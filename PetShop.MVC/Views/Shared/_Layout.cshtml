@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/styles/Style.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <div>
+            <ul class="">
+                <li>
+                    <a asp-controller="Catalog" asp-action="Index">Catalog</a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="Index">Administrator</a>
+                </li>
+            </ul>
+        </div>
+        @RenderBody()
+    </div>
+</body>
+</html>
