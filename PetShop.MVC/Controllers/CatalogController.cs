@@ -16,6 +16,7 @@ namespace PetShop.MVC.Controllers
         }
         public IActionResult Index()
         {
+            
             var model = animalService.GetCatagorys();
             return View(model);
         }

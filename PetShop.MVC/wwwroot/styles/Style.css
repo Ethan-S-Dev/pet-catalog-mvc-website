@@ -28,12 +28,27 @@ nav {
 footer {
     display: flex;
     justify-content: center;
-    width:
     font-size:12px;
 }
+
+
+
+div.footer-box {
+    display: flex;
+    justify-content: center;
+    flex-direction:column;
+    width: 50%;
+}
+    div.footer-box div {
+        display: inline-block;
+        display: flex;
+        justify-content: center;
+    }
 div.footer-line{
     background-color:lightgray;
     height:1px;
+    margin-top:10px;
+    margin-bottom:5px;
 }
 ul.footer-links {
     list-style-type: none;
@@ -55,6 +70,10 @@ ul.footer-links li{
         padding: 14px 16px;
         text-decoration: none;
     }
+    ul.footer-links li a:hover {
+        color: dimgray;
+    }
+
 
 ul.horizontal-nav-bar {
     display: flex;
@@ -78,6 +97,6 @@ ul.horizontal-nav-bar li a {
             text-decoration: none;
         }
 
-    ul.horizontal-nav-bar li a:hover {
+    ul.horizontal-nav-bar li a:hover:not(.active):not(.logo) {
         background-color: #111;
     }

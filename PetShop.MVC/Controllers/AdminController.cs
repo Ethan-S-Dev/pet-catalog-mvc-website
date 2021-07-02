@@ -17,7 +17,7 @@ namespace PetShop.MVC.Controllers
             this.webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
-        {
+        {           
             return View();
         }
 

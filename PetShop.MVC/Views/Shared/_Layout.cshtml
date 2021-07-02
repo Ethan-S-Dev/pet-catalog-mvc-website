@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -12,14 +11,17 @@
         <nav>
             <div>
                 <ul class="horizontal-nav-bar">
-                    <li>
-                        <a asp-controller="Home" asp-action="Index">Home</a>
+                    <li >
+                        <a asp-controller="Home" asp-action="Index" class="logo">Pet Shop</a>
                     </li>
-                    <li>
-                        <a asp-controller="Catalog" asp-action="Index">Catalog</a>
+                    <li >
+                        <a asp-controller="Home" asp-action="Index" class="@ViewBag.HomeClss">Home</a>
                     </li>
-                    <li>
-                        <a asp-controller="Home" asp-action="Index">Administrator</a>
+                    <li >
+                        <a asp-controller="Catalog" asp-action="Index" class="@ViewBag.CatalogClss">Catalog</a>
+                    </li>
+                    <li >
+                        <a asp-controller="Admin" asp-action="Index" class="@ViewBag.AdminClss">Administrator</a>
                     </li>
                 </ul>
             </div>
@@ -30,7 +32,7 @@
             </div>
         </main>
         <footer>
-            <div>
+            <div class="footer-box">
                 <div class="footer-line"></div>
                 <div>Wanna give a follow?</div>
                 <ul class="footer-links">                  
