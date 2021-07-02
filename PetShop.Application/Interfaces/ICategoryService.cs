@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace PetShop.Application.Interfaces
 {
-    public interface ICatalogService
+    public interface ICategoryService
     {
-        public CatalogViewModel GetCatagorys();
+        public CategoryViewModel GetCategorys();
+
+        bool AddCategory(string name,out int id);
+        bool AddCategory(string name);
     }
 }

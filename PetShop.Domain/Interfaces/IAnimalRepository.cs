@@ -10,6 +10,7 @@ namespace PetShop.Domain.Interfaces
     public interface IAnimalRepository
     {
         // Create
+        public void AddAnimal(Animal animal);
 
         // Read
         public IEnumerable<Animal> GetAnimals();

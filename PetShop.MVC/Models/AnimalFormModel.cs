@@ -8,26 +8,40 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PetShop.Domain.Models;
+using PetShop.Application.Interfaces;
+using PetShop.Application.ViewModels;
 
 namespace PetShop.MVC.Models
 {
     public class AnimalFormModel
     {
-        private readonly IConfiguration configuration;
-        public AnimalFormModel(IConfiguration configuration)
+        public AnimalFormModel()
         {
-            this.configuration = configuration;
+
         }
-        public int AnimalId { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
+        public AnimalFormModel(ICategoryService categoryService)
+        {
+            CategoryViewModel = categoryService.GetCategorys();
+        }
+
+
+        public AnimalViewModel Animal { get; set; } 
 
         [Required(ErrorMessage ="Please select an image.")]
         [DataType(DataType.Upload)]
         [AllowedExtensions(".png",".jpg",".svg",".jpeg",".webp",ErrorMessage ="Invalid image type.")]
         [MaxFileSize(65536,ErrorMessage ="Image must be smaller then 64 KB.")]
-        public IFormFile MyProperty { get; set; }
-        public string Description { get; set; }
+        [Display(Name="Animal Image: ")]
+        public IFormFile Image { get; set; }      
+
+        public CategoryViewModel CategoryViewModel { get; set; }
+               
+        [CategoryId(ErrorMessage = "You must select a category or create a new one.")]
         public int CategoryId { get; set; }
+
+        [CategoryName]
+        [Required(ErrorMessage ="Category name can't be empty.")]
+        public string CategoryName { get; set; }
     }
 }

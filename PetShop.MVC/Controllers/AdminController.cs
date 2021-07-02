@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PetShop.Application.Interfaces;
+using PetShop.MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,26 +13,65 @@ namespace PetShop.MVC.Controllers
 {
     public class AdminController : Controller
     {
-        private IWebHostEnvironment webHostEnvironment;
-        public AdminController(IWebHostEnvironment webHostEnvironment)
+        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly ICategoryService categoryService;
+        private readonly IAnimalService animalService;
+        public AdminController(IWebHostEnvironment webHostEnvironment,ICategoryService categoryService,IAnimalService animalService)
         {
             this.webHostEnvironment = webHostEnvironment;
+            this.categoryService = categoryService;
+            this.animalService = animalService;
         }
         public IActionResult Index()
         {           
             return View();
         }
 
-        [HttpPost]
-        public IActionResult ImageUplaod(IFormFile photo)
+        [Route("{controller}/create")]
+        public IActionResult NewAnimal()
         {
-            var unsafeFileName = Path.GetFileName(photo.FileName);
-            var exten = Path.GetExtension(unsafeFileName);
-            var newFileName = $"{Guid.NewGuid()}{exten}";
-            var path = Path.Combine(webHostEnvironment.WebRootPath, "res/images/animals", newFileName);
-            using (var stream = new FileStream(path, FileMode.Create))
-                photo.CopyToAsync(stream);
-            return View();
+            return View(new AnimalFormModel(categoryService));
+        }
+
+        [HttpPost]
+        public IActionResult AddAnimal(AnimalFormModel animalForm)
+        {
+            if(ModelState.IsValid)
+            {
+                if(animalForm.CategoryId == -1)
+                {
+                    if (categoryService.AddCategory(animalForm.CategoryName,out int id))
+                        return View("NewAnimal");
+
+                }
+                var unsafeFileName = Path.GetFileName(animalForm.Image.FileName);
+                var exten = Path.GetExtension(unsafeFileName);
+                var newFileName = $"{Guid.NewGuid()}{exten}";
+                var path = Path.Combine(webHostEnvironment.WebRootPath, "res/images/animals", newFileName);
+                try
+                {                  
+                    
+                    using (var stream = new FileStream(path, FileMode.Create))
+                        animalForm.Image.CopyToAsync(stream);
+                }catch
+                {
+                    newFileName = "default.png";
+                }
+
+                try
+                {
+                    animalService.AddAnimal(animalForm.Animal);
+
+                }catch
+                {
+                    File.Delete(path);
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            
+            return View("NewAnimal",animalForm);
         }
     }
 }

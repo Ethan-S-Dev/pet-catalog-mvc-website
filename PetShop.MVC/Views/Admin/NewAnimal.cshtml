@@ -1,0 +1,81 @@
+﻿@model PetShop.MVC.Models.AnimalFormModel
+@{
+    ViewBag.Title = "Pet Shop";
+    ViewBag.AdminClss = "active";
+}
+<script src="~/scripts/jquery/jquery.js"></script>
+<script src="~/scripts/jquery/jquery.validate.min.js"></script>
+<script src="~/scripts/jquery/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/scripts/CategorySelect.js"></script>
+<link href="~/styles/NewAnimalFormStyle.css" rel="stylesheet" />
+<div>
+    <div>
+        <h2>Add New Animal</h2>
+    </div>
+    <div>
+        <form enctype="multipart/form-data" method="post" asp-action="AddAnimal" >
+            <dl>
+                <dt>
+                    <label asp-for="Animal.Name"></label>
+                </dt>
+                <dd>
+                    <input asp-for="Animal.Name" type="text" />
+                    <span asp-validation-for="Animal.Name"></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label asp-for="Animal.Age"></label>
+                </dt>
+                <dd>
+                    <input asp-for="Animal.Age" type="number" />
+                    <span asp-validation-for="Animal.Age"></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label asp-for="Image"></label>
+                </dt>
+                <dd>
+                    <input asp-for="Image" type="file" />
+                    <span asp-validation-for="Image"></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label asp-for="Animal.Description"></label>
+                </dt>
+                <dd>
+                    <input asp-for="Animal.Description" type="text" />
+                    <span asp-validation-for="Animal.Description"></span>
+                </dd>
+            </dl>
+            <dl>
+                <dt>
+                    <label asp-for="CategoryId"></label>
+                </dt>
+                <dd>
+
+                    <select id="category-select" asp-for="CategoryId" type="text" 
+                            asp-items="@(new SelectList(Model.CategoryViewModel.Categorys,"CategoryId","Name"))">
+                        <option value="0" selected disabled>- Select Category -</option>                        
+                        <option value="-1">- New Category -</option>
+                    </select>
+                    <span asp-validation-for="CategoryId"></span>
+                </dd>
+            </dl>
+            <dl id="category-name">
+                <dt>
+                    <label asp-for="CategoryName"></label>
+                </dt>
+                <dd>
+                    <input id="category-name-filed" asp-for="CategoryName" type="text"/>
+                    <span asp-validation-for="CategoryName"></span>
+                </dd>
+            </dl>
+            <input class="btn" type="submit" value="Add Animal" />
+        </form>
+    </div>
+
+</div>
+

@@ -21,8 +21,4 @@
     <ProjectReference Include="..\PetShop.Infra.IoC\PetShop.Infra.IoC.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\res\images\animals\" />
-  </ItemGroup>
-
 </Project>

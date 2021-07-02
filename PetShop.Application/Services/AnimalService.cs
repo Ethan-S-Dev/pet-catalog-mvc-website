@@ -16,12 +16,49 @@ namespace PetShop.Application.Services
         public AnimalService(IAnimalRepository animalRepository)
         {
             this.animalRepository = animalRepository;
+        }        
+
+        public bool AddAnimal(AnimalViewModel animal, out int id)
+        {
+            var ani = new Animal()
+            {
+                Name = animal.Name,
+                Age = animal.Age,
+                CategoryId = animal.CategoryId,
+                Description = animal.Description,
+                PictureName = animal.ImageName
+            };
+            animalRepository.AddAnimal(ani);
+            id = ani.AnimalId;
+            return true;
         }
+
+        public bool AddAnimal(AnimalViewModel animal)
+        {
+            var ani = new Animal()
+            {
+                Name = animal.Name,
+                Age = animal.Age,
+                CategoryId = animal.CategoryId,
+                Description = animal.Description,
+                PictureName = animal.ImageName
+            };
+            animalRepository.AddAnimal(ani);
+
+            return true;
+        }
+
         public AnimalViewModel GetAnimal(int animalId)
         {
+            var animal = animalRepository.GetAnimal(animalId);
             return new AnimalViewModel()
             {
-                Animal = animalRepository.GetAnimal(animalId)
+                AnimalId = animal.AnimalId,
+                Name = animal.Name,
+                Age = animal.Age,
+                CategoryId = animal.CategoryId,
+                Description = animal.Description,
+                ImageName = animal.PictureName
             };
         }
         public BestAnimalsViewModel GetBestAnimals()
@@ -30,7 +67,12 @@ namespace PetShop.Application.Services
             foreach (var animal in animalRepository.GetBestAnimals())
                 bestAnimals.Add(new AnimalViewModel()
                 {
-                    Animal = animal
+                    AnimalId = animal.AnimalId,
+                    Name = animal.Name,
+                    Age = animal.Age,
+                    CategoryId = animal.CategoryId,
+                    Description = animal.Description,
+                    ImageName = animal.PictureName
                 });
             
             return new BestAnimalsViewModel()

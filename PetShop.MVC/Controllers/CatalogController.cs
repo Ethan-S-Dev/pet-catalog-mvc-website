@@ -9,15 +9,15 @@ namespace PetShop.MVC.Controllers
 {
     public class CatalogController : Controller
     {
-        private ICatalogService animalService;
-        public CatalogController(ICatalogService animalService)
+        private ICategoryService animalService;
+        public CatalogController(ICategoryService animalService)
         {
             this.animalService = animalService;
         }
         public IActionResult Index()
         {
             
-            var model = animalService.GetCatagorys();
+            var model = animalService.GetCategorys();
             return View(model);
         }
         public IActionResult Animal(int? id)

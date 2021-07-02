@@ -9,8 +9,11 @@ namespace PetShop.Application.Interfaces
 {
     public interface IAnimalService
     {
-        public AnimalViewModel GetAnimal(int animalId);
+        public AnimalViewModel GetAnimal(int animalId);       
 
         public BestAnimalsViewModel GetBestAnimals();
+
+        bool AddAnimal(AnimalViewModel animal);
+        bool AddAnimal(AnimalViewModel animal,out int id);
     }
 }

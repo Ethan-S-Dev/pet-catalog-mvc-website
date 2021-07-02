@@ -16,6 +16,13 @@ namespace PetShop.Infra.Data.Repositorys
         {
             this.dbContext = dbContext;
         }
+
+        public void AddCategory(Category category)
+        {
+            dbContext.Categories.Add(category);
+            dbContext.SaveChanges();
+        }
+
         public IEnumerable<Category> GetCategorys()
         {
             return dbContext.Categories;

@@ -4,4 +4,14 @@
     ViewBag.Title = "Home";
 }
 
-<h1>Home</h1>
+<div>
+    <div>
+        <h2>Best two Pets</h2>
+    </div>
+    <div>
+        @foreach (var animal in Model.Animals)
+            {
+                <partial name="AnimalView" model="animal" />
+            }
+    </div>
+</div>

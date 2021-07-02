@@ -21,7 +21,12 @@ namespace PetShop.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // TODO: Add preexisting data to the database
+            modelBuilder.Entity<Category>().HasData(
+                new Category() { CategoryId = 1, Name = "Birds"},
+                new Category() { CategoryId = 2, Name = "Snakes" },
+                new Category() { CategoryId = 3, Name = "Dogs" },
+                new Category() { CategoryId = 4, Name = "Cats" }
+            );
         }
     }
 }

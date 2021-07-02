@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PetShop.Application.ViewModels
 {
-    public class CatalogViewModel
+    public class CategoryViewModel
     {
         public IEnumerable<Category> Categorys { get; set; }
     }

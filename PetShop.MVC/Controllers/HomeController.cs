@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetShop.Application.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,16 @@ namespace PetShop.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        [RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
-        public IActionResult Index()
+        private readonly IAnimalService animalService;
+        public HomeController(IAnimalService animalService)
         {
-            
-            return View();
+            this.animalService = animalService;
+        }
+
+        //[RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
+        public IActionResult Index()
+        {       
+            return View(animalService.GetBestAnimals());
         }
     }
 }

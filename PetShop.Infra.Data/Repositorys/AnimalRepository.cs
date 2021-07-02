@@ -17,6 +17,13 @@ namespace PetShop.Infra.Data.Repositorys
         {
             this.dbContext = dbContext;
         }
+
+        public void AddAnimal(Animal animal)
+        {
+            dbContext.Animals.Add(animal);
+            dbContext.SaveChanges();
+        }
+
         public Animal GetAnimal(int animalId)
         {
             return dbContext.Animals.Find(animalId);

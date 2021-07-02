@@ -32,8 +32,11 @@ namespace PetShop.MVC
             services.RegisterServices();
         }
        
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, PetShopDbContext ctx)
         {
+            ctx.Database.EnsureDeleted();
+            ctx.Database.EnsureCreated();
+
             app.UseStaticFiles();
             app.UseRouting();
 

@@ -16,7 +16,7 @@ namespace PetShop.Infra.IoC
         public static void RegisterServices(IServiceCollection services)
         {
             // PetShop.Application
-            services.AddScoped<ICatalogService, CatalogService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAnimalService, AnimalService>();
 
             // PetShop.Domain.Interfaces | PetShop.Infra.Data.Repositorys

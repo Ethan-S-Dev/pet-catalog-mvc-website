@@ -10,6 +10,7 @@ namespace PetShop.Domain.Interfaces
     public interface ICategoryRepository
     {
         // Create
+        void AddCategory(Category category);
 
         // Read
         IEnumerable<Category> GetCategorys();
