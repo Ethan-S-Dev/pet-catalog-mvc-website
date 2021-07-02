@@ -34,7 +34,6 @@ namespace PetShop.MVC
        
         public void Configure(IApplicationBuilder app, PetShopDbContext ctx)
         {
-            ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();
 
             app.UseStaticFiles();

@@ -40,10 +40,14 @@ namespace PetShop.MVC.Controllers
             {
                 if(animalForm.CategoryId == -1)
                 {
-                    if (categoryService.AddCategory(animalForm.CategoryName,out int id))
+                    if (!categoryService.AddCategory(animalForm.CategoryName,out int id))
                         return View("NewAnimal");
 
+                    animalForm.Animal.CategoryId = id;
+
                 }
+                animalForm.Animal.CategoryId = animalForm.CategoryId;
+                
                 var unsafeFileName = Path.GetFileName(animalForm.Image.FileName);
                 var exten = Path.GetExtension(unsafeFileName);
                 var newFileName = $"{Guid.NewGuid()}{exten}";
@@ -58,13 +62,14 @@ namespace PetShop.MVC.Controllers
                     newFileName = "default.png";
                 }
 
+                animalForm.Animal.ImageName = newFileName;
+
                 try
                 {
                     animalService.AddAnimal(animalForm.Animal);
-
                 }catch
                 {
-                    File.Delete(path);
+                    System.IO.File.Delete(path);
                 }
 
                 return RedirectToAction("Index");
