@@ -4,24 +4,50 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/styles/Style.css" rel="stylesheet" />
+    <link href="~/styles/Style.css" rel="stylesheet" />  
+    <link href="~/fontawesome/css/all.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-        <div>
-            <ul class="">
-                <li>
-                    <a asp-controller="Catalog" asp-action="Index">Catalog</a>
-                </li>
-                <li>
-                    <a asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li>
-                    <a asp-controller="Home" asp-action="Index">Administrator</a>
-                </li>
-            </ul>
-        </div>
-        @RenderBody()
+    <div class="page-container">
+        <nav>
+            <div>
+                <ul class="horizontal-nav-bar">
+                    <li>
+                        <a asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Catalog" asp-action="Index">Catalog</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="Index">Administrator</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main>
+            <div>
+                @RenderBody()
+            </div>
+        </main>
+        <footer>
+            <div>
+                <div class="footer-line"></div>
+                <div>Wanna give a follow?</div>
+                <ul class="footer-links">                  
+                    <li>
+                        <a href="https://www.linkedin.com/in/ethan-shoham-13a40050/">
+                            <i class="fab fa-linkedin-in" title="LinkedIn"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/Ethan-S-Dev">
+                            <i class="fab fa-github-square" title="GitHub"></i>
+                        </a>
+                    </li>
+                </ul>
+                
+            </div>
+        </footer>
     </div>
 </body>
 </html>

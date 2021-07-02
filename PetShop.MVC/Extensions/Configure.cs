@@ -13,7 +13,7 @@ namespace PetShop.MVC.Extensions
 {
     public static class Configure
     {
-        public static void ConfigureSqlDb(this IServiceCollection services,IConfiguration configuration)
+        public static void ConfigureSqlDb(this IServiceCollection services, IConfiguration configuration, bool useLazyLoading = true)
         {
             if (!configuration.IsValid()) throw new Exception(); // TODO: Add proper exception
 
@@ -21,34 +21,36 @@ namespace PetShop.MVC.Extensions
             {
                 services
                     .ConfigureForSqlServer(configuration
-                    .GetConnectionString("SqlServerConnection"));
+                    .GetConnectionString("SqlServerConnection"),
+                    useLazyLoading);
             }
 
             if (configuration.UseSqlite())
             {
                 services
                     .ConfigureForSqlite(configuration
-                    .GetConnectionString("SqliteConnection"));
+                    .GetConnectionString("SqliteConnection"),
+                    useLazyLoading);
             }
         }
 
-        public static void ConfigureForSqlServer(this IServiceCollection services, string connectionString)
+        public static void ConfigureForSqlServer(this IServiceCollection services, string connectionString, bool useLazyLoading)
         {
-            services
-                    .AddDbContext<PetShopDbContext>(options =>
-                options
-                .UseLazyLoadingProxies()
-                .UseSqlServer(connectionString));
-        }     
+            services.AddDbContext<PetShopDbContext>(options =>
+                {
+                    if (useLazyLoading)
+                        options.UseLazyLoadingProxies();
+                    options.UseSqlServer(connectionString);
+                });
+        }
 
-        public static void ConfigureForSqlite(this IServiceCollection services, string connectionString)
+        public static void ConfigureForSqlite(this IServiceCollection services, string connectionString, bool useLazyLoading)
         {
-            services
-                    .AddDbContext<PetShopDbContext>(options =>
-                    {
-                        options
-                        .UseLazyLoadingProxies()
-                        .UseSqlite(connectionString);
+            services.AddDbContext<PetShopDbContext>(options =>
+                {
+                    if (useLazyLoading)
+                        options.UseLazyLoadingProxies();
+                    options.UseSqlite(connectionString);
                 });
         }
 
@@ -58,7 +60,6 @@ namespace PetShop.MVC.Extensions
             var isSqlServer = configuration.UseSqlServer();
             if (!(isSqlite ^ isSqlServer)) return false;
 
-
             return true;
         }
 
@@ -67,6 +68,6 @@ namespace PetShop.MVC.Extensions
         public static bool UseSqlite(this IConfiguration configuration) => configuration.GetValue<bool>("UseSqlite");
 
         public static void RegisterServices(this IServiceCollection services) => DependencyContainer.RegisterServices(services);
-
+      
     }
 }

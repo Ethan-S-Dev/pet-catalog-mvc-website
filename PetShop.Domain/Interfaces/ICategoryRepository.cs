@@ -9,6 +9,13 @@ namespace PetShop.Domain.Interfaces
 {
     public interface ICategoryRepository
     {
+        // Create
+
+        // Read
         IEnumerable<Category> GetCategorys();
+
+        // Update
+
+        // Delete
     }
 }

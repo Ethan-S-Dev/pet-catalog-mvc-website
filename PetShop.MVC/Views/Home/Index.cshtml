@@ -4,4 +4,15 @@
 }
 
 <h1>Home</h1>
-
+<form enctype="multipart/form-data" method="post" asp-controller="Admin" asp-action="ImageUplaod">
+    <dl>
+        <dt>
+            <label for="photo">Photo</label>
+        </dt>
+        <dd>
+            <input type="file" name="photo">
+            <span></span>
+        </dd>
+    </dl>
+    <input type="submit" value="Upload" />
+</form>

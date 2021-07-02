@@ -16,10 +16,14 @@ namespace PetShop.Infra.IoC
         public static void RegisterServices(IServiceCollection services)
         {
             // PetShop.Application
-            services.AddScoped<ICatalogService, AnimalService>();
+            services.AddScoped<ICatalogService, CatalogService>();
+            services.AddScoped<IAnimalService, AnimalService>();
 
             // PetShop.Domain.Interfaces | PetShop.Infra.Data.Repositorys
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IAnimalRepository, AnimalRepository>();
+
+            
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using PetShop.Application.Interfaces;
 using PetShop.Application.ViewModels;
 using PetShop.Domain.Interfaces;
+using PetShop.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +10,32 @@ using System.Threading.Tasks;
 
 namespace PetShop.Application.Services
 {
-    public class AnimalService : ICatalogService
+    public class AnimalService : IAnimalService
     {
-        private readonly ICategoryRepository categoryRepository;
-        public AnimalService(ICategoryRepository categoryRepository)
+        private readonly IAnimalRepository animalRepository;
+        public AnimalService(IAnimalRepository animalRepository)
         {
-            this.categoryRepository = categoryRepository;
+            this.animalRepository = animalRepository;
         }
-        public CatalogViewModel GetCatagorys()
+        public AnimalViewModel GetAnimal(int animalId)
         {
-            return new CatalogViewModel()
+            return new AnimalViewModel()
             {
-                Categorys = categoryRepository.GetCategorys()
+                Animal = animalRepository.GetAnimal(animalId)
+            };
+        }
+        public BestAnimalsViewModel GetBestAnimals()
+        {
+            var bestAnimals = new List<AnimalViewModel>(2);
+            foreach (var animal in animalRepository.GetBestAnimals())
+                bestAnimals.Add(new AnimalViewModel()
+                {
+                    Animal = animal
+                });
+            
+            return new BestAnimalsViewModel()
+            {
+                Animals = bestAnimals
             };
         }
     }
