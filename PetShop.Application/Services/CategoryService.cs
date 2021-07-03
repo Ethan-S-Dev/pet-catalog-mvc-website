@@ -35,12 +35,36 @@ namespace PetShop.Application.Services
             return true;
         }
 
-        public CategoryViewModel GetCategorys()
+        public IEnumerable<CategoryViewModel> GetCategorys()
         {
-            return new CategoryViewModel()
+            var cataList = categoryRepository.GetCategorys();
+            var retList = new List<CategoryViewModel>(cataList.Count());
+            foreach (var cata in cataList)
             {
-                Categorys = categoryRepository.GetCategorys()
-            };
+                var animalList = cata.Animals;
+                var aniVMList = new List<AnimalViewModel>(animalList.Count());
+                foreach (var ani in animalList)
+                {
+                    aniVMList.Add(new AnimalViewModel()
+                    {
+                        AnimalId = ani.AnimalId,
+                        Age = ani.Age,
+                        CategoryId = ani.CategoryId,
+                        Description = ani.Description,
+                        ImageName = ani.PictureName,
+                        Name = ani.Name
+                    }) ;
+                   
+                }
+                retList.Add(new CategoryViewModel()
+                {
+                    CategoryId = cata.CategoryId,
+                    Name = cata.Name,
+                    Animals = aniVMList
+                });
+            }
+
+            return retList;
         }
     }
 }

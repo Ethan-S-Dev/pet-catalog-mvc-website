@@ -1,5 +1,13 @@
 ﻿@model PetShop.Application.ViewModels.AnimalViewModel
-<link href="~/styles/AnimalStyle.css" rel="stylesheet" />
-<div>
-    <img src="~/res/images/animals/@Model.ImageName" />
+
+<div class="animal-box">
+    <div class="animal-header">
+        <img src="~/res/images/animals/@Model.ImageName" class="animal-image" />
+        <h2>@Html.DisplayFor(m=>m.Name)</h2>
+    </div>
+    <div>
+        <p>
+            @Html.DisplayFor(m=>m.Description)
+        </p>
+    </div>
 </div>

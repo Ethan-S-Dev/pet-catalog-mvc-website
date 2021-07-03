@@ -1,8 +1,22 @@
-﻿
+﻿@model IEnumerable<PetShop.Application.ViewModels.CategoryViewModel>
 @{
     ViewBag.CatalogClss = "active";
     ViewBag.Title = "Catalog";
 }
 
-<h1>Catalog</h1>
+<div>
+    <select asp-items="@(new SelectList(Model,"CategoryId","Name"))">
+        
+    </select>
+
+    @foreach (var cata in Model)
+    {
+        <div>
+            @foreach (var animal in cata.Animals)
+            {
+                <partial name="AnimalView" model="animal" />
+            }
+        </div>
+    }
+</div>
 

@@ -57,7 +57,7 @@
                 <dd>
 
                     <select id="category-select" asp-for="CategoryId" type="text" 
-                            asp-items="@(new SelectList(Model.CategoryViewModel.Categorys,"CategoryId","Name"))">
+                            asp-items="@(new SelectList(Model.Categorys,"CategoryId","Name"))">
                         <option value="0" selected disabled>- Select Category -</option>                        
                         <option value="-1">- New Category -</option>
                     </select>

@@ -9,7 +9,7 @@ namespace PetShop.Application.Interfaces
 {
     public interface ICategoryService
     {
-        public CategoryViewModel GetCategorys();
+        public IEnumerable<CategoryViewModel> GetCategorys();
 
         bool AddCategory(string name,out int id);
         bool AddCategory(string name);

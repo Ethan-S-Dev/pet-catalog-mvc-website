@@ -2,7 +2,9 @@
     padding: 0;
     margin: 0;
     font-family: Verdana,sans-serif;
+    background-color: #E2E2E2;
 }
+
 main{
     margin-top:50px;
     display:flex;
@@ -10,13 +12,14 @@ main{
 }
 
 .page-container {
+    width:80%;
     display: flex;
     flex-direction:column;
     justify-content: center;
 }
 
 .active {
-    background-color: #04AA6D;
+    background-color: #6E7E85;
 }
 
 nav {
@@ -82,7 +85,7 @@ ul.horizontal-nav-bar {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #1C0F13;
 }
 
 ul.horizontal-nav-bar li {
@@ -98,5 +101,5 @@ ul.horizontal-nav-bar li a {
         }
 
     ul.horizontal-nav-bar li a:hover:not(.active):not(.logo) {
-        background-color: #111;
+        background-color: #B7CECE;
     }

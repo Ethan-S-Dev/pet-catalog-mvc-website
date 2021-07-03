@@ -22,7 +22,7 @@ namespace PetShop.MVC.Models
         }
         public AnimalFormModel(ICategoryService categoryService)
         {
-            CategoryViewModel = categoryService.GetCategorys();
+            Categorys = categoryService.GetCategorys();
         }
 
 
@@ -35,7 +35,7 @@ namespace PetShop.MVC.Models
         [Display(Name="Animal Image: ")]
         public IFormFile Image { get; set; }      
 
-        public CategoryViewModel CategoryViewModel { get; set; }
+        public IEnumerable<CategoryViewModel> Categorys { get; set; }
                
         [CategoryId(ErrorMessage = "You must select a category or create a new one.")]
         public int CategoryId { get; set; }

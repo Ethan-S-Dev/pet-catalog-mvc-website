@@ -9,6 +9,8 @@ namespace PetShop.Application.ViewModels
 {
     public class CategoryViewModel
     {
-        public IEnumerable<Category> Categorys { get; set; }
+        public int CategoryId { get; set; }
+        public string Name { get; set; }
+        public IEnumerable<AnimalViewModel> Animals { get; set; }
     }
 }
