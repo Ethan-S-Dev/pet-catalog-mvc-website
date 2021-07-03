@@ -1,14 +1,8 @@
-﻿$(function() {
-    $("#category-select").change(function() {
-        if ($("#category-select option:selected").val() == -1) {
-            $("#category-name").css("visibility", "visible");
-            $("category-name-filed").prop("readonly", false);
-            $("#category-name-filed").val("");
-        } else {
-            $("#category-name").css("visibility", "collapse");
-            $("category-name-filed").prop("readonly", true);           
-            var categoryName = $("#category-select option:selected").text();
-            $("#category-name-filed").val(categoryName);            
-        }        
-    })
-})
+﻿$(function () {
+    $("#cata-select").change(function () {
+        $(".cate-select-row").css("visibility", "collapse");
+        let id = $("#cata-select option:selected").val();
+        let trName = `#tr-id-${id}`;
+        $(trName).css("visibility", "visible");
+    });
+});

@@ -3,20 +3,36 @@
     ViewBag.CatalogClss = "active";
     ViewBag.Title = "Catalog";
 }
+<script src="~/scripts/CategorySelect.js"></script>
 <script src="~/scripts/AnimalView.js"></script>
-<div>
-    <select asp-items="@(new SelectList(Model,"CategoryId","Name"))">
-        
-    </select>
 
-    @foreach (var cata in Model)
-    {
-        <div>
-            @foreach (var animal in cata.Animals)
+<link href="~/styles/CatalogStyle.css" rel="stylesheet" />
+<div>
+
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    <select id="cata-select" asp-items="@(new SelectList(Model,"CategoryId","Name"))" >
+                    </select>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var cata in Model)
             {
-                <partial name="AnimalView" model="animal" />
-            }
-        </div>
-    }
+                <tr class="cate-select-row" id="tr-id-@cata.CategoryId" >
+                    <td>
+                        <div>
+                            @foreach(var animal in cata.Animals)
+                {
+                    <partial name="AnimalView" model="animal"/>
+                }
+                        </div>
+                    </td>
+                </tr>
+            }            
+            </tbody>
+    </table>
 </div>
 

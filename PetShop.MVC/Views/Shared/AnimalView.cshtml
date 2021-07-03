@@ -10,7 +10,7 @@
             </button>
         </div>
     </div>
-    
+
     <div class="animal-image">
         <img src="~/res/images/animals/@Model.PictureName" alt="The Image of @Html.DisplayFor(m=>m.Name)" />
 
@@ -27,4 +27,15 @@
 
 </div>
 <div id="desc-animal-@Model.AnimalId" class="animal-desc">
+    <div class="animal-desc-header">
+        <strong>Description</strong>
+        <button onclick="closeDesc(@Model.AnimalId)">
+            <i class="fas fa-arrow-circle-right"></i>
+        </button>
+    </div>
+    <div class="desc-para">
+        <p>
+            @Model.Description
+        </p>
+    </div>
 </div>
