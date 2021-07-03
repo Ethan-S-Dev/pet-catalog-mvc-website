@@ -26,6 +26,7 @@ namespace PetShop.Application.ViewModels
         public int Age { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [Display(Name="Description: ")]
         [Required(ErrorMessage = "Please enter a description for the animal.")]
         [MaxLength(500, ErrorMessage = "Description can't be longer then 500 characters.")]
         public string Description { get; set; }

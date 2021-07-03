@@ -24,6 +24,7 @@ main{
 nav {
     position:fixed;
     top:0;
+    z-index:6;
     width:100%;
 }
 
@@ -102,3 +103,14 @@ ul.horizontal-nav-bar li a {
     ul.horizontal-nav-bar li a:hover:not(.active):not(.logo) {
         background-color: #B7CECE;
     }
+
+.page-shadow-layer{
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    z-index:5;
+    visibility:collapse;
+    background-color: rgba(28,20,19,0.9);
+}

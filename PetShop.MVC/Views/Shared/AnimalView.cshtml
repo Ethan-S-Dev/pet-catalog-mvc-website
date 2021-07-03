@@ -1,10 +1,16 @@
 ﻿@model PetShop.Application.ViewModels.AnimalViewModel
 
 <div class="animal-container">
-    <div class="animal-comments">
+    <div class="animal-details">
         <h2>@Html.DisplayFor(m => m.Name)</h2>
-        <h3>Comments: (@Model.Comments.Count())</h3>
+        <div class="comments-control">
+            <button class="comments-btn">
+                <span class="coments-count">@Model.Comments.Count()</span>
+                <span class="coments-text">Comments</span>
+            </button>
+        </div>
     </div>
+    
     <div class="animal-image">
         <img src="~/res/images/animals/@Model.PictureName" alt="The Image of @Html.DisplayFor(m=>m.Name)" />
 
@@ -14,9 +20,11 @@
                 <li><strong>@Html.DisplayNameFor(m => m.Name) </strong>@Html.DisplayFor(m => m.Name)</li>
                 <li><strong>@Html.DisplayNameFor(m => m.Age) </strong>@Html.DisplayFor(m => m.Age)</li>
                 <li><strong>@Html.DisplayNameFor(m => m.Category.Name) </strong>@Html.DisplayFor(m => m.Category.Name)</li>
-                <li><strong>@Html.DisplayNameFor(m => m.Description) </strong>@Html.DisplayFor(m => m.Description)</li>
+                <li class="desc-li" onclick="openDesc(@Model.AnimalId)"><strong>Description</strong></li>
             </ul>
         </div>
     </div>
 
+</div>
+<div id="desc-animal-@Model.AnimalId" class="animal-desc">
 </div>
