@@ -14,6 +14,7 @@ namespace PetShop.Domain.Interfaces
 
         // Read
         IEnumerable<Category> GetCategorys();
+        Category GetCategory(int categoryId);
 
         // Update
 

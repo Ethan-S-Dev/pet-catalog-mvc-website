@@ -35,6 +35,33 @@ namespace PetShop.Application.Services
             return true;
         }
 
+        public CategoryViewModel GetCategory(int categoryId)
+        {
+            var cata = categoryRepository.GetCategory(categoryId);
+            var aniList = new List<AnimalViewModel>(cata.Animals.Count());
+            var cataVM = new CategoryViewModel()
+            {
+                CategoryId = categoryId,
+                Name = cata.Name,
+                Animals = aniList
+            };
+            foreach (var animal in cata.Animals)
+            {
+                aniList.Add(new AnimalViewModel()
+                {
+                    Name = animal.Name,
+                    AnimalId = animal.AnimalId,
+                    Age = animal.Age,
+                    Description = animal.Description,
+                    Category = cataVM,
+                    CategoryId = animal.CategoryId,
+                    PictureName = animal.PictureName
+                }) ;
+            }
+
+            return cataVM;    
+        }
+
         public IEnumerable<CategoryViewModel> GetCategorys()
         {
             var cataList = categoryRepository.GetCategorys();
@@ -51,7 +78,7 @@ namespace PetShop.Application.Services
                         Age = ani.Age,
                         CategoryId = ani.CategoryId,
                         Description = ani.Description,
-                        ImageName = ani.PictureName,
+                        PictureName = ani.PictureName,
                         Name = ani.Name
                     }) ;
                    

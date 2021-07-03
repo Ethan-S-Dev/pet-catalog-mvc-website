@@ -11,6 +11,7 @@ namespace PetShop.Application.Interfaces
     {
         public IEnumerable<CategoryViewModel> GetCategorys();
 
+        public CategoryViewModel GetCategory(int categoryId);
         bool AddCategory(string name,out int id);
         bool AddCategory(string name);
     }

@@ -68,6 +68,8 @@ namespace PetShop.MVC.Extensions
         public static bool UseSqlite(this IConfiguration configuration) => configuration.GetValue<bool>("UseSqlite");
 
         public static void RegisterServices(this IServiceCollection services) => DependencyContainer.RegisterServices(services);
+
+        public static void RegisterMapping(this IServiceCollection services) => MapperDependency.RegisterServices(services);
       
     }
 }

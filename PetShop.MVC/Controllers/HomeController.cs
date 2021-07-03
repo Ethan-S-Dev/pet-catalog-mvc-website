@@ -17,8 +17,9 @@ namespace PetShop.MVC.Controllers
 
         //[RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
         public IActionResult Index()
-        {       
-            return View(animalService.GetBestAnimals());
+        {
+            var bestAnimals = animalService.GetBestAnimals();
+            return View(bestAnimals);
         }
     }
 }

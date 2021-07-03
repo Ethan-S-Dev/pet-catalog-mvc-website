@@ -11,7 +11,7 @@ namespace PetShop.Application.Interfaces
     {
         public AnimalViewModel GetAnimal(int animalId);       
 
-        public BestAnimalsViewModel GetBestAnimals();
+        public IEnumerable<AnimalViewModel> GetBestAnimals();
 
         bool AddAnimal(AnimalViewModel animal);
         bool AddAnimal(AnimalViewModel animal,out int id);

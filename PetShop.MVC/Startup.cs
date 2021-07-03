@@ -28,6 +28,8 @@ namespace PetShop.MVC
             services.AddControllersWithViews();
 
             services.ConfigureSqlDb(configuration);
+
+            services.RegisterMapping();
           
             services.RegisterServices();
         }

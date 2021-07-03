@@ -62,7 +62,7 @@ namespace PetShop.MVC.Controllers
                     newFileName = "default.png";
                 }
 
-                animalForm.Animal.ImageName = newFileName;
+                animalForm.Animal.PictureName = newFileName;
 
                 try
                 {

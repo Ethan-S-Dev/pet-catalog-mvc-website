@@ -14,6 +14,8 @@ namespace PetShop.Application.ViewModels
 
         public int CategoryId { get; set; }
 
+        public string PictureName { get; set; }    
+
         [Required(ErrorMessage = "Please enter a name.")]
         [Display(Name = "Animal Name: ")]
         public string Name { get; set; }
@@ -28,6 +30,8 @@ namespace PetShop.Application.ViewModels
         [MaxLength(500, ErrorMessage = "Description can't be longer then 500 characters.")]
         public string Description { get; set; }
 
-        public string ImageName { get; set; }
+        public CategoryViewModel Category { get; set; }
+
+        public IEnumerable<CommentViewModel> Comments { get; set; }
     }
 }

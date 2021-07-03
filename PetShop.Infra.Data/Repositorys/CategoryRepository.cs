@@ -23,6 +23,11 @@ namespace PetShop.Infra.Data.Repositorys
             dbContext.SaveChanges();
         }
 
+        public Category GetCategory(int categoryId)
+        {
+            return dbContext.Categories.Find(categoryId);
+        }
+
         public IEnumerable<Category> GetCategorys()
         {
             return dbContext.Categories;

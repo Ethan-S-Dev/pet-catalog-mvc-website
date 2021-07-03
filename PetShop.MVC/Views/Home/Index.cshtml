@@ -1,4 +1,4 @@
-﻿@model PetShop.Application.ViewModels.BestAnimalsViewModel
+﻿@model IEnumerable<PetShop.Application.ViewModels.AnimalViewModel>
 @{
     ViewBag.HomeClss = "active";
     ViewBag.Title = "Home";
@@ -9,7 +9,7 @@
         <h2>Best two Pets</h2>
     </div>
     <div>
-        @foreach (var animal in Model.Animals)
+        @foreach (var animal in Model)
             {
                 <partial name="AnimalView" model="animal" />
             }

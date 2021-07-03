@@ -1,4 +1,5 @@
-﻿using PetShop.Application.Interfaces;
+﻿using AutoMapper;
+using PetShop.Application.Interfaces;
 using PetShop.Application.ViewModels;
 using PetShop.Domain.Interfaces;
 using PetShop.Domain.Models;
@@ -13,9 +14,13 @@ namespace PetShop.Application.Services
     public class AnimalService : IAnimalService
     {
         private readonly IAnimalRepository animalRepository;
-        public AnimalService(IAnimalRepository animalRepository)
+        private readonly ICategoryService categoryService;
+        private readonly IMapper mapper;
+        public AnimalService(IAnimalRepository animalRepository, ICategoryService categoryService,IMapper mapper)
         {
+            this.mapper = mapper;
             this.animalRepository = animalRepository;
+            this.categoryService = categoryService;
         }        
 
         public bool AddAnimal(AnimalViewModel animal, out int id)
@@ -26,7 +31,7 @@ namespace PetShop.Application.Services
                 Age = animal.Age,
                 CategoryId = animal.CategoryId,
                 Description = animal.Description,
-                PictureName = animal.ImageName
+                PictureName = animal.PictureName
             };
             animalRepository.AddAnimal(ani);
             id = ani.AnimalId;
@@ -41,7 +46,7 @@ namespace PetShop.Application.Services
                 Age = animal.Age,
                 CategoryId = animal.CategoryId,
                 Description = animal.Description,
-                PictureName = animal.ImageName
+                PictureName = animal.PictureName
             };
             animalRepository.AddAnimal(ani);
 
@@ -51,34 +56,15 @@ namespace PetShop.Application.Services
         public AnimalViewModel GetAnimal(int animalId)
         {
             var animal = animalRepository.GetAnimal(animalId);
-            return new AnimalViewModel()
-            {
-                AnimalId = animal.AnimalId,
-                Name = animal.Name,
-                Age = animal.Age,
-                CategoryId = animal.CategoryId,
-                Description = animal.Description,
-                ImageName = animal.PictureName
-            };
+            return mapper.Map<AnimalViewModel>(animal);
         }
-        public BestAnimalsViewModel GetBestAnimals()
+        public IEnumerable<AnimalViewModel> GetBestAnimals()
         {
             var bestAnimals = new List<AnimalViewModel>(2);
             foreach (var animal in animalRepository.GetBestAnimals())
-                bestAnimals.Add(new AnimalViewModel()
-                {
-                    AnimalId = animal.AnimalId,
-                    Name = animal.Name,
-                    Age = animal.Age,
-                    CategoryId = animal.CategoryId,
-                    Description = animal.Description,
-                    ImageName = animal.PictureName
-                });
-            
-            return new BestAnimalsViewModel()
-            {
-                Animals = bestAnimals
-            };
+                bestAnimals.Add(mapper.Map<AnimalViewModel>(animal));
+
+            return bestAnimals;
         }
     }
 }

@@ -1,13 +1,22 @@
 ﻿@model PetShop.Application.ViewModels.AnimalViewModel
 
-<div class="animal-box">
-    <div class="animal-header">
-        <img src="~/res/images/animals/@Model.ImageName" class="animal-image" />
-        <h2>@Html.DisplayFor(m=>m.Name)</h2>
+<div class="animal-container">
+    <div class="animal-comments">
+        <h2>@Html.DisplayFor(m => m.Name)</h2>
+        <h3>Comments: (@Model.Comments.Count())</h3>
     </div>
-    <div>
-        <p>
-            @Html.DisplayFor(m=>m.Description)
-        </p>
+    <div class="animal-image">
+        <img src="~/res/images/animals/@Model.PictureName" alt="The Image of @Html.DisplayFor(m=>m.Name)" />
+
+        <div class="info">
+            <h2>Information</h2>
+            <ul>
+                <li><strong>@Html.DisplayNameFor(m => m.Name) </strong>@Html.DisplayFor(m => m.Name)</li>
+                <li><strong>@Html.DisplayNameFor(m => m.Age) </strong>@Html.DisplayFor(m => m.Age)</li>
+                <li><strong>@Html.DisplayNameFor(m => m.Category.Name) </strong>@Html.DisplayFor(m => m.Category.Name)</li>
+                <li><strong>@Html.DisplayNameFor(m => m.Description) </strong>@Html.DisplayFor(m => m.Description)</li>
+            </ul>
+        </div>
     </div>
+
 </div>
