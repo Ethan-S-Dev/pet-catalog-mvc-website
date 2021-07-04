@@ -20,7 +20,7 @@
                 <li><strong>@Html.DisplayNameFor(m => m.Name) </strong>@Html.DisplayFor(m => m.Name)</li>
                 <li><strong>@Html.DisplayNameFor(m => m.Age) </strong>@Html.DisplayFor(m => m.Age)</li>
                 <li><strong>@Html.DisplayNameFor(m => m.Category.Name) </strong>@Html.DisplayFor(m => m.Category.Name)</li>
-                <li class="desc-li" onclick="openDesc(@Model.AnimalId)"><strong>Description</strong></li>
+                <li class="desc-li" animal-id="@Model.AnimalId"><strong>Description</strong></li>
             </ul>
         </div>
     </div>
@@ -29,7 +29,7 @@
 <div id="desc-animal-@Model.AnimalId" class="animal-desc">
     <div class="animal-desc-header">
         <strong>Description</strong>
-        <button onclick="closeDesc(@Model.AnimalId)">
+        <button animal-id="@Model.AnimalId">
             <i class="fas fa-arrow-circle-right"></i>
         </button>
     </div>

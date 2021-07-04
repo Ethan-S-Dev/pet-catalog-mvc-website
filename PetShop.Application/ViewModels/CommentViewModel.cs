@@ -10,8 +10,10 @@ namespace PetShop.Application.ViewModels
     public class CommentViewModel
     {
         public int CommentId { get; set; }
+        [Required]
         public int AnimalId { get; set; }
-        public virtual AnimalViewModel Animal { get; set; }
+        [Required]
+        [MaxLength(200)]
         public string Value { get; set; }
     }
 }

@@ -1,15 +1,59 @@
-﻿@{
+﻿@model IEnumerable<PetShop.Application.ViewModels.CategoryViewModel>
+@{
     ViewBag.Title = "Pet Shop";
     ViewBag.AdminClss = "active";
+    ViewBag.EnableCommentDelete = true;
 }
+<script src="~/scripts/CategorySelect.js"></script>
+<script src="~/scripts/AnimalView.js"></script>
 
+<link href="~/styles/AdminPageStyle.css" rel="stylesheet" />
+<link href="~/styles/CatalogStyle.css" rel="stylesheet" />
 <div>
     <div>
         <h2>Animals</h2>
     </div>
     <div>
-        <a asp-action="NewAnimal"><i style="font-size:x-large" class="fa-plus-square" title="Add Animal"></i></a>
+        <a asp-action="NewAnimal"><i class="far fa-plus-square" title="Add Animal"></i></a>
     </div>
-    
+    <div>
+
+        
+        <div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            <select id="cata-select" asp-items="@(new SelectList(Model,"CategoryId","Name"))">
+                            </select>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cata in Model)
+                    {
+                        <tr class="cate-select-row" id="tr-id-@cata.CategoryId">
+                            <td>
+                                <div >
+                                    @foreach (var animal in cata.Animals)
+                                    {
+                                    <div class="anima-edit-box">
+                                        <partial name="AnimalView" model="animal" />
+                                        <div class="edit-box">
+                                            <button>Delete</button>
+                                            <button>Edit</button>
+                                        </div>
+                                    </div>
+                                    }
+                                            
+                                </div>
+                            </td>                          
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>  
 </div>
 

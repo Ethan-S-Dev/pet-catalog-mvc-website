@@ -1,0 +1,18 @@
+﻿i{
+    color:black;
+}
+
+.anima-edit-box{
+    display:flex;
+    flex-direction:row;
+}
+
+.edit-box{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.edit-box button{
+    margin:5px;
+}

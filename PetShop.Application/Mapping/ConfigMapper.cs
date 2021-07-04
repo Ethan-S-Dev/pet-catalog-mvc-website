@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using PetShop.Application.Mapping.Profiles;
+using PetShop.Application.ViewModels;
+using PetShop.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,10 @@ namespace PetShop.Application.Mapping
     {
         public static Action<IMapperConfigurationExpression> Configuration => cfg=>
         {
-            cfg.AddProfile<MapperProfile>();
+            cfg.CreateMap<Comment, CommentViewModel>();
+            cfg.CreateMap<Animal, AnimalViewModel>();
+            cfg.CreateMap<Category, CategoryViewModel>();
+            cfg.CreateMap<CommentViewModel, Comment>();
         };
         
     }

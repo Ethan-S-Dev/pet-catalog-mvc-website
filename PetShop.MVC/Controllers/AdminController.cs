@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PetShop.MVC.Controllers
-{
+{    
     public class AdminController : Controller
     {
         private readonly IWebHostEnvironment webHostEnvironment;
@@ -23,8 +23,9 @@ namespace PetShop.MVC.Controllers
             this.animalService = animalService;
         }
         public IActionResult Index()
-        {           
-            return View();
+        {
+            var model = categoryService.GetCategorys();
+            return View(model);
         }
 
         [Route("{controller}/create")]

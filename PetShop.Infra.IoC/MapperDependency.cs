@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PetShop.Application.Mapping;
-using PetShop.Application.Mapping.Profiles;
-using PetShop.Application.Mapping.Resolvers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
