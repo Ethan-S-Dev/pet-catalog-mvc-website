@@ -15,6 +15,7 @@
             <tr>
                 <td>
                     <select id="cata-select" asp-items="@(new SelectList(Model,"CategoryId","Name"))" >
+                        <option value="-1" selected>All</option>
                     </select>
                 </td>
             </tr>

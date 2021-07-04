@@ -1,0 +1,101 @@
+﻿@model PetShop.MVC.Models.AnimalEditModel
+@{
+    ViewBag.Title = "Pet Shop";
+    ViewBag.AdminClss = "active";
+    
+    
+}
+
+<script src="~/scripts/jquery/jquery.validate.min.js"></script>
+<script src="~/scripts/jquery/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/scripts/CategoryFormSelect.js"></script>
+<link href="~/styles/NewAnimalFormStyle.css" rel="stylesheet" />
+<div>
+    <div>
+        <h2>Edit Animal</h2>
+    </div>
+    <div>
+        <form enctype="multipart/form-data" method="post" asp-action="EditAnimal">
+            <table>
+                <tbody>
+                    <tr style="visibility:collapse">
+                        <td>
+                            <input asp-for="Animal.AnimalId" type="number" value="@Model.Animal.AnimalId" readonly />
+                            <input asp-for="Animal.PictureName" type="text" value="@Model.Animal.PictureName" readonly/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="Animal.Name"></label>
+                        </td>
+                        <td colspan="2">
+                            <input asp-for="Animal.Name" type="text" />
+                            <span asp-validation-for="Animal.Name"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="Animal.Age"></label>
+                        </td>
+                        <td colspan="2">
+                            <input asp-for="Animal.Age" type="number" />
+                            <span asp-validation-for="Animal.Age"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="Image"></label>
+                        </td>
+                        <td>
+                            <img src="~/res/images/animals/@Model.Animal.PictureName" width="100" height="100"/>
+                        </td>
+                        <td>
+                            <input asp-for="Image" type="file" /> 
+                            <span asp-validation-for="Image"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="Animal.Description"></label>
+                        </td>
+                        <td colspan="2">
+                            <textarea asp-for="Animal.Description"></textarea>
+                            <span asp-validation-for="Animal.Description"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="CategoryId"></label>
+                        </td>
+                        <td colspan="2">
+
+                            <select id="category-select" asp-for="CategoryId" type="text"
+                                    asp-items="@(new SelectList(Model.Categorys,"CategoryId","Name"))">
+                                <option value="0" selected disabled>- Select Category -</option>
+                                <option value="-1">- New Category -</option>
+                            </select>
+                            <span asp-validation-for="CategoryId"></span>
+                        </td>
+                    </tr>
+                    <tr id="category-name">
+                        <td>
+                            <label asp-for="CategoryName"></label>
+                        </td>
+                        <td colspan="2">
+                            <input id="category-name-filed" asp-for="CategoryName" type="text" />
+                            <span asp-validation-for="CategoryName"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            <input class="btn" type="submit" value="Save" />
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+
+</div>

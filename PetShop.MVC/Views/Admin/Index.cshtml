@@ -28,6 +28,7 @@
                     <tr>
                         <td>
                             <select id="cata-select" asp-items="@(new SelectList(Model,"CategoryId","Name"))">
+                                <option value="-1" selected>All</option>
                             </select>
                         </td>
                     </tr>
@@ -42,10 +43,10 @@
                                     {
                                     <div class="anima-edit-box">
                                         <partial name="AnimalView" model="animal" />
-                                        <div class="edit-box">
-                                            <button>Delete</button>
-                                            <button>Edit</button>
-                                        </div>
+                                            <form method="get" class="edit-box">
+                                                <button asp-action="DeleteAnimal" asp-route-id="@animal.AnimalId">Delete</button>
+                                                <button asp-action="EditAnimal" asp-route-id="@animal.AnimalId">Edit</button>
+                                            </form>                                                                              
                                     </div>
                                     }
                                             

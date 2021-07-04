@@ -40,17 +40,21 @@ namespace PetShop.Application.Services
 
         public bool AddAnimal(AnimalViewModel animal)
         {
-            var ani = new Animal()
-            {
-                Name = animal.Name,
-                Age = animal.Age,
-                CategoryId = animal.CategoryId,
-                Description = animal.Description,
-                PictureName = animal.PictureName
-            };
+            var ani = mapper.Map<Animal>(animal);
             animalRepository.AddAnimal(ani);
 
             return true;
+        }
+
+        public void DeleteAnimal(int animalId)
+        {
+            animalRepository.DeleteAnimal(animalId);
+        }
+
+        public void EditAnimal(AnimalViewModel animal)
+        {
+            var ani = mapper.Map<Animal>(animal);
+            animalRepository.EditAnimal(ani);
         }
 
         public AnimalViewModel GetAnimal(int animalId)

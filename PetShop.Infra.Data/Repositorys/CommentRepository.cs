@@ -16,9 +16,9 @@ namespace PetShop.Infra.Data.Repositorys
         {
             this.dbContext = dbContext;
         }
-        public void AddComment(Comment animal)
+        public void AddComment(Comment comment)
         {
-            dbContext.Comments.Add(animal);
+            dbContext.Comments.Add(comment);
             dbContext.SaveChanges();
         }
 
@@ -27,6 +27,18 @@ namespace PetShop.Infra.Data.Repositorys
             var toRemove = GetComment(commentId);
             if (toRemove is null) return null;
             dbContext.Comments.Remove(toRemove);
+            dbContext.SaveChanges();
+            return toRemove;
+        }
+
+        public IEnumerable<Comment> DeleteComments(int animalId)
+        {
+            var toRemove = GetAnimalComments(animalId);
+            if (toRemove.Count() == 0) return null;
+            foreach (var comm in toRemove)
+            {
+                dbContext.Comments.Remove(comm);
+            }
             dbContext.SaveChanges();
             return toRemove;
         }

@@ -15,5 +15,9 @@ namespace PetShop.Application.Interfaces
 
         bool AddAnimal(AnimalViewModel animal);
         bool AddAnimal(AnimalViewModel animal,out int id);
+
+        void EditAnimal(AnimalViewModel animal);
+
+        void DeleteAnimal(int animalId);
     }
 }

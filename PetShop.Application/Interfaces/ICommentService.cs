@@ -14,5 +14,7 @@ namespace PetShop.Application.Interfaces
         IEnumerable<CommentViewModel> GetComments(int animalId);
         void AddComment(CommentViewModel comment);
         void DeleteComment(int id);
+
+        void DeleteComments(int animalId);
     }
 }

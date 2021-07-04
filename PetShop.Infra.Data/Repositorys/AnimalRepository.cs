@@ -24,6 +24,29 @@ namespace PetShop.Infra.Data.Repositorys
             dbContext.SaveChanges();
         }
 
+        public Animal DeleteAnimal(int animalId)
+        {
+            var animal = GetAnimal(animalId);
+            if (animal is null) return null;
+            dbContext.Animals.Remove(animal);
+            dbContext.SaveChanges();
+            return animal;
+        }
+
+        public void EditAnimal(Animal animal)
+        {
+            var realAnimal = dbContext.Animals.Find(animal.AnimalId);
+            if (realAnimal is null) return;
+
+            realAnimal.Age = animal.Age;
+            realAnimal.CategoryId = animal.CategoryId;
+            realAnimal.Name = animal.Name;
+            realAnimal.Description = animal.Description;
+            realAnimal.PictureName = animal.PictureName;
+
+            dbContext.SaveChanges();
+        }
+
         public Animal GetAnimal(int animalId)
         {
             return dbContext.Animals.Find(animalId);

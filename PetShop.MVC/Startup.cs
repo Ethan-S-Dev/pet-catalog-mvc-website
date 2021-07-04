@@ -43,7 +43,12 @@ namespace PetShop.MVC
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default","{controller=home}/{action=index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
+            });
+
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Error...");
             });
         }
 

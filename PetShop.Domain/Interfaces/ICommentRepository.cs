@@ -10,7 +10,7 @@ namespace PetShop.Domain.Interfaces
     public interface ICommentRepository
     {
         // Create
-        public void AddComment(Comment animal);
+        public void AddComment(Comment comment);
 
         // Read
         public IEnumerable<Comment> GetAllComments();
@@ -19,5 +19,6 @@ namespace PetShop.Domain.Interfaces
         // Update
         // Delete
         public Comment DeleteComment(int commentId);
+        IEnumerable<Comment> DeleteComments(int animalId);
     }
 }

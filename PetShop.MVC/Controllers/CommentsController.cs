@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PetShop.MVC.Controllers
-{
+{    
     public class CommentsController : Controller
     {
         private readonly ICommentService commentService;
@@ -24,15 +24,17 @@ namespace PetShop.MVC.Controllers
             {
                 commentService.AddComment(comment);
             }
-            return RedirectToAction("index","home");
+            var url = Request.Headers["Referer"].ToString();
+            return Redirect(url);
         }
 
-        [HttpGet]
+        
         public IActionResult DeleteComment(int id)
         {
-            commentService.DeleteComment(id);
-            
-            return RedirectToAction("Index", "Admin");
+            var url = Request.Headers["Referer"].ToString();
+            if (id ==0) return Redirect(url);
+            commentService.DeleteComment(id);    
+            return Redirect(url);
         }
     }
 }

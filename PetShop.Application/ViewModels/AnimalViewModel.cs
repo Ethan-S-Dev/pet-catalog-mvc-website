@@ -28,7 +28,7 @@ namespace PetShop.Application.ViewModels
         [DataType(DataType.MultilineText)]
         [Display(Name="Description: ")]
         [Required(ErrorMessage = "Please enter a description for the animal.")]
-        [MaxLength(500, ErrorMessage = "Description can't be longer then 500 characters.")]
+        [MaxLength(3000, ErrorMessage = "Description can't be longer then 3000 characters.")]
         public string Description { get; set; }
 
         public CategoryViewModel Category { get; set; }

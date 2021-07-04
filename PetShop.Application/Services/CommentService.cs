@@ -31,7 +31,12 @@ namespace PetShop.Application.Services
         {
             commentRepository.DeleteComment(id);
         }
-    
+
+        public void DeleteComments(int animalId)
+        {
+            commentRepository.DeleteComments(animalId);
+        }
+
         public IEnumerable<CommentViewModel> GetCommensts()
         {
             var comments = commentRepository.GetAllComments();

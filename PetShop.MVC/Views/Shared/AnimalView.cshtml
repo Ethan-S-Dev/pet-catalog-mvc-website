@@ -2,7 +2,7 @@
 
 <div class="animal-container">
     <div class="animal-details">
-        <h2>@Html.DisplayFor(m => m.Name)</h2>
+        <h1>@Html.DisplayFor(m => m.Name)</h1>
         <div class="comment-continer">
             @if (ViewBag.EnableCommentDelete)
             {
@@ -18,9 +18,13 @@
                     <partial name="CommentView" model="comment" />
                 }
             }
+            @if (Model.Comments.Count() == 0)
+            {
+                <div class="no-comment-div"><p>No Comments.</p></div>
+            }
         </div>
         <div class="comments-control">
-            <button class="comments-btn">
+            <button animal-id="@Model.AnimalId" class="comments-btn">
                 <span class="coments-count">@Model.Comments.Count()</span>
                 <span class="coments-text">Comments</span>
             </button>
@@ -45,7 +49,7 @@
 <div id="desc-animal-@Model.AnimalId" class="animal-desc">
     <div class="animal-desc-header">
         <strong>Description</strong>
-        <button animal-id="@Model.AnimalId">
+        <button animal-id="@Model.AnimalId" >
             <i class="fas fa-arrow-circle-right"></i>
         </button>
     </div>
@@ -53,5 +57,15 @@
         <p>
             @Model.Description
         </p>
+    </div>
+</div>
+<div id="comment-animal-@Model.AnimalId" class="animal-comment">
+    <div class="animal-comment-header">       
+        <button animal-id="@Model.AnimalId">
+            <i class="fas fa-arrow-circle-right"></i>
+        </button>
+    </div>
+    <div class="comment-para">
+        <partial name="CommentCreate" model="@(new PetShop.Application.ViewModels.CommentViewModel() {AnimalId = Model.AnimalId})"/>
     </div>
 </div>

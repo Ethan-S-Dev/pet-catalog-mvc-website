@@ -13,6 +13,7 @@ namespace PetShop.Application.ViewModels
         [Required]
         public int AnimalId { get; set; }
         [Required]
+        [DataType(DataType.MultilineText)]
         [MaxLength(200)]
         public string Value { get; set; }
     }

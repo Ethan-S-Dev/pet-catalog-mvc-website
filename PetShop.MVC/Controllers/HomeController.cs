@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PetShop.MVC.Controllers
-{
+{   
     public class HomeController : Controller
     {
         private readonly IAnimalService animalService;

@@ -1,7 +1,32 @@
 ﻿@model PetShop.Application.ViewModels.CommentViewModel
 
-<div>
-    <form asp-controller="Comments" asp-action="Post">
-        
+<div style="height:100%">
+    <form asp-controller="Comments" asp-action="AddComment" enctype="multipart/form-data" method="post">
+        <table>
+            <thead>
+                <tr>
+                    <td>
+                        <strong>Add Comment:</strong>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <textarea type="text" asp-for="Value"></textarea>
+                    </td>
+                    <td style="visibility:collapse">
+                        <input type="number" asp-for="AnimalId" value="@Model.AnimalId" readonly="readonly" style="visibility:collapse" />
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <input type="submit" value="Add" />
+                    </td>
+                </tr>
+            </tfoot>                   
+        </table>
     </form>
 </div>

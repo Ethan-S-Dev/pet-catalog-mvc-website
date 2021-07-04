@@ -16,7 +16,10 @@ namespace PetShop.Domain.Interfaces
         public IEnumerable<Animal> GetAnimals();
         public Animal GetAnimal(int animalId);
         public IEnumerable<Animal> GetBestAnimals();
+
         // Update
+        void EditAnimal(Animal animal);
         // Delete
+        Animal DeleteAnimal(int animalId);
     }
 }

@@ -15,6 +15,7 @@ namespace PetShop.Application.Mapping
         {
             cfg.CreateMap<Comment, CommentViewModel>();
             cfg.CreateMap<Animal, AnimalViewModel>();
+            cfg.CreateMap<AnimalViewModel, Animal>();
             cfg.CreateMap<Category, CategoryViewModel>();
             cfg.CreateMap<CommentViewModel, Comment>();
         };

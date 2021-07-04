@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PetShop.MVC.Controllers
-{
+{    
     public class CatalogController : Controller
     {
         private ICategoryService categoryService;
@@ -19,9 +19,9 @@ namespace PetShop.MVC.Controllers
             var model = categoryService.GetCategorys();
             return View(model);
         }
-        public IActionResult Animal(int? id)
+        public IActionResult Animal(int id)
         {
-            if (id is null) return RedirectToAction("index");
+            if (id == 0) return RedirectToAction("index");
 
             return View();
         }
