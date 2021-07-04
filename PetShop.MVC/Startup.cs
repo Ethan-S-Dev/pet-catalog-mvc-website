@@ -43,7 +43,7 @@ namespace PetShop.MVC
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default","{controller=home}/{action=index}");
+                endpoints.MapControllerRoute("default","{controller=home}/{action=index}/{id?}");
             });
         }
 

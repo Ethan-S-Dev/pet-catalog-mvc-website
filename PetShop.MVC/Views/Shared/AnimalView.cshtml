@@ -3,6 +3,22 @@
 <div class="animal-container">
     <div class="animal-details">
         <h2>@Html.DisplayFor(m => m.Name)</h2>
+        <div class="comment-continer">
+            @if (ViewBag.EnableCommentDelete)
+            {
+                @foreach (var comment in Model.Comments)
+                {
+                    <partial name="CommentDelete" model="comment" />
+                }
+            }
+            else
+            {
+                @foreach (var comment in Model.Comments)
+                {
+                    <partial name="CommentView" model="comment" />
+                }
+            }
+        </div>
         <div class="comments-control">
             <button class="comments-btn">
                 <span class="coments-count">@Model.Comments.Count()</span>

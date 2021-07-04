@@ -1,12 +1,9 @@
 ﻿@model PetShop.Application.ViewModels.CommentViewModel
 
-<div>
-    <form enctype="multipart/form-data" method="post" asp-controller="Comments" asp-action="DeleteComment">
-        <div style="display:flex">
-            <p>@Html.DisplayFor(c => c.Value)</p>
-            <button type="submit">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-        </div>
-    </form>
+
+<div class="comment-box">
+    <p>@Html.DisplayFor(c => c.Value)</p>
+    <a asp-controller="Comments" asp-action="DeleteComment" asp-route-id="@Model.CommentId">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+    </a>
 </div>

@@ -27,14 +27,11 @@ namespace PetShop.MVC.Controllers
             return RedirectToAction("index","home");
         }
 
-        [HttpPost]
-        public IActionResult DeleteComment(CommentViewModel comment)
+        [HttpGet]
+        public IActionResult DeleteComment(int id)
         {
-            if (ModelState.IsValid)
-            {
-                commentService.DeleteComment(comment.CommentId);
-            }
-
+            commentService.DeleteComment(id);
+            
             return RedirectToAction("Index", "Admin");
         }
     }
