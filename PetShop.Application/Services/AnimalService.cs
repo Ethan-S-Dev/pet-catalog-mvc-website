@@ -1,38 +1,29 @@
 ﻿using AutoMapper;
-using PetShop.Application.Interfaces;
-using PetShop.Application.ViewModels;
-using PetShop.Domain.Interfaces;
-using PetShop.Domain.Models;
+using PetCatalog.Application.Interfaces;
+using PetCatalog.Application.ViewModels;
+using PetCatalog.Domain.Interfaces;
+using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Application.Services
+namespace PetCatalog.Application.Services
 {
     public class AnimalService : IAnimalService
     {
         private readonly IAnimalRepository animalRepository;
-        private readonly ICategoryService categoryService;
         private readonly IMapper mapper;
-        public AnimalService(IAnimalRepository animalRepository, ICategoryService categoryService,IMapper mapper)
+        public AnimalService(IAnimalRepository animalRepository,IMapper mapper)
         {
             this.mapper = mapper;
             this.animalRepository = animalRepository;
-            this.categoryService = categoryService;
         }        
 
         public bool AddAnimal(AnimalViewModel animal, out int id)
         {
-            var ani = new Animal()
-            {
-                Name = animal.Name,
-                Age = animal.Age,
-                CategoryId = animal.CategoryId,
-                Description = animal.Description,
-                PictureName = animal.PictureName
-            };
+            var ani = mapper.Map<Animal>(animal);
             animalRepository.AddAnimal(ani);
             id = ani.AnimalId;
             return true;
@@ -42,13 +33,12 @@ namespace PetShop.Application.Services
         {
             var ani = mapper.Map<Animal>(animal);
             animalRepository.AddAnimal(ani);
-
             return true;
         }
 
         public void DeleteAnimal(int animalId)
         {
-            animalRepository.DeleteAnimal(animalId);
+            animalRepository.DeleteAnimal(animalId);           
         }
 
         public void EditAnimal(AnimalViewModel animal)

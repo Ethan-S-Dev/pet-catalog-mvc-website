@@ -1,24 +1,29 @@
 ﻿using AutoMapper;
-using PetShop.Application.ViewModels;
-using PetShop.Domain.Models;
+using PetCatalog.Application.ViewModels;
+using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Application.Mapping
+namespace PetCatalog.Application.Mapping
 {
-    public class ConfigMapper
+    public static class ConfigMapper
     {
-        public static Action<IMapperConfigurationExpression> Configuration => cfg=>
+        public static IMapperConfigurationExpression Configuration(this IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<Comment, CommentViewModel>();
+            cfg.CreateMap<CommentViewModel, Comment>();
+
             cfg.CreateMap<Animal, AnimalViewModel>();
             cfg.CreateMap<AnimalViewModel, Animal>();
+
             cfg.CreateMap<Category, CategoryViewModel>();
-            cfg.CreateMap<CommentViewModel, Comment>();
-        };
+            cfg.CreateMap<CategoryViewModel, Category>();
+
+            return cfg;
+        }
         
     }
 }

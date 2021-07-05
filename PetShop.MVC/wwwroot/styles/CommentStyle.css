@@ -27,3 +27,14 @@
 .comment-box p{
     margin:0;
 }
+
+.comment-para{
+    display:flex;
+    justify-content:center;
+    height:100%;
+}
+
+.comment-table-div{
+    width:95%;
+    height:95%;
+}

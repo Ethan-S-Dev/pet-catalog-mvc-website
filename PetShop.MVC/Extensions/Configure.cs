@@ -1,15 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PetShop.Infra.Data.Context;
-using PetShop.Infra.IoC;
+using PetCatalog.Application.Interfaces;
+using PetCatalog.Application.Services;
+using PetCatalog.Infra.Data.Context;
+using PetCatalog.Infra.IoC;
+using PetCatalog.MVC.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.MVC.Extensions
+namespace PetCatalog.MVC.Extensions
 {
     public static class Configure
     {
@@ -36,7 +40,7 @@ namespace PetShop.MVC.Extensions
 
         public static void ConfigureForSqlServer(this IServiceCollection services, string connectionString, bool useLazyLoading)
         {
-            services.AddDbContext<PetShopDbContext>(options =>
+            services.AddDbContext<PetCatalogDbContext>(options =>
                 {
                     if (useLazyLoading)
                         options.UseLazyLoadingProxies();
@@ -46,7 +50,7 @@ namespace PetShop.MVC.Extensions
 
         public static void ConfigureForSqlite(this IServiceCollection services, string connectionString, bool useLazyLoading)
         {
-            services.AddDbContext<PetShopDbContext>(options =>
+            services.AddDbContext<PetCatalogDbContext>(options =>
                 {
                     if (useLazyLoading)
                         options.UseLazyLoadingProxies();
@@ -67,9 +71,15 @@ namespace PetShop.MVC.Extensions
 
         public static bool UseSqlite(this IConfiguration configuration) => configuration.GetValue<bool>("UseSqlite");
 
-        public static void RegisterServices(this IServiceCollection services) => DependencyContainer.RegisterServices(services);
+        public static void RegisterServices(this IServiceCollection services,string imagesSaveDir) => DependencyContainer.RegisterServices(services, imagesSaveDir);
 
-        public static void RegisterMapping(this IServiceCollection services) => MapperDependency.RegisterServices(services);
-      
+        //Most be called after RegisterServices!!
+        public static void RegisterAutoMapper(this IServiceCollection services)
+        {
+            IMapperConfigurationExpression exs;
+            services.RegisterModelMaps(out exs);
+            exs.RegisterFormMaps(services.GetScopedService<ICategoryService>());
+        }
+
     }
 }

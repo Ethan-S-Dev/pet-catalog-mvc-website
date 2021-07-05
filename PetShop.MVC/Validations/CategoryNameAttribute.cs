@@ -1,5 +1,5 @@
-﻿using PetShop.Application.Interfaces;
-using PetShop.Domain.Models;
+﻿using PetCatalog.Application.Interfaces;
+using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.MVC.Validations
+namespace PetCatalog.MVC.Validations
 {
     public class CategoryNameAttribute : ValidationAttribute
     {

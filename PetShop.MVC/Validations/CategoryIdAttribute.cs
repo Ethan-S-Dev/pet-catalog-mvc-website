@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.MVC.Validations
+namespace PetCatalog.MVC.Validations
 {
     public class CategoryIdAttribute : ValidationAttribute
     {

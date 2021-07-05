@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Domain.Models
+namespace PetCatalog.Domain.Models
 {
     public class Comment
     {

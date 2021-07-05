@@ -2,3 +2,58 @@
     visibility: collapse;
 }
 
+
+.animal-form-continer {
+    font-size: 1.1em;
+    box-shadow: 0 15px 30px 1px grey;
+    background: rgba(255, 255, 255, 0.90);
+    text-align:left;
+    border-radius: 5px;
+    margin: 2em;
+    padding: 2px 1em;
+}
+
+
+.custom-file-input{
+    display:none;
+    visibility: hidden;
+}
+
+.custom-file-label {
+    font-size: 0.9em;
+    background-color: #1c0f13;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    text-align:center;
+    font-weight:lighter;
+    padding: 3px 6px;
+    border: none;
+    text-decoration: none;
+    margin:2px 4px;
+}
+
+    .custom-file-label:hover {
+        background-color: #B7CECE;
+        transform: scale(0.95);
+    }
+
+    .custom-file-label:active {
+        position: relative;
+        top: 1px;
+    }
+
+.image-box{
+    display:flex;
+    flex-direction:column;
+}
+
+.selected-image {
+    width: 100px;
+    height: 100px;
+    border: 2px solid #1C0F13;
+    border-radius: 3px;
+    background-color: #E2E2E2;
+}
+

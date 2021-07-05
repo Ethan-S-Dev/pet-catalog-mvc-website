@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Application.ViewModels
+namespace PetCatalog.Application.ViewModels
 {
     public class CommentViewModel
     {

@@ -1,20 +1,24 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using PetShop.Application.Mapping;
+﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
+using PetCatalog.Application.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Infra.IoC
+namespace PetCatalog.Infra.IoC
 {
-    public class MapperDependency
+    public static class MapperDependency
     {
-        public static void RegisterServices(IServiceCollection services)
+        public static IServiceCollection RegisterModelMaps(this IServiceCollection services,out IMapperConfigurationExpression configurationExpression)
         {
             // PetShop.Application
-            // Auto Mapper           
-            services.AddAutoMapper(ConfigMapper.Configuration);
+            // Auto Mapper                  
+            IMapperConfigurationExpression ce = default;
+            services.AddAutoMapper(cfg => { cfg.Configuration(); ce = cfg;  });
+            configurationExpression = ce;
+            return services;
         }
 
 

@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using PetShop.Application.Interfaces;
-using PetShop.Application.ViewModels;
-using PetShop.Domain.Interfaces;
-using PetShop.Domain.Models;
+using PetCatalog.Application.Interfaces;
+using PetCatalog.Application.ViewModels;
+using PetCatalog.Domain.Interfaces;
+using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Application.Services
+namespace PetCatalog.Application.Services
 {
     public class CategoryService : ICategoryService
     {

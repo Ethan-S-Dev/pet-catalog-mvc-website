@@ -1,4 +1,4 @@
-﻿@model PetShop.Application.ViewModels.AnimalViewModel
+﻿@model PetCatalog.Application.ViewModels.AnimalViewModel
 
 <div class="animal-container">
     <div class="animal-details">
@@ -49,7 +49,7 @@
 <div id="desc-animal-@Model.AnimalId" class="animal-desc">
     <div class="animal-desc-header">
         <strong>Description</strong>
-        <button animal-id="@Model.AnimalId" >
+        <button class="back-btn" animal-id="@Model.AnimalId" >
             <i class="fas fa-arrow-circle-right"></i>
         </button>
     </div>
@@ -61,11 +61,11 @@
 </div>
 <div id="comment-animal-@Model.AnimalId" class="animal-comment">
     <div class="animal-comment-header">       
-        <button animal-id="@Model.AnimalId">
+        <button class="back-btn" animal-id="@Model.AnimalId">
             <i class="fas fa-arrow-circle-right"></i>
         </button>
     </div>
     <div class="comment-para">
-        <partial name="CommentCreate" model="@(new PetShop.Application.ViewModels.CommentViewModel() {AnimalId = Model.AnimalId})"/>
+        <partial name="CommentCreate" model="@(new PetCatalog.Application.ViewModels.CommentViewModel() {AnimalId = Model.AnimalId})"/>
     </div>
 </div>

@@ -1,4 +1,4 @@
-﻿using PetShop.Domain.Models;
+﻿using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Application.ViewModels
+namespace PetCatalog.Application.ViewModels
 {
     public class CategoryViewModel
     {

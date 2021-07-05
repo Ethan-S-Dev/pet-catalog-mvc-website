@@ -1,34 +1,10 @@
-﻿/*.animal-box {
-    margin:10px;
-    background-color: #cedede;
-    padding: 5px;
-    border: 1px solid #BBBAC6;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 70vw;
-    height:35vw;
-    max-width:600px;
-    max-height:300px;
-}
-
-.animal-image{
-    width:40%;
-    height:40%;
-}
-
-.animal-header{
-    display:flex;
-    flex-direction:row;
-    justify-content:space-evenly;
-}*/
-
-.animal-container {
+﻿.animal-container {
     box-shadow: 0 15px 30px 1px grey;
     background: rgba(255, 255, 255, 0.90);
     text-align: center;
     border-radius: 5px;
     overflow:hidden;
-    margin: 5em auto;
+    margin:0 0 4em 0;
     height: 35vw;
     width: 70vw;
     max-height: 350px;
@@ -46,30 +22,14 @@
 }
 
 .animal-container .animal-details h1 {
-    font-family: 'Bebas Neue', cursive;
+    /*font-family: 'Bebas Neue', cursive;*/
     display: inline-block;
     position: relative;
     font-size: 1.5em;
     color: #344055;
     margin: 0;
 }
-
-    .animal-container .animal-details h1:before {
-        position: absolute;
-        content: '';
-        right: 0%;
-        top: 0%;
-        transform: translate(25px, -15px);
-        font-family: 'Bree Serif', serif;
-        display: inline-block;
-        background: #ffe6e6;
-        border-radius: 5px;
-        font-size: 1.4em;
-        padding: 5px;
-        color: white;
-        margin: 0;
-        animation: chan-sh 6s ease infinite;
-    }
+  
 
 .comments-control {
     position: absolute;
@@ -138,7 +98,7 @@
     position: absolute;
     line-height: 1.8;
     text-align: left;
-    font-size: 105%;
+    font-size: 1.01em;
     cursor: no-drop;
     color: #FFF;
     height: 100%;
@@ -219,31 +179,31 @@
         padding: 10px;
     }
 
-.animal-desc button {
+.animal-desc .back-btn {
     float: right;
     padding: 1px 3px;
     border: none;
-    font-size: 28px;
+    font-size: 1.5em;
     background-color: transparent;
     color: #6E7E85;
 }
 
-.animal-comment button {
-    margin: 10px 0px 5px 10px;
+.animal-comment .back-btn {
+    margin: 0;
     float: right;
     padding: 1px 3px;
     border: none;
-    font-size: 28px;
+    font-size: 1.5em;
     background-color: transparent;
     color: #6E7E85;
 }
 
-        .animal-desc button:hover {
-            color: #B7CECE;
-            cursor: pointer;
-        }
+.animal-desc .back-btn:hover {
+    color: #B7CECE;
+    cursor: pointer;
+}
 
-.animal-comment button:hover {
+.animal-comment .back-btn:hover {
     color: #B7CECE;
     cursor: pointer;
 }

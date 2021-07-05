@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PetShop.Infra.Data.Context;
-using PetShop.MVC.Extensions;
+using PetCatalog.Infra.Data.Context;
+using PetCatalog.MVC.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PetShop.MVC
+namespace PetCatalog.MVC
 {
     public class Startup
     {
@@ -34,7 +34,7 @@ namespace PetShop.MVC
             services.RegisterServices();
         }
        
-        public void Configure(IApplicationBuilder app, PetShopDbContext ctx)
+        public void Configure(IApplicationBuilder app, PetCatalogDbContext ctx)
         {
             ctx.Database.EnsureCreated();
 
@@ -46,9 +46,9 @@ namespace PetShop.MVC
                 endpoints.MapDefaultControllerRoute();
             });
 
-            app.Run(async context =>
+            app.Run(async c =>
             {
-                await context.Response.WriteAsync("Error...");
+                 c.Response.Redirect("/");
             });
         }
 

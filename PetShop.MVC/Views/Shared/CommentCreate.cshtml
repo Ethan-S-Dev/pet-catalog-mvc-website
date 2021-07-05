@@ -1,20 +1,24 @@
-﻿@model PetShop.Application.ViewModels.CommentViewModel
+﻿@model PetCatalog.Application.ViewModels.CommentViewModel
 
-<div style="height:100%">
-    <form asp-controller="Comments" asp-action="AddComment" enctype="multipart/form-data" method="post">
-        <table>
+<div class="comment-table-div">
+    <form asp-controller="Comments" asp-action="AddComment" enctype="multipart/form-data" method="post" style="height:100%">
+
+        <table width="100%" height="100%">
             <thead>
                 <tr>
                     <td>
-                        <strong>Add Comment:</strong>
+                        <label asp-for="Value"><strong>Add Comment:</strong></label>
                     </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>
-                        <textarea type="text" asp-for="Value"></textarea>
+                    <td height="80%">
+                        <textarea type="text" asp-for="Value" style="width:100%;height:100%;resize:none"></textarea>
                     </td>
+                    
+                </tr>
+                <tr style="visibility:collapse">
                     <td style="visibility:collapse">
                         <input type="number" asp-for="AnimalId" value="@Model.AnimalId" readonly="readonly" style="visibility:collapse" />
                     </td>
@@ -23,7 +27,7 @@
             <tfoot>
                 <tr>
                     <td>
-                        <input type="submit" value="Add" />
+                        <button type="submit" style="margin:5px 0px 2px 0px" class="btn">Add</button>
                     </td>
                 </tr>
             </tfoot>                   

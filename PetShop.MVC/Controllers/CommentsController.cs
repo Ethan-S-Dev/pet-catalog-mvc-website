@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PetShop.Application.Interfaces;
-using PetShop.Application.ViewModels;
+using PetCatalog.Application.Interfaces;
+using PetCatalog.Application.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PetShop.MVC.Controllers
+namespace PetCatalog.MVC.Controllers
 {    
     public class CommentsController : Controller
     {

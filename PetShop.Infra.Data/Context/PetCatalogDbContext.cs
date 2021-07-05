@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PetShop.Domain.Models;
+using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Infra.Data.Context
+namespace PetCatalog.Infra.Data.Context
 {
-    public class PetShopDbContext : DbContext
+    public class PetCatalogDbContext : DbContext
     {
-        public PetShopDbContext(DbContextOptions<PetShopDbContext> options) : base(options)
+        public PetCatalogDbContext(DbContextOptions<PetCatalogDbContext> options) : base(options)
         {
 
         }

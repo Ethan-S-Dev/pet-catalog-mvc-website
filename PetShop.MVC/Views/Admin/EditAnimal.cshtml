@@ -1,18 +1,21 @@
-﻿@model PetShop.MVC.Models.AnimalEditModel
+﻿@model PetCatalog.MVC.Models.AnimalEditModel
 @{
     ViewBag.Title = "Pet Shop";
     ViewBag.AdminClss = "active";
-    
-    
+
+
 }
 
 <script src="~/scripts/jquery/jquery.validate.min.js"></script>
 <script src="~/scripts/jquery/jquery.validate.unobtrusive.min.js"></script>
 <script src="~/scripts/CategoryFormSelect.js"></script>
+<script src="~/scripts/ImageFormSelect.js"></script>
+
 <link href="~/styles/NewAnimalFormStyle.css" rel="stylesheet" />
-<div>
+
+<div class="animal-form-continer">
     <div>
-        <h2>Edit Animal</h2>
+        <h2>Edit Animal</h2>       
     </div>
     <div>
         <form enctype="multipart/form-data" method="post" asp-action="EditAnimal">
@@ -21,7 +24,7 @@
                     <tr style="visibility:collapse">
                         <td>
                             <input asp-for="Animal.AnimalId" type="number" value="@Model.Animal.AnimalId" readonly />
-                            <input asp-for="Animal.PictureName" type="text" value="@Model.Animal.PictureName" readonly/>
+                            <input asp-for="Animal.PictureName" type="text" value="@Model.Animal.PictureName" readonly />
                         </td>
                     </tr>
                     <tr>
@@ -30,7 +33,11 @@
                         </td>
                         <td colspan="2">
                             <input asp-for="Animal.Name" type="text" />
-                            <span asp-validation-for="Animal.Name"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="error" asp-validation-for="Animal.Name"></span>
                         </td>
                     </tr>
                     <tr>
@@ -39,19 +46,29 @@
                         </td>
                         <td colspan="2">
                             <input asp-for="Animal.Age" type="number" />
-                            <span asp-validation-for="Animal.Age"></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="error" asp-validation-for="Animal.Age"></span>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label asp-for="Image"></label>
+                            <label asp-for="Image" ></label>
                         </td>
                         <td>
-                            <img src="~/res/images/animals/@Model.Animal.PictureName" width="100" height="100"/>
+                            <div class="image-box">
+                                <img class="selected-image" src="~/res/images/animals/@Model.Animal.PictureName" />
+                                <label asp-for="Image" class="custom-file-label">Choose an image...</label>
+                                <input asp-for="Image" type="file" class="custom-file-input" accept="image/gif, image/jpeg, image/png , image/jpg , image/webp" />
+                            </div>
                         </td>
-                        <td>
-                            <input asp-for="Image" type="file" /> 
-                            <span asp-validation-for="Image"></span>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="error" asp-validation-for="Image"></span>
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +77,12 @@
                         </td>
                         <td colspan="2">
                             <textarea asp-for="Animal.Description"></textarea>
-                            <span asp-validation-for="Animal.Description"></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="error" asp-validation-for="Animal.Description"></span>
                         </td>
                     </tr>
                     <tr>
@@ -74,7 +96,12 @@
                                 <option value="0" selected disabled>- Select Category -</option>
                                 <option value="-1">- New Category -</option>
                             </select>
-                            <span asp-validation-for="CategoryId"></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="error" asp-validation-for="CategoryId"></span>
                         </td>
                     </tr>
                     <tr id="category-name">
@@ -83,14 +110,19 @@
                         </td>
                         <td colspan="2">
                             <input id="category-name-filed" asp-for="CategoryName" type="text" />
-                            <span asp-validation-for="CategoryName"></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="error" asp-validation-for="CategoryName"></span>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td>
-                            <input class="btn" type="submit" value="Save" />
+                            <button class="btn" type="submit">Save</button>
                         </td>
                     </tr>
                 </tfoot>

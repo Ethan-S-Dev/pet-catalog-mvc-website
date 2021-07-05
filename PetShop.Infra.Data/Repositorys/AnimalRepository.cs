@@ -1,19 +1,19 @@
-﻿using PetShop.Domain.Interfaces;
-using PetShop.Domain.Models;
-using PetShop.Infra.Data.Context;
+﻿using PetCatalog.Domain.Interfaces;
+using PetCatalog.Domain.Models;
+using PetCatalog.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Infra.Data.Repositorys
+namespace PetCatalog.Infra.Data.Repositorys
 {
     public class AnimalRepository : IAnimalRepository
     {
-        private readonly PetShopDbContext dbContext;
+        private readonly PetCatalogDbContext dbContext;
 
-        public AnimalRepository(PetShopDbContext dbContext)
+        public AnimalRepository(PetCatalogDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

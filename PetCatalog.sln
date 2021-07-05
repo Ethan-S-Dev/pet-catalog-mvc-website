@@ -5,25 +5,25 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{28383733-B27F-4DB1-AB68-A4BDC5BE5B76}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetShop.UI.MVC", "PetShop.UI.MVC", "{38D6620A-89F6-493D-A835-69CE98EA026C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetCatalog.UI.MVC", "PetCatalog.UI.MVC", "{38D6620A-89F6-493D-A835-69CE98EA026C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.MVC", "PetShop.MVC\PetShop.MVC.csproj", "{F5222466-707A-4B0D-9527-C7A07EA4DBE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetCatalog.MVC", "PetShop.MVC\PetCatalog.MVC.csproj", "{F5222466-707A-4B0D-9527-C7A07EA4DBE9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetShop.Domain", "PetShop.Domain", "{C57B1AE3-7FDC-4ED9-986C-64B80C044C23}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetCatalog.Domain", "PetCatalog.Domain", "{C57B1AE3-7FDC-4ED9-986C-64B80C044C23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Domain", "PetShop.Domain\PetShop.Domain.csproj", "{150F40B8-0FDE-4277-B075-27415B406A59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetCatalog.Domain", "PetShop.Domain\PetCatalog.Domain.csproj", "{150F40B8-0FDE-4277-B075-27415B406A59}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetShop.Infrastructure", "PetShop.Infrastructure", "{09FEA139-D547-4173-926F-17B33AF6BA13}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetCatalog.Infrastructure", "PetCatalog.Infrastructure", "{09FEA139-D547-4173-926F-17B33AF6BA13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Infra.Data", "PetShop.Infra.Data\PetShop.Infra.Data.csproj", "{D3C750F3-549E-4351-B228-92B7514FF9F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetCatalog.Infra.Data", "PetShop.Infra.Data\PetCatalog.Infra.Data.csproj", "{D3C750F3-549E-4351-B228-92B7514FF9F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{BC47D2DD-E1FF-4A72-B7E1-33B48627F0EA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetShop.Application", "PetShop.Application", "{970D093D-C51E-419D-A49B-181F7E2EA747}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetCatalog.Application", "PetCatalog.Application", "{970D093D-C51E-419D-A49B-181F7E2EA747}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Application", "PetShop.Application\PetShop.Application.csproj", "{C156A99D-9DC5-479D-9517-5440130C03B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetCatalog.Application", "PetShop.Application\PetCatalog.Application.csproj", "{C156A99D-9DC5-479D-9517-5440130C03B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Infra.IoC", "PetShop.Infra.IoC\PetShop.Infra.IoC.csproj", "{1D9D2B67-94C8-43BA-BC63-7A7FF8FE8DE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetCatalog.Infra.IoC", "PetShop.Infra.IoC\PetCatalog.Infra.IoC.csproj", "{1D9D2B67-94C8-43BA-BC63-7A7FF8FE8DE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,12 +1,13 @@
-﻿using PetShop.Domain.Models;
+﻿using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShop.Application.ViewModels
+namespace PetCatalog.Application.ViewModels
 {
     public class AnimalViewModel
     {
@@ -14,7 +15,7 @@ namespace PetShop.Application.ViewModels
 
         public int CategoryId { get; set; }
 
-        public string PictureName { get; set; }    
+        public string PictureName { get; set; }         
 
         [Required(ErrorMessage = "Please enter a name.")]
         [Display(Name = "Animal Name: ")]

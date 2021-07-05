@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PetShop.Application.ViewModels.CategoryViewModel>
+﻿@model IEnumerable<PetCatalog.Application.ViewModels.CategoryViewModel>
 @{
     ViewBag.Title = "Pet Shop";
     ViewBag.AdminClss = "active";
@@ -7,29 +7,27 @@
 <script src="~/scripts/CategorySelect.js"></script>
 <script src="~/scripts/AnimalView.js"></script>
 
-<link href="~/styles/AdminPageStyle.css" rel="stylesheet" />
-<link href="~/styles/CatalogStyle.css" rel="stylesheet" />
-
 
 <div>
     <div>
         <h2>Animals</h2>
     </div>
-    <div>
-        <a asp-action="NewAnimal"><i class="far fa-plus-square" title="Add Animal"></i></a>
-    </div>
+
     <div>
 
-        
+
         <div>
 
             <table>
                 <thead>
                     <tr>
                         <td>
-                            <select id="cata-select" asp-items="@(new SelectList(Model,"CategoryId","Name"))">
-                                <option value="-1" selected>All</option>
-                            </select>
+                            <div class="admin-table-header">
+                                <select id="cata-select" asp-items="@(new SelectList(Model,"CategoryId","Name"))">
+                                    <option value="-1" selected>All</option>
+                                </select>
+                                <a asp-action="NewAnimal"><i class="far fa-plus-square" title="Add Animal"></i></a>
+                            </div>
                         </td>
                     </tr>
                 </thead>
@@ -38,25 +36,25 @@
                     {
                         <tr class="cate-select-row" id="tr-id-@cata.CategoryId">
                             <td>
-                                <div >
+                                <div>
                                     @foreach (var animal in cata.Animals)
                                     {
                                     <div class="anima-edit-box">
+                                        <form method="get" class="edit-box">
+                                            <button asp-action="DeleteAnimal" asp-route-id="@animal.AnimalId" class="btn">Delete</button>
+                                            <button asp-action="EditAnimal" asp-route-id="@animal.AnimalId" class="btn">Edit</button>
+                                        </form>
                                         <partial name="AnimalView" model="animal" />
-                                            <form method="get" class="edit-box">
-                                                <button asp-action="DeleteAnimal" asp-route-id="@animal.AnimalId">Delete</button>
-                                                <button asp-action="EditAnimal" asp-route-id="@animal.AnimalId">Edit</button>
-                                            </form>                                                                              
                                     </div>
                                     }
-                                            
+
                                 </div>
-                            </td>                          
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-    </div>  
+    </div>
 </div>
 
