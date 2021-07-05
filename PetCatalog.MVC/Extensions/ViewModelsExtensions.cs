@@ -34,6 +34,7 @@ namespace PetCatalog.MVC.Extensions
                 var newFileName = $"{Guid.NewGuid()}{exten}";
                 imgStream = new MemoryStream();
                 animalForm.Image.CopyTo(imgStream);
+                imgStream.Position = 0;
                 animalVm.PictureName = newFileName;
             }
             return imgStream;
@@ -61,9 +62,11 @@ namespace PetCatalog.MVC.Extensions
                 var newFileName = $"{Guid.NewGuid()}{exten}";
                 using var imgStream = new MemoryStream();
                 animalForm.Image.CopyTo(imgStream);
+                imgStream.Position = 0;
                 if (imageService.UpdateImage(oldFileName, newFileName, imgStream))
                 {
                     animalVm.PictureName = newFileName;
+                    return;
                 }
             }
 

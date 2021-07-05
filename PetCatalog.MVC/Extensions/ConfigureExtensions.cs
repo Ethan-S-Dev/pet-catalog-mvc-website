@@ -77,7 +77,7 @@ namespace PetCatalog.MVC.Extensions
 
         public static void RegisterServices(this IServiceCollection services, IWebHostEnvironment webHostEnv, Microsoft.Extensions.Configuration.IConfiguration config)
             => 
-            DependencyContainer.RegisterServices(services, Path.Combine(webHostEnv.ContentRootPath,"res/images/animals"), config.GetValue<string>("DefaultImageName"));
+            DependencyContainer.RegisterServices(services, Path.Combine(webHostEnv.WebRootPath,"res\\images\\animals\\"), config.GetValue<string>("DefaultImageName"));
 
         //Most be called after RegisterServices!!
         public static void RegisterAutoMapper(this IServiceCollection services)

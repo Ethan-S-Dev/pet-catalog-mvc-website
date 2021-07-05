@@ -23,29 +23,43 @@ namespace PetCatalog.Application.Services
 
         public bool DeleteImage(string name)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool SaveImage(string name, Stream data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdateImage(string oldName, string newName, Stream data)
-        {
-            var oldPath = Path.Combine(ImageDir, oldName);
-            var newPath = Path.Combine(ImageDir, newName);
+            var oldPath = Path.Combine(ImageDir, name);
             try
             {
-                using var file = File.Create(newPath);
-                data.CopyTo(file);
                 File.Delete(oldPath);
+                return true;
             }
             catch
             {
                 return false;
             }
+        }
+
+        public bool SaveImage(string name, Stream data)
+        {
+            var newPath = Path.Combine(ImageDir, name);
+            try
+            {
+                using var file = File.Create(newPath);
+                data.CopyTo(file);
+            }
+            catch
+            {
+
+            }
+            
             return true;
+        }
+
+        public bool UpdateImage(string oldName, string newName, Stream data)
+        {          
+                if(SaveImage(newName, data))
+                {
+                    DeleteImage(oldName);
+                    return true;
+                }                    
+                return false;
+
         }
     }
 }
