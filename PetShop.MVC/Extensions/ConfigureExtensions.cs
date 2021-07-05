@@ -1,23 +1,27 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PetCatalog.Application.Interfaces;
+using PetCatalog.Application.Mapping;
 using PetCatalog.Application.Services;
 using PetCatalog.Infra.Data.Context;
 using PetCatalog.Infra.IoC;
 using PetCatalog.MVC.Mappers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PetCatalog.MVC.Extensions
 {
-    public static class Configure
+    public static class ConfigureExtensions
     {
-        public static void ConfigureSqlDb(this IServiceCollection services, IConfiguration configuration, bool useLazyLoading = true)
+        public static void ConfigureSqlDb(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration, bool useLazyLoading = true)
         {
             if (!configuration.IsValid()) throw new Exception(); // TODO: Add proper exception
 
@@ -58,7 +62,7 @@ namespace PetCatalog.MVC.Extensions
                 });
         }
 
-        public static bool IsValid(this IConfiguration configuration)
+        public static bool IsValid(this Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             var isSqlite = configuration.UseSqlite();
             var isSqlServer = configuration.UseSqlServer();
@@ -67,18 +71,22 @@ namespace PetCatalog.MVC.Extensions
             return true;
         }
 
-        public static bool UseSqlServer(this IConfiguration configuration) => configuration.GetValue<bool>("UseSqlServer");
+        public static bool UseSqlServer(this Microsoft.Extensions.Configuration.IConfiguration configuration) => configuration.GetValue<bool>("UseSqlServer");
 
-        public static bool UseSqlite(this IConfiguration configuration) => configuration.GetValue<bool>("UseSqlite");
+        public static bool UseSqlite(this Microsoft.Extensions.Configuration.IConfiguration configuration) => configuration.GetValue<bool>("UseSqlite");
 
-        public static void RegisterServices(this IServiceCollection services,string imagesSaveDir) => DependencyContainer.RegisterServices(services, imagesSaveDir);
+        public static void RegisterServices(this IServiceCollection services, IWebHostEnvironment webHostEnv, Microsoft.Extensions.Configuration.IConfiguration config)
+            => 
+            DependencyContainer.RegisterServices(services, Path.Combine(webHostEnv.ContentRootPath,"res/images/animals"), config.GetValue<string>("DefaultImageName"));
 
         //Most be called after RegisterServices!!
         public static void RegisterAutoMapper(this IServiceCollection services)
         {
-            IMapperConfigurationExpression exs;
-            services.RegisterModelMaps(out exs);
-            exs.RegisterFormMaps(services.GetScopedService<ICategoryService>());
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.Configuration();
+                cfg.RegisterFormMaps();
+            });
         }
 
     }

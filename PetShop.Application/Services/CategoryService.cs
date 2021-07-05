@@ -15,11 +15,11 @@ namespace PetCatalog.Application.Services
     {
         private readonly ICategoryRepository categoryRepository;
         private readonly IMapper mapper;
-        public CategoryService(ICategoryRepository categoryRepository,IMapper mapper)
-        {
-            this.mapper = mapper;
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+        {           
             this.categoryRepository = categoryRepository;
-        }
+            this.mapper = mapper;
+        } 
 
         public bool AddCategory(string name)
         {

@@ -9,6 +9,7 @@ using PetCatalog.Infra.Data.Context;
 using PetCatalog.MVC.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,10 +18,12 @@ namespace PetCatalog.MVC
     public class Startup
     {
         private readonly IConfiguration configuration;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration,IWebHostEnvironment webHostEnvironment)
         {
             this.configuration = configuration;
+            this.webHostEnvironment = webHostEnvironment;
         }
         
         public void ConfigureServices(IServiceCollection services)
@@ -29,9 +32,9 @@ namespace PetCatalog.MVC
 
             services.ConfigureSqlDb(configuration);
 
-            services.RegisterMapping();
+            services.RegisterServices(webHostEnvironment, configuration);
           
-            services.RegisterServices();
+            services.RegisterAutoMapper();
         }
        
         public void Configure(IApplicationBuilder app, PetCatalogDbContext ctx)

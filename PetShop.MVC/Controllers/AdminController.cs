@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PetCatalog.Application.Interfaces;
 using PetCatalog.Application.ViewModels;
+using PetCatalog.MVC.Extensions;
 using PetCatalog.MVC.Models;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,15 @@ namespace PetCatalog.MVC.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IWebHostEnvironment webHostEnvironment;
+
         private readonly ICommentService commentService;
         private readonly ICategoryService categoryService;
         private readonly IImageService imageService;
         private readonly IAnimalService animalService;
         private readonly IMapper mapper;
-        public AdminController(IWebHostEnvironment webHostEnvironment, ICategoryService categoryService, IAnimalService animalService, ICommentService commentService,IImageService imageService,IMapper mapper)
+        public AdminController(ICategoryService categoryService, IAnimalService animalService, ICommentService commentService,IImageService imageService,IMapper mapper)
         {
-            this.webHostEnvironment = webHostEnvironment;
+            this.imageService = imageService;
             this.commentService = commentService;
             this.categoryService = categoryService;
             this.animalService = animalService;
@@ -38,7 +39,9 @@ namespace PetCatalog.MVC.Controllers
 
         public IActionResult NewAnimal()
         {
-            return View(mapper.Map<AnimalFormModel>(new AnimalViewModel()));
+            var animalFm = mapper.Map<AnimalFormModel>(new AnimalViewModel());
+            animalFm.Categorys = categoryService.GetCategorys();
+            return View(animalFm);
         }
 
         [HttpGet]
@@ -47,6 +50,7 @@ namespace PetCatalog.MVC.Controllers
             var animal = animalService.GetAnimal(id);
             if(animal is null) return RedirectToAction("Index");
             var animalEm = mapper.Map<AnimalEditModel>(animal);
+            animalEm.Categorys = categoryService.GetCategorys();
             return View(animalEm);
         }
 
@@ -55,8 +59,8 @@ namespace PetCatalog.MVC.Controllers
             var animal = animalService.GetAnimal(id);
             if(animal is null) return RedirectToAction("Index");
 
-            commentService.DeleteComments(id);
             animalService.DeleteAnimal(id);
+            commentService.DeleteComments(id);
             imageService.DeleteImage(animal.PictureName);                    
 
             return RedirectToAction("Index");
@@ -68,7 +72,16 @@ namespace PetCatalog.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var animalVm = mapper.Map<AnimalViewModel>(animalForm);
+
+                animalVm.SetCategory(animalForm,categoryService);
+                using var imgStream = animalVm.SetPicture(animalForm);
                 animalService.AddAnimal(animalVm);
+                if (!imageService.SaveImage(animalVm.PictureName, imgStream))
+                {
+                    animalVm.PictureName = imageService.DefaultName;
+                    animalService.EditAnimal(animalVm);
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -82,6 +95,8 @@ namespace PetCatalog.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var animalVm = mapper.Map<AnimalViewModel>(animalForm);
+                animalVm.SetCategory(animalForm, categoryService);
+                animalVm.SetPicture(animalForm,imageService);
                 animalService.EditAnimal(animalVm);
                 return RedirectToAction("Index");
             }

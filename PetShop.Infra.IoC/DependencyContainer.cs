@@ -4,9 +4,6 @@ using PetCatalog.Application.Mapping;
 using PetCatalog.Application.Services;
 using PetCatalog.Domain.Interfaces;
 using PetCatalog.Infra.Data.Repositorys;
-using PetCatalog.Infre.Files.Interfaces;
-using PetCatalog.Infre.RootFiles;
-using PetCatalog.Infre.RootFiles.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +14,13 @@ namespace PetCatalog.Infra.IoC
 {
     public class DependencyContainer
     {
-        public static void RegisterServices(IServiceCollection services,string imagesSaveLocation)
+        public static void RegisterServices(IServiceCollection services,string imagesSaveLocation,string defaultName)
         {
             // PetShop.Application
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAnimalService, AnimalService>();
             services.AddScoped<ICommentService, CommentService>();
-            services.AddSingleton<IImageService>(new ImageService(imagesSaveLocation));
+            services.AddSingleton<IImageService>(new ImageService(imagesSaveLocation, defaultName));
 
             // PetShop.Domain.Interfaces | PetShop.Infra.Data.Repositorys
             services.AddScoped<ICategoryRepository, CategoryRepository>();

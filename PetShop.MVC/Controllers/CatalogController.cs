@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PetCatalog.Application.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,8 @@ namespace PetCatalog.MVC.Controllers
 {    
     public class CatalogController : Controller
     {
-        private ICategoryService categoryService;
-        public CatalogController(ICategoryService categoryService)
+        private readonly ICategoryService categoryService;
+        public CatalogController(ICategoryService categoryService,IMapper mapper)
         {
             this.categoryService = categoryService;
         }
