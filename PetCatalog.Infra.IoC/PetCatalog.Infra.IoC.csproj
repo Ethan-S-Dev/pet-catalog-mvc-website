@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PetShop.Application\PetCatalog.Application.csproj" />
-    <ProjectReference Include="..\PetShop.Infra.Data\PetCatalog.Infra.Data.csproj" />
+    <ProjectReference Include="..\PetCatalog.Application\PetCatalog.Application.csproj" />
+    <ProjectReference Include="..\PetCatalog.Infra.Data\PetCatalog.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>
