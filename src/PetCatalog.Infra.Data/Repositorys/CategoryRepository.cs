@@ -1,6 +1,6 @@
 ﻿using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
-using PetCatalog.Infra.Data.Context;
+using PetCatalog.Infra.Data.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

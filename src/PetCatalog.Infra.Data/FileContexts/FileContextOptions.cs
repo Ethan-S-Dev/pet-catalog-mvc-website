@@ -1,11 +1,11 @@
-﻿namespace PetCatalog.Infra.Data.FileSavers
+﻿namespace PetCatalog.Infra.Data.FileContexts
 {
-    public class FileSaverOptions
+    public class FileContextOptions
     {
         private string saveingDirectory;
         public string SaveingDirectory => saveingDirectory;
 
-        public FileSaverOptions UseSaveDir(string path)
+        public FileContextOptions UseSaveDir(string path)
         {
             saveingDirectory = path;
             return this;

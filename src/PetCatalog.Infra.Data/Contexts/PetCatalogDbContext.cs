@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetCatalog.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PetCatalog.Infra.Data.Context
+namespace PetCatalog.Infra.Data.Contexts
 {
     public class PetCatalogDbContext : DbContext
     {
@@ -22,6 +17,7 @@ namespace PetCatalog.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Image>().Ignore(e => e.Data);
 
             modelBuilder.Entity<Image>().HasData(new Image()
             {

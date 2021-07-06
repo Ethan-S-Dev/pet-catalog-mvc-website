@@ -31,7 +31,7 @@ namespace PetCatalog.MVC.Controllers
 
         public IActionResult Index()
         {
-            var model = categoryService.GetCategorys();
+            var model = mapper.Map<IEnumerable<CategoryViewModel>>(categoryService.GetCategorys());
             return View(model);
         }
 
@@ -47,7 +47,8 @@ namespace PetCatalog.MVC.Controllers
         {
             var animal = animalService.GetAnimal(id);
             if(animal is null) return RedirectToAction("Index");
-            var animalEm = mapper.Map<AnimalEditModel>(animal);
+            var animaVm = mapper.Map<AnimalViewModel>(animal);
+            var animalEm = mapper.Map<AnimalEditModel>(animaVm);
             animalEm.Categorys = mapper.Map<IEnumerable<CategoryViewModel>>(categoryService.GetCategorys());
             return View(animalEm);
         }
@@ -82,7 +83,6 @@ namespace PetCatalog.MVC.Controllers
         [HttpPost]
         public IActionResult EditAnimal(AnimalEditModel animalForm)
         {
-
             if (ModelState.IsValid)
             {
                 var animalVm = mapper.Map<AnimalViewModel>(animalForm);

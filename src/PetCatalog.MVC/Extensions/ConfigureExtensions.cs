@@ -2,18 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.Services;
-using PetCatalog.Infra.Data.Context;
+using PetCatalog.Infra.Data.Contexts;
 using PetCatalog.Infra.Data.DependencyInjections;
 using PetCatalog.Infra.IoC;
 using PetCatalog.MVC.Mappers;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PetCatalog.MVC.Extensions
 {
@@ -76,7 +71,7 @@ namespace PetCatalog.MVC.Extensions
             => configuration.GetValue<bool>("UseSqlite");
 
         public static void CunfigureFileSaver(this IServiceCollection services, IWebHostEnvironment webHostEnv, IConfiguration config) 
-            => services.AddFileSaver(ops=>ops.UseSaveDir(Path.Combine(webHostEnv.WebRootPath,config.GetValue<string>("ImageDirectory"))));
+            => services.AddFileContext<ImageFileContext>(ops=>ops.UseSaveDir(Path.Combine(webHostEnv.WebRootPath,config.GetValue<string>("ImageDirectory"))));
 
         public static void RegisterServices(this IServiceCollection services)
             => DependencyContainer.RegisterServices(services);

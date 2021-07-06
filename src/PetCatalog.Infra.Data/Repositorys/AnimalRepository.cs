@@ -1,6 +1,6 @@
 ﻿using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
-using PetCatalog.Infra.Data.Context;
+using PetCatalog.Infra.Data.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,7 @@ namespace PetCatalog.Infra.Data.Repositorys
             realAnimal.CategoryId = animal.CategoryId;
             realAnimal.Name = animal.Name;
             realAnimal.Description = animal.Description;
-            realAnimal.Image = animal.Image;
+            realAnimal.ImageId = animal.ImageId;
 
             dbContext.SaveChanges();
         }

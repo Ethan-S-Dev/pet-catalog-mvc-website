@@ -28,6 +28,7 @@ namespace PetCatalog.MVC.ViewModels
         [MaxLength(3000, ErrorMessage = "Description can't be longer then 3000 characters.")]
         public string Description { get; set; }
 
+        public int ImageId { get; set; }
         public ImageViewModel Image { get; set; }
 
         public int CategoryId { get; set; }

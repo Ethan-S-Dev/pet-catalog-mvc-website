@@ -33,8 +33,7 @@ namespace PetCatalog.MVC.Mappers
 
             mce.CreateMap<IFormFile, ImageViewModel>()
                 .ForMember(des => des.Name, cfg => cfg.MapFrom(src => src.FileName))
-                .ForMember(des => des.Animal, cfg => cfg.Ignore())
-                .ForMember(des => des.data, cfg => cfg.ConvertUsing(new ImageConverter()))
+                .ForMember(des => des.data, cfg => cfg.ConvertUsing(new ImageConverter(),src=>src))
                 .ForMember(des=>des.ImageId,cfg=>cfg.Ignore()); 
 
             mce.CreateMap<AnimalViewModel, AnimalFormModel>()

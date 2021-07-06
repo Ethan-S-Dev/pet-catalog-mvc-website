@@ -19,18 +19,10 @@ namespace PetCatalog.Application.Services
             this.imageRepository = imageRepository;
         }        
 
-        public bool AddAnimal(Animal animal, out int id)
-        {
-            animalRepository.Create(animal);
-            imageRepository.Create(animal.Image);
-            id = animal.AnimalId;
-            return true;
-        }
-
         public bool AddAnimal(Animal animal)
         {
-            animalRepository.Create(animal);
             imageRepository.Create(animal.Image);
+            animalRepository.Create(animal);
             return true;
         }
 
@@ -42,9 +34,13 @@ namespace PetCatalog.Application.Services
 
         public void EditAnimal(Animal animal)
         {
-            var img = imageRepository.Get(animal.AnimalId);
-            if (animal.Image.Name != img.Name)
+            var realAnimal = animalRepository.Get(animal.AnimalId);
+            if (animal.Image.Name != realAnimal.Image.Name)
+            {
+                animal.Image.ImageId = realAnimal.ImageId;
+                animal.ImageId = realAnimal.ImageId;
                 imageRepository.Update(animal.Image);
+            }
             animalRepository.Update(animal);
         }
 

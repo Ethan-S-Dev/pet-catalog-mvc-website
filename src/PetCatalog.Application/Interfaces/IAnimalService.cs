@@ -14,7 +14,6 @@ namespace PetCatalog.Application.Interfaces
         public IEnumerable<Animal> GetBestAnimals();
 
         bool AddAnimal(Animal animal);
-        bool AddAnimal(Animal animal,out int id);
 
         void EditAnimal(Animal animal);
 
