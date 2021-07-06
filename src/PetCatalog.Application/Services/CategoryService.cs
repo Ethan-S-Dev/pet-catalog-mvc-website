@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.ViewModels;
+﻿using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
 using System;
@@ -14,46 +12,38 @@ namespace PetCatalog.Application.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository categoryRepository;
-        private readonly IMapper mapper;
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+
+        public CategoryService(ICategoryRepository categoryRepository)
         {           
             this.categoryRepository = categoryRepository;
-            this.mapper = mapper;
         } 
 
         public bool AddCategory(string name)
         {
-            if (!categoryRepository.GetCategorys().All(c => c.Name.ToLower() != name.ToLower())) return false;
-            categoryRepository.AddCategory(new Category() { Name = name });
+            if (!categoryRepository.GetAll().All(c => c.Name.ToLower() != name.ToLower())) return false;
+            categoryRepository.Create(new Category() { Name = name });
             return true;
         }
 
         public bool AddCategory(string name, out int id)
         {
             id = default;
-            if (!categoryRepository.GetCategorys().All(c => c.Name.ToLower() != name.ToLower())) return false;
+            if (!categoryRepository.GetAll().All(c => c.Name.ToLower() != name.ToLower())) return false;
             var cate = new Category() { Name = name };
-            categoryRepository.AddCategory(cate);
+            categoryRepository.Create(cate);
             id = cate.CategoryId;
             return true;
         }
 
-        public CategoryViewModel GetCategory(int categoryId)
+        public Category GetCategory(int categoryId)
         {
-            var category = categoryRepository.GetCategory(categoryId);
-            return mapper.Map<CategoryViewModel>(category);
+            return categoryRepository.Get(categoryId);
            
         }
 
-        public IEnumerable<CategoryViewModel> GetCategorys()
+        public IEnumerable<Category> GetCategorys()
         {
-            var cateList = categoryRepository.GetCategorys();
-            var retCateList = new List<CategoryViewModel>(cateList.Count());
-            foreach (var cate in cateList)
-                retCateList.Add(mapper.Map<CategoryViewModel>(cate));
-
-            return retCateList;
-           
+            return categoryRepository.GetAll().ToList();         
         }
     }
 }

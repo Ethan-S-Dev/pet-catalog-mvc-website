@@ -1,4 +1,4 @@
-﻿@model PetCatalog.Application.ViewModels.AnimalViewModel
+﻿@model PetCatalog.MVC.ViewModels.AnimalViewModel
 
 <div class="animal-container">
     <div class="animal-details">
@@ -32,7 +32,7 @@
     </div>
 
     <div class="animal-image">
-        <img src="~/res/images/animals/@Model.PictureName" alt="The Image of @Html.DisplayFor(m=>m.Name)" />
+        <img src="~/res/images/animals/@Model.Image.Name" alt="The Image of @Html.DisplayFor(m=>m.Name)" />
 
         <div class="info">
             <h2>Information</h2>
@@ -66,6 +66,6 @@
         </button>
     </div>
     <div class="comment-para">
-        <partial name="CommentCreate" model="@(new PetCatalog.Application.ViewModels.CommentViewModel() {AnimalId = Model.AnimalId})"/>
+        <partial name="CommentCreate" model="@(new PetCatalog.MVC.ViewModels.CommentViewModel() {AnimalId = Model.AnimalId})"/>
     </div>
 </div>

@@ -2,7 +2,8 @@
 {
     public class FileSaverOptions
     {
-        private string saveingDirectory { get; set; }
+        private string saveingDirectory;
+        public string SaveingDirectory => saveingDirectory;
 
         public FileSaverOptions UseSaveDir(string path)
         {

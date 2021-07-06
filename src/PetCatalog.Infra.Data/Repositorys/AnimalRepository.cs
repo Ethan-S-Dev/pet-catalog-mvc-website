@@ -18,22 +18,22 @@ namespace PetCatalog.Infra.Data.Repositorys
             this.dbContext = dbContext;
         }
 
-        public void AddAnimal(Animal animal)
+        public void Create(Animal animal)
         {
             dbContext.Animals.Add(animal);
             dbContext.SaveChanges();
         }
 
-        public Animal DeleteAnimal(int animalId)
+        public Animal Delete(int animalId)
         {
-            var animal = GetAnimal(animalId);
+            var animal = Get(animalId);
             if (animal is null) return null;
             dbContext.Animals.Remove(animal);
             dbContext.SaveChanges();
             return animal;
         }
 
-        public void EditAnimal(Animal animal)
+        public void Update(Animal animal)
         {
             var realAnimal = dbContext.Animals.Find(animal.AnimalId);
             if (realAnimal is null) return;
@@ -42,22 +42,22 @@ namespace PetCatalog.Infra.Data.Repositorys
             realAnimal.CategoryId = animal.CategoryId;
             realAnimal.Name = animal.Name;
             realAnimal.Description = animal.Description;
-            realAnimal.PictureName = animal.PictureName;
+            realAnimal.Image = animal.Image;
 
             dbContext.SaveChanges();
         }
 
-        public Animal GetAnimal(int animalId)
+        public Animal Get(int animalId)
         {
             return dbContext.Animals.Find(animalId);
         }
 
-        public IEnumerable<Animal> GetAnimals()
+        public IEnumerable<Animal> GetAll()
         {
             return dbContext.Animals;
         }
 
-        public IEnumerable<Animal> GetBestAnimals()
+        public IEnumerable<Animal> GetTopCommented()
         {
             return dbContext.Animals.OrderByDescending(a => a.Comments.Count()).Take(2);
         }

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.Mapping;
 using PetCatalog.Application.Services;
 using PetCatalog.Infra.Data.Context;
 using PetCatalog.Infra.Data.DependencyInjections;
@@ -87,8 +86,7 @@ namespace PetCatalog.MVC.Extensions
         {
             services.AddAutoMapper(cfg =>
             {
-                cfg.Configuration();
-                cfg.RegisterFormMaps();
+                cfg.RegisterMaps();
             });
         }
 

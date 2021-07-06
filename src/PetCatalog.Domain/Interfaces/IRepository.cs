@@ -16,8 +16,8 @@ namespace PetCatalog.Domain.Interfaces
         public T Get(int id);
 
         // Update
-        void Update(T animal);
+        void Update(T obj);
         // Delete
-        T Delete(int animalId);
+        T Delete(int Id);
     }
 }

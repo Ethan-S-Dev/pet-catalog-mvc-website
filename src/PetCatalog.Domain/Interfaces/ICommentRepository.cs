@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace PetCatalog.Domain.Interfaces
 {
-    public interface ICommentRepository
+    public interface ICommentRepository : IRepository<Comment>
     {
         public IEnumerable<Comment> GetAnimalComments (int animalId);
+        public IEnumerable<Comment> DeleteAnimalComments(int animalId);
     }
 }

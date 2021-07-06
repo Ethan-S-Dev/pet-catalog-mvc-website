@@ -22,16 +22,12 @@ namespace PetCatalog.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Image>()
-                .Ignore("Data")
-                .HasOne(i=>i.Animal)
-                .WithOne(a=>a.Image)
-                .HasForeignKey<Animal>(a=>a.AnimalId);
 
-            modelBuilder.Entity<Animal>()
-                .HasOne(a => a.Image)
-                .WithOne(b => b.Animal)
-                .HasForeignKey<Image>(b => b.ImageId);
+            modelBuilder.Entity<Image>().HasData(new Image()
+            {
+                ImageId = 1,
+                Name ="default.png"
+            }); ;
 
         }
     }

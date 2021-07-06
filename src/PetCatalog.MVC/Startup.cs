@@ -41,7 +41,7 @@ namespace PetCatalog.MVC
        
         public void Configure(IApplicationBuilder app, PetCatalogDbContext ctx)
         {
-            ctx.Database.EnsureCreated();
+            //ctx.Database.EnsureCreated();
 
             app.UseStaticFiles();
             app.UseRouting();

@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using PetCatalog.Domain.Models;
 using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.ViewModels;
 
 namespace PetCatalog.MVC.ViewModels
 {

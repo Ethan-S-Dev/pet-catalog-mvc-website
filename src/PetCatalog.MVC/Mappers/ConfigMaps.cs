@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.ViewModels;
+using PetCatalog.Domain.Models;
 using PetCatalog.MVC.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,9 +15,27 @@ namespace PetCatalog.MVC.Mappers
     public static class ConfigMaps
     {
 
-        public static IMapperConfigurationExpression RegisterFormMaps(this IMapperConfigurationExpression mce)
+        public static IMapperConfigurationExpression RegisterMaps(this IMapperConfigurationExpression mce)
         {
             //mce.CreateMap<FormFile,>
+
+            mce.CreateMap<AnimalViewModel, Animal>();
+            mce.CreateMap<Animal, AnimalViewModel>();
+
+            mce.CreateMap<CategoryViewModel, Category>();
+            mce.CreateMap<Category, CategoryViewModel>();
+
+            mce.CreateMap<Comment, CommentViewModel>();
+            mce.CreateMap<CommentViewModel, Comment>();
+
+            mce.CreateMap<ImageViewModel, Image>();
+            mce.CreateMap<Image, ImageViewModel>();
+
+            mce.CreateMap<IFormFile, ImageViewModel>()
+                .ForMember(des => des.Name, cfg => cfg.MapFrom(src => src.FileName))
+                .ForMember(des => des.Animal, cfg => cfg.Ignore())
+                .ForMember(des => des.data, cfg => cfg.ConvertUsing(new ImageConverter()))
+                .ForMember(des=>des.ImageId,cfg=>cfg.Ignore()); 
 
             mce.CreateMap<AnimalViewModel, AnimalFormModel>()
                 .ForMember(dest => dest.Animal, cfg => cfg.MapFrom(src => src))
@@ -31,7 +49,7 @@ namespace PetCatalog.MVC.Mappers
                 .ForMember(des => des.Name, cfg => cfg.MapFrom(src => src.Animal.Name))
                 .ForMember(des => des.Age, cfg => cfg.MapFrom(src => src.Animal.Age))
                 .ForMember(des => des.Description, cfg => cfg.MapFrom(src => src.Animal.Description))
-                .ForMember(des => des.PictureName, cfg => cfg.Ignore()) // impotent
+                .ForMember(des => des.Image, cfg => cfg.MapFrom(src=>src.Image))
                 .ForMember(des => des.CategoryId, cfg => cfg.Ignore()); // impotent
 
             mce.CreateMap<AnimalViewModel, AnimalEditModel>()
@@ -46,7 +64,7 @@ namespace PetCatalog.MVC.Mappers
                 .ForMember(des => des.Name, cfg => cfg.MapFrom(src => src.Animal.Name))
                 .ForMember(des => des.Age, cfg => cfg.MapFrom(src => src.Animal.Age))
                 .ForMember(des => des.Description, cfg => cfg.MapFrom(src => src.Animal.Description))
-                .ForMember(des => des.PictureName, cfg => cfg.Ignore()) // impotent
+                .ForMember(des => des.Image, cfg => cfg.MapFrom(src => src.Image))
                 .ForMember(des => des.CategoryId, cfg => cfg.Ignore()); // impotent
 
             return mce;

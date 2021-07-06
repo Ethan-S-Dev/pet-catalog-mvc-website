@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using PetCatalog.Application.ViewModels;
-using PetCatalog.Domain.Models;
+﻿using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

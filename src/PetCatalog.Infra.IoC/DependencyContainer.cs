@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.Mapping;
 using PetCatalog.Application.Services;
 using PetCatalog.Domain.Interfaces;
-using PetCatalog.Infra.Data.FileSavers;
 using PetCatalog.Infra.Data.Repositorys;
 using System;
 using System.Collections.Generic;
@@ -22,7 +20,6 @@ namespace PetCatalog.Infra.IoC
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAnimalService, AnimalService>();
             services.AddScoped<ICommentService, CommentService>();
-            services.AddSingleton<IImageService,ImageService>();
 
             // PetShop.Domain.Interfaces | PetShop.Infra.Data.Repositorys
             services.AddScoped<ICategoryRepository, CategoryRepository>();
