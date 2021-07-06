@@ -11,6 +11,7 @@ namespace PetCatalog.Application.ViewModels
     {
         public int CommentId { get; set; }
         [Required]
+        
         public int AnimalId { get; set; }
         [Required]
         [DataType(DataType.MultilineText)]

@@ -32,7 +32,9 @@ namespace PetCatalog.MVC
 
             services.ConfigureSqlDb(configuration);
 
-            services.RegisterServices(webHostEnvironment, configuration);
+            services.CunfigureFileSaver(webHostEnvironment, configuration);
+
+            services.RegisterServices();
           
             services.RegisterAutoMapper();
         }

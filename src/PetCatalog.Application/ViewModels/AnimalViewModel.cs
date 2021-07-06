@@ -13,8 +13,6 @@ namespace PetCatalog.Application.ViewModels
     {
         public int AnimalId { get; set; }
 
-        public int CategoryId { get; set; }
-
         public string PictureName { get; set; }         
 
         [Required(ErrorMessage = "Please enter a name.")]
@@ -32,6 +30,7 @@ namespace PetCatalog.Application.ViewModels
         [MaxLength(3000, ErrorMessage = "Description can't be longer then 3000 characters.")]
         public string Description { get; set; }
 
+        public int CategoryId { get; set; }
         public CategoryViewModel Category { get; set; }
 
         public IEnumerable<CommentViewModel> Comments { get; set; }

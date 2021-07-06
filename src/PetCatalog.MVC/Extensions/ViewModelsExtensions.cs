@@ -1,6 +1,6 @@
 ﻿using PetCatalog.Application.Interfaces;
 using PetCatalog.Application.ViewModels;
-using PetCatalog.MVC.Models;
+using PetCatalog.MVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;

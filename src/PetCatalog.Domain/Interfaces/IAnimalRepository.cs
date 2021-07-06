@@ -7,19 +7,9 @@ using System.Threading.Tasks;
 
 namespace PetCatalog.Domain.Interfaces
 {
-    public interface IAnimalRepository
+    public interface IAnimalRepository : IRepository<Animal>
     {
-        // Create
-        public void AddAnimal(Animal animal);
-
-        // Read
-        public IEnumerable<Animal> GetAnimals();
-        public Animal GetAnimal(int animalId);
-        public IEnumerable<Animal> GetBestAnimals();
-
-        // Update
-        void EditAnimal(Animal animal);
-        // Delete
-        Animal DeleteAnimal(int animalId);
+        // Read       
+        public IEnumerable<Animal> GetTopCommented();
     }
 }

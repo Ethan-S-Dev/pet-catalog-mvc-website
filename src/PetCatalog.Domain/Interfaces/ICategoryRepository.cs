@@ -7,17 +7,8 @@ using System.Threading.Tasks;
 
 namespace PetCatalog.Domain.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IRepository<Category>
     {
-        // Create
-        void AddCategory(Category category);
 
-        // Read
-        IEnumerable<Category> GetCategorys();
-        Category GetCategory(int categoryId);
-
-        // Update
-
-        // Delete
     }
 }

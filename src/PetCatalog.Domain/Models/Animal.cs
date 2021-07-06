@@ -10,9 +10,9 @@ namespace PetCatalog.Domain.Models
     {
         public int AnimalId { get; set; }
         public string Name { get; set; }
-        public int Age { get; set; }
-        public string PictureName { get; set; }
+        public int Age { get; set; }    
         public string Description { get; set; }
+        public Image Image { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
         public virtual IEnumerable<Comment> Comments { get; set; }
