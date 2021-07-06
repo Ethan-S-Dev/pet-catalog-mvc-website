@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.ViewModels;
+﻿using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
 using System;
@@ -15,52 +13,38 @@ namespace PetCatalog.Application.Services
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository commentRepository;
-        private readonly IMapper mapper;
-        public CommentService(ICommentRepository commentRepository,IMapper mapper)
+        public CommentService(ICommentRepository commentRepository)
         {
             this.commentRepository = commentRepository;
-            this.mapper = mapper;
         }
-        public void AddComment(CommentViewModel comment)
+        public void AddComment(Comment comment)
         {
-            var realComment = mapper.Map<Comment>(comment);
-            commentRepository.AddComment(realComment);
+            commentRepository.Create(comment);
         }
 
         public void DeleteComment(int id)
         {
-            commentRepository.DeleteComment(id);
+            commentRepository.Delete(id);
         }
 
         public void DeleteComments(int animalId)
         {
-            commentRepository.DeleteComments(animalId);
+            commentRepository.Delete(animalId);
         }
 
-        public IEnumerable<CommentViewModel> GetCommensts()
-        {
-            var comments = commentRepository.GetAllComments();
-            var list = new List<CommentViewModel>(comments.Count());
-            foreach (var com in comments)
-                list.Add(mapper.Map<CommentViewModel>(com));
-            return list;
+        public IEnumerable<Comment> GetCommensts()
+        {                   
+            return commentRepository.GetAll().ToList();
         }
 
-        public CommentViewModel GetComment(int commentId)
+        public Comment GetComment(int commentId)
         {
-            var comment = commentRepository.GetComment(commentId);
-            if (comment is null) return null;
-            var commentDto = mapper.Map<CommentViewModel>(comment);
-            return commentDto;
+            return commentRepository.Get(commentId);
         }
 
-        public IEnumerable<CommentViewModel> GetComments(int animalId)
+        public IEnumerable<Comment> GetComments(int animalId)
         {
-            var comments = commentRepository.GetAnimalComments(animalId);
-            var list = new List<CommentViewModel>(comments.Count());
-            foreach (var com in comments)
-                list.Add(mapper.Map<CommentViewModel>(com));
-            return list;
+            return commentRepository.GetAnimalComments(animalId).ToList();
         }
 
     }

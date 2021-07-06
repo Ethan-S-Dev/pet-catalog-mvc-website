@@ -1,4 +1,4 @@
-﻿@model PetCatalog.MVC.Models.AnimalEditModel
+﻿@model PetCatalog.MVC.ViewModels.AnimalEditModel
 @{
     ViewBag.Title = "Pet Shop";
     ViewBag.AdminClss = "active";
@@ -24,7 +24,7 @@
                     <tr style="visibility:collapse">
                         <td>
                             <input asp-for="Animal.AnimalId" type="number" value="@Model.Animal.AnimalId" readonly />
-                            <input asp-for="Animal.PictureName" type="text" value="@Model.Animal.PictureName" readonly />
+                            <input asp-for="Animal.Image.Name" type="text" value="@Model.Animal.Image.Name" readonly />
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +60,7 @@
                         </td>
                         <td>
                             <div class="image-box">
-                                <img class="selected-image" src="~/res/images/animals/@Model.Animal.PictureName" />
+                                <img class="selected-image" src="~/res/images/animals/@Model.Animal.Image.Name" />
                                 <label asp-for="Image" class="custom-file-label">Choose an image...</label>
                                 <input asp-for="Image" type="file" class="custom-file-input" accept="image/gif, image/jpeg, image/png , image/jpg , image/webp" />
                             </div>

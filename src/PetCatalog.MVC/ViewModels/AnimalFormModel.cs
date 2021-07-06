@@ -10,13 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using PetCatalog.Domain.Models;
 using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.ViewModels;
 
-namespace PetCatalog.MVC.Models
+namespace PetCatalog.MVC.ViewModels
 {
     public class AnimalFormModel
     {
-
+        [Required]
         public AnimalViewModel Animal { get; set; } 
 
         [Required(ErrorMessage ="Please select an image.")]

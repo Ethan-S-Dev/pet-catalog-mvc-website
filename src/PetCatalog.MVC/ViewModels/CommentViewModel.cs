@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetCatalog.Application.ViewModels
+namespace PetCatalog.MVC.ViewModels
 {
     public class CommentViewModel
     {
         public int CommentId { get; set; }
         [Required]
+        
         public int AnimalId { get; set; }
         [Required]
         [DataType(DataType.MultilineText)]

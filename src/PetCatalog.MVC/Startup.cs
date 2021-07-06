@@ -1,17 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PetCatalog.Infra.Data.Context;
+using PetCatalog.Infra.Data.Contexts;
 using PetCatalog.MVC.Extensions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace PetCatalog.MVC
 {
@@ -32,14 +26,20 @@ namespace PetCatalog.MVC
 
             services.ConfigureSqlDb(configuration);
 
-            services.RegisterServices(webHostEnvironment, configuration);
+            services.CunfigureFileSaver(webHostEnvironment, configuration);
+
+            services.RegisterServices();
           
             services.RegisterAutoMapper();
         }
        
-        public void Configure(IApplicationBuilder app, PetCatalogDbContext ctx)
+        public void Configure(IApplicationBuilder app, PetCatalogDbContext ctx,ImageFileContext fs)
         {
+            //ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();
+            //fs.Diractory.EnsureDeleted();
+            fs.Diractory.EnsureCreated();
+
 
             app.UseStaticFiles();
             app.UseRouting();

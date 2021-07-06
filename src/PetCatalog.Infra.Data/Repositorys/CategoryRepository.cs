@@ -1,6 +1,6 @@
 ﻿using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
-using PetCatalog.Infra.Data.Context;
+using PetCatalog.Infra.Data.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,20 +17,30 @@ namespace PetCatalog.Infra.Data.Repositorys
             this.dbContext = dbContext;
         }
 
-        public void AddCategory(Category category)
+        public void Create(Category category)
         {
             dbContext.Categories.Add(category);
             dbContext.SaveChanges();
         }
 
-        public Category GetCategory(int categoryId)
+        public Category Delete(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category Get(int categoryId)
         {
             return dbContext.Categories.Find(categoryId);
         }
 
-        public IEnumerable<Category> GetCategorys()
+        public IEnumerable<Category> GetAll()
         {
             return dbContext.Categories;
+        }
+
+        public void Update(Category obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

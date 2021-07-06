@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.ViewModels;
+﻿using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
 using System;
@@ -14,50 +12,47 @@ namespace PetCatalog.Application.Services
     public class AnimalService : IAnimalService
     {
         private readonly IAnimalRepository animalRepository;
-        private readonly IMapper mapper;
-        public AnimalService(IAnimalRepository animalRepository,IMapper mapper)
+        private readonly IImageRepository imageRepository;
+        public AnimalService(IAnimalRepository animalRepository,IImageRepository imageRepository)
         {
-            this.mapper = mapper;
             this.animalRepository = animalRepository;
+            this.imageRepository = imageRepository;
         }        
 
-        public bool AddAnimal(AnimalViewModel animal, out int id)
+        public bool AddAnimal(Animal animal)
         {
-            var ani = mapper.Map<Animal>(animal);
-            animalRepository.AddAnimal(ani);
-            id = ani.AnimalId;
-            return true;
-        }
-
-        public bool AddAnimal(AnimalViewModel animal)
-        {
-            var ani = mapper.Map<Animal>(animal);
-            animalRepository.AddAnimal(ani);
+            imageRepository.Create(animal.Image);
+            animalRepository.Create(animal);
             return true;
         }
 
         public void DeleteAnimal(int animalId)
         {
-            animalRepository.DeleteAnimal(animalId);           
+            var animal = animalRepository.Delete(animalId);                    
+            imageRepository.Delete(animal.ImageId);
         }
 
-        public void EditAnimal(AnimalViewModel animal)
+        public void EditAnimal(Animal animal)
         {
-            var ani = mapper.Map<Animal>(animal);
-            animalRepository.EditAnimal(ani);
+            var realAnimal = animalRepository.Get(animal.AnimalId);
+            if (animal.Image.Name != realAnimal.Image.Name)
+            {
+                animal.Image.ImageId = realAnimal.ImageId;
+                animal.ImageId = realAnimal.ImageId;
+                imageRepository.Update(animal.Image);
+            }
+            animalRepository.Update(animal);
         }
 
-        public AnimalViewModel GetAnimal(int animalId)
+        public Animal GetAnimal(int animalId)
         {
-            var animal = animalRepository.GetAnimal(animalId);
-            return mapper.Map<AnimalViewModel>(animal);
+            return animalRepository.Get(animalId);
         }
-        public IEnumerable<AnimalViewModel> GetBestAnimals()
+        public IEnumerable<Animal> GetBestAnimals()
         {
-            var bestAnimals = new List<AnimalViewModel>(2);
-            foreach (var animal in animalRepository.GetBestAnimals())
-                bestAnimals.Add(mapper.Map<AnimalViewModel>(animal));
-
+            var bestAnimals = new List<Animal>(2);
+            foreach (var animal in animalRepository.GetTopCommented())
+                bestAnimals.Add(animal);
             return bestAnimals;
         }
     }

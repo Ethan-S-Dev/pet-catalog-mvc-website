@@ -1,4 +1,4 @@
-﻿using PetCatalog.Application.ViewModels;
+﻿using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +9,13 @@ namespace PetCatalog.Application.Interfaces
 {
     public interface IAnimalService
     {
-        public AnimalViewModel GetAnimal(int animalId);       
+        public Animal GetAnimal(int animalId);       
 
-        public IEnumerable<AnimalViewModel> GetBestAnimals();
+        public IEnumerable<Animal> GetBestAnimals();
 
-        bool AddAnimal(AnimalViewModel animal);
-        bool AddAnimal(AnimalViewModel animal,out int id);
+        bool AddAnimal(Animal animal);
 
-        void EditAnimal(AnimalViewModel animal);
+        void EditAnimal(Animal animal);
 
         void DeleteAnimal(int animalId);
     }

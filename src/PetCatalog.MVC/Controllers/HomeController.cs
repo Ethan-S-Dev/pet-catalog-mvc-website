@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PetCatalog.Application.Interfaces;
+using PetCatalog.MVC.Extensions;
+using PetCatalog.MVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +13,17 @@ namespace PetCatalog.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly IAnimalService animalService;
-        public HomeController(IAnimalService animalService)
+        private readonly IMapper mapper;
+
+        public HomeController(IAnimalService animalService,IMapper mapper)
         {
             this.animalService = animalService;
+            this.mapper = mapper;
         }
 
-        //[RequestFormLimits(MultipartBodyLengthLimit = 268435456)]
         public IActionResult Index()
         {
-            var bestAnimals = animalService.GetBestAnimals();
+            var bestAnimals = mapper.Map<IEnumerable<AnimalViewModel>>(animalService.GetBestAnimals()); 
             return View(bestAnimals);
         }
     }

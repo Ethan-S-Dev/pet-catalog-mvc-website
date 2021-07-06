@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PetCatalog.Application.Interfaces;
-using PetCatalog.Application.ViewModels;
 using PetCatalog.MVC.Validations;
 using System;
 using System.Collections.Generic;
@@ -9,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetCatalog.MVC.Models
+namespace PetCatalog.MVC.ViewModels
 {
     public class AnimalEditModel
     {
-
+        [Required]
         public AnimalViewModel Animal { get; set; }
 
         
