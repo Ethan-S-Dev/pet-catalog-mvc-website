@@ -50,10 +50,13 @@ namespace PetCatalog.Application.Services
         }
         public IEnumerable<Animal> GetBestAnimals()
         {
-            var bestAnimals = new List<Animal>(2);
-            foreach (var animal in animalRepository.GetTopCommented())
-                bestAnimals.Add(animal);
+            var bestAnimals = animalRepository.GetTopCommented().ToList();
             return bestAnimals;
+        }
+
+        public Animal GetEmptyAnimal()
+        {
+            return new Animal { Image = imageRepository.Get(1) };
         }
     }
 }

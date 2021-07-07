@@ -23,7 +23,8 @@ namespace PetCatalog.MVC.Controllers
 
         public IActionResult Index()
         {
-            var bestAnimals = mapper.Map<IEnumerable<AnimalViewModel>>(animalService.GetBestAnimals()); 
+            var animals = animalService.GetBestAnimals();
+            var bestAnimals = mapper.Map<IEnumerable<AnimalViewModel>>(animals); 
             return View(bestAnimals);
         }
     }

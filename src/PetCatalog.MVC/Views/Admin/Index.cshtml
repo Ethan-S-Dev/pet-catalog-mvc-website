@@ -27,7 +27,7 @@
                                 <select id="cata-select" asp-items="@(new SelectList(Model,"CategoryId","Name"))">
                                     <option value="-1" selected>All</option>
                                 </select>
-                                <a asp-action="NewAnimal"><i class="far fa-plus-square" title="Add Animal"></i></a>
+                                <a asp-action="AnimalForm" asp-route-id="0"><i class="far fa-plus-square" title="Add Animal"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -41,9 +41,9 @@
                                     @foreach (var animal in cata.Animals)
                                     {
                                     <div class="anima-edit-box">
-                                        <form method="get" class="edit-box">
+                                        <form method="get"  class="edit-box">
                                             <button asp-action="DeleteAnimal" asp-route-id="@animal.AnimalId" class="btn">Delete</button>
-                                            <button asp-action="EditAnimal" asp-route-id="@animal.AnimalId" class="btn">Edit</button>
+                                            <button asp-action="AnimalForm" asp-route-id="@animal.AnimalId" class="btn">Edit</button>
                                         </form>
                                         <partial name="AnimalView" model="animal" />
                                     </div>

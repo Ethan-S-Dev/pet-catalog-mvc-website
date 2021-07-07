@@ -18,5 +18,7 @@ namespace PetCatalog.Application.Interfaces
         void EditAnimal(Animal animal);
 
         void DeleteAnimal(int animalId);
+
+        public Animal GetEmptyAnimal();
     }
 }

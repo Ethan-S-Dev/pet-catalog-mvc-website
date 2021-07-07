@@ -19,8 +19,6 @@ namespace PetCatalog.Infra.Data.Repositorys
         public void Create(Image obj)
         {
             if (obj is null) throw new ArgumentNullException();
-            if (obj.Data is null) throw new ArgumentNullException();
-            if (obj.Name is null) throw new ArgumentNullException();
 
             var extention = Path.GetExtension(obj.Name);
             var newName = $"{Guid.NewGuid()}{extention}";

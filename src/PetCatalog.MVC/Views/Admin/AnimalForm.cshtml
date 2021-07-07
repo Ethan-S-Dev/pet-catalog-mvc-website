@@ -12,26 +12,19 @@
 <script src="~/scripts/ImageFormSelect.js"></script>
 
 <link href="~/styles/NewAnimalFormStyle.css" rel="stylesheet" />
-
 <div class="animal-form-continer">
     <div>
-        <h2>Edit Animal</h2>
+        <h2>Add New Animal</h2>
     </div>
     <div>
-        <form enctype="multipart/form-data" method="post" asp-action="EditAnimal">
+        <form enctype="multipart/form-data" method="post" asp-action="AnimalForm">
             <table>
                 <tbody>
-                    <tr style="visibility:collapse">
-                        <td>
-                            <input asp-for="AnimalId" type="number" value="@Model.AnimalId" readonly />
-                            <input asp-for="ImageName" type="text" value="@Model.ImageName" readonly />
-                        </td>
-                    </tr>
                     <tr>
                         <td>
                             <label asp-for="Name"></label>
                         </td>
-                        <td colspan="2">
+                        <td>
                             <input asp-for="Name" type="text" />
                         </td>
                     </tr>
@@ -44,9 +37,8 @@
                         <td>
                             <label asp-for="Age"></label>
                         </td>
-                        <td colspan="2">
+                        <td>
                             <input asp-for="Age" type="number" />
-
                         </td>
                     </tr>
                     <tr>
@@ -60,12 +52,13 @@
                         </td>
                         <td>
                             <div class="image-box">
-                                <img class="selected-image" src="~/res/images/animals/@Model.ImageName" />
-                                <label asp-for="Image" class="custom-file-label">Choose an image...</label>
-                                <input asp-for="Image" type="file" class="custom-file-input" accept="image/gif, image/jpeg, image/png , image/jpg , image/webp" />
+                                <img class="selected-image" src="~/res/images/animals/@Model.ImageName"/>
+                                <label asp-for="Image" class="custom-file-label">Choose a file</label>
+                                <input asp-for="Image" type="file" class="custom-file-input" accept="image/gif, image/jpeg, image/png , image/jpg , image/webp"/>
+                                <input asp-for="ImageName" value="@Model.ImageName" type="text" style="visibility:collapse" readonly/>
                             </div>
                         </td>
-                    </tr>
+                    </tr> 
                     <tr>
                         <td colspan="2">
                             <span class="error" asp-validation-for="Image"></span>
@@ -75,7 +68,7 @@
                         <td>
                             <label asp-for="Description"></label>
                         </td>
-                        <td colspan="2">
+                        <td>
                             <textarea asp-for="Description"></textarea>
 
                         </td>
@@ -89,14 +82,13 @@
                         <td>
                             <label asp-for="CategoryId"></label>
                         </td>
-                        <td colspan="2">
+                        <td>
 
                             <select id="category-select" asp-for="CategoryId" type="text"
                                     asp-items="@(new SelectList(categorys,"CategoryId","Name"))">
                                 <option value="0" selected disabled>- Select Category -</option>
                                 <option value="-1">- New Category -</option>
                             </select>
-
                         </td>
                     </tr>
                     <tr>
@@ -108,9 +100,8 @@
                         <td>
                             <label asp-for="CategoryName"></label>
                         </td>
-                        <td colspan="2">
+                        <td>
                             <input id="category-name-filed" asp-for="CategoryName" type="text" />
-
                         </td>
                     </tr>
                     <tr>
@@ -122,7 +113,7 @@
                 <tfoot>
                     <tr>
                         <td>
-                            <button class="btn" type="submit">Save</button>
+                            <button class="btn" type="submit">Add Animal</button>
                         </td>
                     </tr>
                 </tfoot>
@@ -131,3 +122,4 @@
     </div>
 
 </div>
+

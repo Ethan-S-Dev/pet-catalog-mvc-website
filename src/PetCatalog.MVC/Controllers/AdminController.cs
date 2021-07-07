@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Models;
 using PetCatalog.MVC.Extensions;
@@ -21,7 +22,7 @@ namespace PetCatalog.MVC.Controllers
         private readonly ICategoryService categoryService;
         private readonly IAnimalService animalService;
         private readonly IMapper mapper;
-        public AdminController(ICategoryService categoryService, IAnimalService animalService, ICommentService commentService,IMapper mapper)
+        public AdminController(ICategoryService categoryService, IAnimalService animalService, ICommentService commentService, IMapper mapper)
         {
             this.commentService = commentService;
             this.categoryService = categoryService;
@@ -42,10 +43,15 @@ namespace PetCatalog.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditAnimal(int id)
+        public IActionResult AnimalForm(int id)
         {
-            var animal = animalService.GetAnimal(id);
-            if(animal is null) return RedirectToAction("Index");
+            Animal animal;
+            if (id == 0)           
+                animal = animalService.GetEmptyAnimal();           
+            else           
+                animal = animalService.GetAnimal(id);            
+            
+            if (animal is null) return RedirectToAction("Index");
             var animaVm = mapper.Map<AnimalViewModel>(animal);
             return View(animaVm);
         }
@@ -62,32 +68,27 @@ namespace PetCatalog.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAnimal(AnimalViewModel animalVm)
+        public IActionResult AnimalForm(AnimalViewModel animalVm,int id)
         {
             if (ModelState.IsValid)
             {
                 animalVm.SetCategory(categoryService);
+                animalVm.AnimalId = id;
                 var animal = mapper.Map<Animal>(animalVm);
-                animalService.AddAnimal(animal);
-
+                if (id == 0)
+                {
+                    animalService.AddAnimal(animal);
+                    
+                }
+                else
+                {
+                    animalService.EditAnimal(animal);
+                }
                 return RedirectToAction("Index");
             }
 
             return View("NewAnimal", animalVm);
         }
-
-        [HttpPost]
-        public IActionResult EditAnimal(AnimalViewModel animalVm)
-        {
-            if (ModelState.IsValid)
-            {
-                animalVm.SetCategory(categoryService);
-                var animal = mapper.Map<Animal>(animalVm);
-                animalService.EditAnimal(animal);
-                return RedirectToAction("Index");
-            }
-            IActionResult result = View("EditAnimal", animalVm);
-            return result;
-        }
+     
     }
 }
