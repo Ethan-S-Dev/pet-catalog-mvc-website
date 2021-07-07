@@ -11,30 +11,14 @@ namespace PetCatalog.MVC.Extensions
 {
     public static class ViewModelsExtensions
     {
-        public static void SetCategory(this AnimalViewModel animalVm, AnimalFormModel animalForm,ICategoryService categoryService)
+        public static void SetCategory(this AnimalViewModel animalVm,ICategoryService categoryService)
         {
-            if (animalForm.CategoryId < 0)
+            if (animalVm.CategoryId < 0)
             {
-                categoryService.AddCategory(animalForm.CategoryName, out int cateId);
+                categoryService.AddCategory(animalVm.CategoryName, out int cateId);
                 animalVm.CategoryId = cateId;
             }
-            else
-            {
-                animalVm.CategoryId = animalForm.CategoryId;
-            }
-        }
-        public static void SetCategory(this AnimalViewModel animalVm, AnimalEditModel animalForm, ICategoryService categoryService)
-        {
-            if (animalForm.CategoryId < 0)
-            {
-                categoryService.AddCategory(animalForm.CategoryName, out int cateId);
-                animalVm.CategoryId = cateId;
-            }
-            else
-            {
-                animalVm.CategoryId = animalForm.CategoryId;
-            }
-        }
+        }       
     }
 
 }

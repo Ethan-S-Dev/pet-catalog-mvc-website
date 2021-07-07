@@ -13,6 +13,7 @@ namespace PetCatalog.MVC.ViewModels
         public int CategoryId { get; set; }
         [Display(Name="Category: ")]
         public string Name { get; set; }
+
         public IEnumerable<AnimalViewModel> Animals { get; set; }
     }
 }

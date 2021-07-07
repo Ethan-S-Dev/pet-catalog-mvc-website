@@ -37,8 +37,7 @@ namespace PetCatalog.MVC.Controllers
 
         public IActionResult NewAnimal()
         {
-            var animalFm = mapper.Map<AnimalFormModel>(new AnimalViewModel());
-            animalFm.Categorys = mapper.Map<IEnumerable<CategoryViewModel>>(categoryService.GetCategorys());
+            var animalFm = new AnimalViewModel();
             return View(animalFm);
         }
 
@@ -48,9 +47,7 @@ namespace PetCatalog.MVC.Controllers
             var animal = animalService.GetAnimal(id);
             if(animal is null) return RedirectToAction("Index");
             var animaVm = mapper.Map<AnimalViewModel>(animal);
-            var animalEm = mapper.Map<AnimalEditModel>(animaVm);
-            animalEm.Categorys = mapper.Map<IEnumerable<CategoryViewModel>>(categoryService.GetCategorys());
-            return View(animalEm);
+            return View(animaVm);
         }
 
         public IActionResult DeleteAnimal(int id)
@@ -65,35 +62,31 @@ namespace PetCatalog.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAnimal(AnimalFormModel animalForm)
+        public IActionResult AddAnimal(AnimalViewModel animalVm)
         {
             if (ModelState.IsValid)
             {
-                var animalVm = mapper.Map<AnimalViewModel>(animalForm);
-                animalVm.SetCategory(animalForm,categoryService);
+                animalVm.SetCategory(categoryService);
                 var animal = mapper.Map<Animal>(animalVm);
                 animalService.AddAnimal(animal);
 
                 return RedirectToAction("Index");
             }
 
-            return View("NewAnimal", animalForm);
+            return View("NewAnimal", animalVm);
         }
 
         [HttpPost]
-        public IActionResult EditAnimal(AnimalEditModel animalForm)
+        public IActionResult EditAnimal(AnimalViewModel animalVm)
         {
             if (ModelState.IsValid)
             {
-                var animalVm = mapper.Map<AnimalViewModel>(animalForm);
-                animalVm.SetCategory(animalForm, categoryService);
+                animalVm.SetCategory(categoryService);
                 var animal = mapper.Map<Animal>(animalVm);
                 animalService.EditAnimal(animal);
                 return RedirectToAction("Index");
             }
-
-            animalForm.Categorys = mapper.Map<IEnumerable<CategoryViewModel>>(categoryService.GetCategorys());
-            IActionResult result = View("EditAnimal", animalForm);
+            IActionResult result = View("EditAnimal", animalVm);
             return result;
         }
     }
