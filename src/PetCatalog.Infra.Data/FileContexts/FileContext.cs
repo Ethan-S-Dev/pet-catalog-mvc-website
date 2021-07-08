@@ -7,33 +7,20 @@ namespace PetCatalog.Infra.Data.FileContexts
 {
     public partial class FileContext
     {
-        private static bool isCreated;             
-        private static FileContextDir saveDiractory;
-
-        private readonly FileContextOptions options;
+        private readonly FileContextDir saveDiractory;
         private readonly string path;
         public FileContextDir Diractory => saveDiractory;
         public FileContext(FileContextOptions fileContextOptions)
         {
-            options = fileContextOptions;
-            if (!isCreated)
-            {
-                Configure(options);
-                isCreated = true;
-            }
+            if (fileContextOptions.SaveingDirectory is null) throw new ArgumentNullException();
+            saveDiractory = new FileContextDir(fileContextOptions.SaveingDirectory);            
+            saveDiractory.OnCreation += OnDirectoryCreation;
             path = saveDiractory.Path;
         }
 
-        private void Configure(FileContextOptions options)
+        protected virtual void OnDirectoryCreation()
         {
-            if (options.SaveingDirectory is null) throw new ArgumentNullException();
-            saveDiractory = new FileContextDir(options.SaveingDirectory);
-            saveDiractory.OnCreation += OnCreation;
-        }
 
-        protected virtual void OnCreation()
-        {
-            
         }
 
         public bool Delete(string fileName)
@@ -75,6 +62,6 @@ namespace PetCatalog.Infra.Data.FileContexts
             return false;
 
         }
-       
+
     }
 }

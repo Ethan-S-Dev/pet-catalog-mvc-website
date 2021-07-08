@@ -13,7 +13,7 @@ namespace PetCatalog.Infra.Data.Contexts
             defaultImage = configuration["DefaultImageName"];
             defaultImagePath = configuration["DefaultImagePath"];
         }
-        protected override void OnCreation()
+        protected override void OnDirectoryCreation()
         {
             var data = File.ReadAllBytes(defaultImagePath);
             Save(defaultImage, data);
