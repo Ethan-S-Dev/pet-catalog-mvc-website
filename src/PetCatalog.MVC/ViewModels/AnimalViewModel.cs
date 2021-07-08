@@ -39,6 +39,7 @@ namespace PetCatalog.MVC.ViewModels
         public IFormFile Image {get;set;}
         public int CategoryId { get; set; }
         [CategoryName]
+        [Display(Name ="Category name:")]
         [Required(ErrorMessage = "Category name can't be empty.")]
         public string CategoryName { get; set; }
         public IEnumerable<CommentViewModel> Comments { get; set; }
