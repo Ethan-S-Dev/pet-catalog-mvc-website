@@ -41,10 +41,10 @@
                                     @foreach (var animal in cata.Animals)
                                     {
                                     <div class="anima-edit-box">
-                                        <form method="get"  class="edit-box">
-                                            <button asp-action="DeleteAnimal" asp-route-id="@animal.AnimalId" class="btn">Delete</button>
-                                            <button asp-action="AnimalForm" asp-route-id="@animal.AnimalId" class="btn">Edit</button>
-                                        </form>
+                                        <div class="edit-box">
+                                            <a asp-action="DeleteAnimal" asp-route-id="@animal.AnimalId" class="btn">Delete</a>
+                                            <a asp-action="AnimalForm" asp-route-id="@animal.AnimalId" class="btn">Edit</a>
+                                        </div>
                                         <partial name="AnimalView" model="animal" />
                                     </div>
                                     }

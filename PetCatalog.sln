@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetCatalog.Application", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetCatalog.Infra.IoC", "src\PetCatalog.Infra.IoC\PetCatalog.Infra.IoC.csproj", "{1D9D2B67-94C8-43BA-BC63-7A7FF8FE8DE3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2D9753D3-E656-4037-887E-1DEF8D95A4C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -2,31 +2,31 @@
     color: #1c0f13;
 }
 
-.anima-edit-box{
-    display:flex;
-    flex-direction:column;
+.anima-edit-box {
+    display: flex;
+    flex-direction: column;
 }
 
-.edit-box{
-    display:flex;
-    flex-direction:row;
-    justify-content:right;
-    margin:0 0 5px 0;
+.edit-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    margin: 0 0 5px 0;
 }
 
-.edit-box button{
-    margin:5px;
-}
+    .edit-box .btn {
+        margin: 5px;
+    }
 
 .admin-table-header {
     display: flex;
     justify-content: space-between;
 }
 
-.admin-table-header a {
-    font-size: 2em;
-}
+    .admin-table-header a {
+        font-size: 2em;
+    }
 
-select#category-select{
+select#category-select {
     font-size: 0.9em;
 }
