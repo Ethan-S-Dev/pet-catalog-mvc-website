@@ -20,24 +20,26 @@ namespace PetCatalog.Infra.Data.Repositorys
         {
             if (obj is null) throw new ArgumentNullException();
             if (obj.Data is null) throw new ArgumentNullException();
-            if (obj.Name is null) throw new ArgumentNullException();
 
+            
             var extention = Path.GetExtension(obj.Name);
             var newName = $"{Guid.NewGuid()}{extention}";
-            if(fileSaver.Save(newName,obj.Data))
+            if (fileSaver.Save(newName, obj.Data))
             {
                 obj.Name = newName;
                 try
                 {
                     dbContext.Images.Add(obj);
                     dbContext.SaveChanges();
-                }catch
+                }
+                catch
                 {
                     // TODO: Add logging
-                    fileSaver.Delete(newName);                  
+                    fileSaver.Delete(newName);
                 }
-                
+
             }
+
         }
 
         public Image Delete(int id)
@@ -78,26 +80,34 @@ namespace PetCatalog.Infra.Data.Repositorys
         {
             if (obj is null) throw new ArgumentNullException();
             if (obj.Data is null) throw new ArgumentNullException();
-            if (obj.Name is null) throw new ArgumentNullException();
 
-            var dbImage = dbContext.Images.Find(obj.ImageId);
-            if (dbImage is null) throw new ArgumentNullException();
-            var oldName = dbImage.Name;
 
-            var extention = Path.GetExtension(obj.Name);
-            var newName = $"{Guid.NewGuid()}{extention}";
-            if (fileSaver.Update(oldName,newName, obj.Data))
+            if (obj.ImageId == dbContext.DefaultImageId)
             {
-                try
+                obj.ImageId = 0;
+                Create(obj);
+            }
+            else
+            {
+                var dbImage = dbContext.Images.Find(obj.ImageId);
+                if (dbImage is null) throw new ArgumentNullException();
+                var oldName = dbImage.Name;
+
+                var extention = Path.GetExtension(obj.Name);
+                var newName = $"{Guid.NewGuid()}{extention}";
+                if (fileSaver.Update(oldName, newName, obj.Data))
                 {
-                    dbImage.Name = newName;
-                    dbContext.SaveChanges();
-                }
-                catch
-                {
+                    try
+                    {
+                        dbImage.Name = newName;
+                        dbContext.SaveChanges();
+                    }
+                    catch
+                    {
+
+                    }
 
                 }
-                
             }
         }
     }

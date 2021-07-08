@@ -20,6 +20,7 @@ namespace PetCatalog.Infra.IoC
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAnimalService, AnimalService>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IImageService, ImageService>();
 
             // PetShop.Domain.Interfaces | PetShop.Infra.Data.Repositorys
             services.AddScoped<ICategoryRepository, CategoryRepository>();

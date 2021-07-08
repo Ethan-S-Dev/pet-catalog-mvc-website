@@ -1,4 +1,8 @@
 ﻿@model PetCatalog.MVC.ViewModels.AnimalViewModel
+@inject PetCatalog.Application.Interfaces.IImageService imageService
+@{ 
+    var imageName = imageService.GetImageName(Model.ImageId);
+}
 
 <div class="animal-container">
     <div class="animal-details">
@@ -32,14 +36,14 @@
     </div>
 
     <div class="animal-image">
-        <img src="~/res/images/animals/@Model.Image.Name" alt="The Image of @Html.DisplayFor(m=>m.Name)" />
+        <img src="~/res/images/animals/@imageName" alt="The Image of @Html.DisplayFor(m=>m.Name)" />
 
         <div class="info">
             <h2>Information</h2>
             <ul>
                 <li><strong>@Html.DisplayNameFor(m => m.Name) </strong>@Html.DisplayFor(m => m.Name)</li>
                 <li><strong>@Html.DisplayNameFor(m => m.Age) </strong>@Html.DisplayFor(m => m.Age)</li>
-                <li><strong>@Html.DisplayNameFor(m => m.Category.Name) </strong>@Html.DisplayFor(m => m.Category.Name)</li>
+                <li><strong>@Html.DisplayNameFor(m => m.CategoryName) </strong>@Html.DisplayFor(m => m.CategoryName)</li>
                 <li class="desc-li" animal-id="@Model.AnimalId"><strong>Description</strong></li>
             </ul>
         </div>

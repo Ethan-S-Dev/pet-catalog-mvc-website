@@ -11,31 +11,33 @@ namespace PetCatalog.Infra.Data.Contexts
     {
         private readonly string path;
         public string Path => path;
+        public bool IsCreated => Directory.Exists(path);
 
-        public event Action OnCreation;
-        public event Action OnDeletion;
+        public Action OnCreation;
+        public Action OnDeletion;
 
         public FileContextDir(string path)
-        {           
+        {
             this.path = path;
         }
 
         public void EnsureDeleted()
         {
-            if (Directory.Exists(path))
+            if (IsCreated)
             {
                 Directory.Delete(path, true);
                 OnDeletion?.Invoke();
-            }      
+            }
         }
+
         public void EnsureCreated()
         {
-            if (!Directory.Exists(path))
+            if (!IsCreated)
             {
                 Directory.CreateDirectory(path);
                 OnCreation?.Invoke();
             }
         }
-      
     }
 }
+

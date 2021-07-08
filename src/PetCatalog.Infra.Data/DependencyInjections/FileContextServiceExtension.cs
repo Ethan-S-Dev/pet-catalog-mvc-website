@@ -13,7 +13,10 @@ namespace PetCatalog.Infra.Data.DependencyInjections
     {
         public static void AddFileContext<T>(this IServiceCollection services, Action<FileContextOptions> optionAction, ServiceLifetime serviceLifetime = ServiceLifetime.Scoped) where T : FileContext
         {
-            FileContext.Configuring = optionAction;
+            var srvc = new FileContextOptions();
+            optionAction.Invoke(srvc);
+            services.AddSingleton(srvc);
+
             switch (serviceLifetime)
             {
                 case ServiceLifetime.Singleton:
@@ -30,7 +33,9 @@ namespace PetCatalog.Infra.Data.DependencyInjections
 
         public static void AddFileContext(this IServiceCollection services, Action<FileContextOptions> optionAction, ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
         {
-            FileContext.Configuring = optionAction;
+            services.AddSingleton<FileContextOptions>();
+            var srvc = services.BuildServiceProvider().GetService<FileContextOptions>();
+            optionAction.Invoke(srvc);
             switch (serviceLifetime)
             {
                 case ServiceLifetime.Singleton:

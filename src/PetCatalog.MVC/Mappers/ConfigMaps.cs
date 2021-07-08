@@ -17,57 +17,33 @@ namespace PetCatalog.MVC.Mappers
 
         public static IMapperConfigurationExpression RegisterMaps(this IMapperConfigurationExpression mce)
         {
-            //mce.CreateMap<FormFile,>
-
-            mce.CreateMap<AnimalViewModel, Animal>();
-            mce.CreateMap<Animal, AnimalViewModel>();
-
             mce.CreateMap<CategoryViewModel, Category>();
             mce.CreateMap<Category, CategoryViewModel>();
 
             mce.CreateMap<Comment, CommentViewModel>();
             mce.CreateMap<CommentViewModel, Comment>();
+            //mce.CreateMap<IFormFile, Image>()
+            //    .ConvertUsing<ImageConverter>();
 
-            mce.CreateMap<ImageViewModel, Image>();
-            mce.CreateMap<Image, ImageViewModel>();
+            mce.CreateMap<Animal, AnimalViewModel>()
+                .ForMember(des => des.CategoryName, cfg => cfg.MapFrom(src => src.Category.Name))
+                .ForMember(des => des.ImageId, cfg => cfg.MapFrom(src => src.Image.ImageId))
+                .ForMember(des => des.Image, cfg => cfg.Ignore());
 
-            mce.CreateMap<IFormFile, ImageViewModel>()
-                .ForMember(des => des.Name, cfg => cfg.MapFrom(src => src.FileName))
-                .ForMember(des => des.data, cfg => cfg.ConvertUsing(new ImageConverter(),src=>src))
-                .ForMember(des=>des.ImageId,cfg=>cfg.Ignore()); 
-
-            mce.CreateMap<AnimalViewModel, AnimalFormModel>()
-                .ForMember(dest => dest.Animal, cfg => cfg.MapFrom(src => src))
-                .ForMember(dest => dest.CategoryId, cfg => cfg.MapFrom(src => src.CategoryId))
-                .ForMember(dest => dest.CategoryName, cfg => cfg.MapFrom(src => src.Category.Name))
-                .ForMember(dest => dest.Categorys, cfg => cfg.Ignore()) // impotent
-                .ForMember(dest => dest.Image, cfg => cfg.Ignore()); // ignore
-
-            mce.CreateMap<AnimalFormModel, AnimalViewModel>()
-                .ForMember(des => des.AnimalId, cfg => cfg.MapFrom(src => src.Animal.AnimalId))
-                .ForMember(des => des.Name, cfg => cfg.MapFrom(src => src.Animal.Name))
-                .ForMember(des => des.Age, cfg => cfg.MapFrom(src => src.Animal.Age))
-                .ForMember(des => des.Description, cfg => cfg.MapFrom(src => src.Animal.Description))
-                .ForMember(des => des.Image, cfg => cfg.MapFrom(src=>src.Image))
-                .ForMember(des => des.CategoryId, cfg => cfg.Ignore()); // impotent
-
-            mce.CreateMap<AnimalViewModel, AnimalEditModel>()
-                .ForMember(dest => dest.Animal, cfg => cfg.MapFrom(src => src))
-                .ForMember(dest => dest.CategoryId, cfg => cfg.MapFrom(src => src.CategoryId))
-                .ForMember(dest => dest.CategoryName, cfg => cfg.MapFrom(src => src.Category.Name))
-                .ForMember(dest => dest.Categorys, cfg => cfg.Ignore()) // impotent
-                .ForMember(dest => dest.Image, cfg => cfg.Ignore()); // ignore
-
-            mce.CreateMap<AnimalEditModel, AnimalViewModel>()
-                .ForMember(des => des.AnimalId, cfg => cfg.MapFrom(src => src.Animal.AnimalId))
-                .ForMember(des => des.Name, cfg => cfg.MapFrom(src => src.Animal.Name))
-                .ForMember(des => des.Age, cfg => cfg.MapFrom(src => src.Animal.Age))
-                .ForMember(des => des.Description, cfg => cfg.MapFrom(src => src.Animal.Description))
-                .ForMember(des => des.Image, cfg => cfg.MapFrom(src => src.Image))
-                .ForMember(des => des.CategoryId, cfg => cfg.Ignore()); // impotent
+            mce.CreateMap<AnimalViewModel, Animal>()
+                .ForPath(des => des.Image.ImageId, cfg => cfg.MapFrom(src => (src.Image == null) ? src.ImageId : 0))
+                .ForPath(des => des.Image.Name, cfg => cfg.MapFrom(src => (src.Image == null) ? null : src.Image.FileName))
+                .ForPath(des => des.Image.Data, cfg => cfg.MapFrom(src => (src.Image == null) ? null : CreateData(src.Image)));
 
             return mce;
         }
 
+        private static byte[] CreateData(IFormFile src)
+        {
+            using var stream = new MemoryStream();
+            src.CopyTo(stream);
+            stream.Position = 0;
+            return stream.ToArray();       
+        }
     }
 }

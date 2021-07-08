@@ -1,14 +1,22 @@
-﻿using PetCatalog.Infra.Data.FileContexts;
+﻿using Microsoft.Extensions.Configuration;
+using PetCatalog.Infra.Data.FileContexts;
 using System.IO;
 
 namespace PetCatalog.Infra.Data.Contexts
 {
     public class ImageFileContext : FileContext
     {
-        protected override void OnCreation()
+        private readonly string defaultImage;
+        private readonly string defaultImagePath;
+        public ImageFileContext(FileContextOptions options,IConfiguration configuration) : base(options)
         {
-            var data = File.ReadAllBytes("./res/default.png");
-            Save("default.png", data);
+            defaultImage = configuration["DefaultImageName"];
+            defaultImagePath = configuration["DefaultImagePath"];
+        }
+        protected override void OnDirectoryCreation()
+        {
+            var data = File.ReadAllBytes(defaultImagePath);
+            Save(defaultImage, data);
         }
     }
 }

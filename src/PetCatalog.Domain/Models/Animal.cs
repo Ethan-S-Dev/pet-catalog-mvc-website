@@ -19,5 +19,7 @@ namespace PetCatalog.Domain.Models
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
         public virtual IEnumerable<Comment> Comments { get; set; }
+        
     }
+
 }
