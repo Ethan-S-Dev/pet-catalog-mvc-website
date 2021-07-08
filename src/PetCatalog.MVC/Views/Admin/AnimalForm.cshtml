@@ -1,9 +1,12 @@
 ﻿@model PetCatalog.MVC.ViewModels.AnimalViewModel
 @inject PetCatalog.Application.Interfaces.ICategoryService categoryService
+@inject PetCatalog.Application.Interfaces.IImageService imageService
 @{
     ViewBag.Title = "Pet Shop";
     ViewBag.AdminClss = "active";
     var categorys = categoryService.GetCategorys();
+    var imageName = imageService.GetImageName(Model.ImageId);
+    var submitText = Model.ImageId == 0 ? "Add Animal" : "Edit Animal";
 }
 
 <script src="~/scripts/jquery/jquery.validate.min.js"></script>
@@ -52,13 +55,13 @@
                         </td>
                         <td>
                             <div class="image-box">
-                                <img class="selected-image" src="~/res/images/animals/@Model.ImageName"/>
+                                <img class="selected-image" src="~/res/images/animals/@imageName" />
                                 <label asp-for="Image" class="custom-file-label">Choose a file</label>
-                                <input asp-for="Image" type="file" class="custom-file-input" accept="image/gif, image/jpeg, image/png , image/jpg , image/webp"/>
-                                <input asp-for="ImageName" value="@Model.ImageName" type="text" style="visibility:collapse" readonly/>
+                                <input asp-for="Image" type="file" class="custom-file-input" accept="image/gif, image/jpeg, image/png , image/jpg , image/webp" />
+                                <input asp-for="ImageId" value="@Model.ImageId" type="text" style="visibility:collapse" readonly />
                             </div>
                         </td>
-                    </tr> 
+                    </tr>
                     <tr>
                         <td colspan="2">
                             <span class="error" asp-validation-for="Image"></span>
@@ -113,7 +116,7 @@
                 <tfoot>
                     <tr>
                         <td>
-                            <button class="btn" type="submit">Add Animal</button>
+                            <button class="btn" type="submit">@submitText</button>
                         </td>
                     </tr>
                 </tfoot>

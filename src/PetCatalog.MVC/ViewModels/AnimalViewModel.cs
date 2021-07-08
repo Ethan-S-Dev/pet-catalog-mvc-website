@@ -30,7 +30,7 @@ namespace PetCatalog.MVC.ViewModels
         [MaxLength(3000, ErrorMessage = "Description can't be longer then 3000 characters.")]
         public string Description { get; set; }
 
-        public string ImageName { get; set; }
+        public int ImageId { get; set; }
 
         [DataType(DataType.Upload)]
         [AllowedExtensions(".png", ".jpg", ".svg", ".jpeg", ".webp", ErrorMessage = "Invalid image type.")]

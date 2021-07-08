@@ -1,4 +1,8 @@
 ﻿@model PetCatalog.MVC.ViewModels.AnimalViewModel
+@inject PetCatalog.Application.Interfaces.IImageService imageService
+@{ 
+    var imageName = imageService.GetImageName(Model.ImageId);
+}
 
 <div class="animal-container">
     <div class="animal-details">
@@ -32,7 +36,7 @@
     </div>
 
     <div class="animal-image">
-        <img src="~/res/images/animals/@Model.ImageName" alt="The Image of @Html.DisplayFor(m=>m.Name)" />
+        <img src="~/res/images/animals/@imageName" alt="The Image of @Html.DisplayFor(m=>m.Name)" />
 
         <div class="info">
             <h2>Information</h2>

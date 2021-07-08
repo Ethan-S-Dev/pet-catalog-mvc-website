@@ -21,12 +21,15 @@ namespace PetCatalog.MVC.Controllers
         private readonly ICommentService commentService;
         private readonly ICategoryService categoryService;
         private readonly IAnimalService animalService;
+
         private readonly IMapper mapper;
-        public AdminController(ICategoryService categoryService, IAnimalService animalService, ICommentService commentService, IMapper mapper)
+        private readonly string defaultName;
+        public AdminController(ICategoryService categoryService,IConfiguration configuration, IAnimalService animalService, ICommentService commentService, IMapper mapper)
         {
             this.commentService = commentService;
             this.categoryService = categoryService;
             this.animalService = animalService;
+            defaultName = configuration.GetValue<string>("");
             this.mapper = mapper;
         }
 
@@ -77,8 +80,7 @@ namespace PetCatalog.MVC.Controllers
                 var animal = mapper.Map<Animal>(animalVm);
                 if (id == 0)
                 {
-                    animalService.AddAnimal(animal);
-                    
+                    animalService.AddAnimal(animal);           
                 }
                 else
                 {

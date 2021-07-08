@@ -21,7 +21,14 @@ namespace PetCatalog.Application.Services
 
         public bool AddAnimal(Animal animal)
         {
-            imageRepository.Create(animal.Image);
+            var image = imageRepository.Get(animal.Image.ImageId);
+            if (image is not null)
+                animal.Image = image;
+            else
+            {
+                imageRepository.Create(animal.Image);
+                animal.ImageId = animal.Image.ImageId;
+            }
             animalRepository.Create(animal);
             return true;
         }
@@ -35,11 +42,13 @@ namespace PetCatalog.Application.Services
         public void EditAnimal(Animal animal)
         {
             var realAnimal = animalRepository.Get(animal.AnimalId);
-            if (animal.Image.Name != realAnimal.Image.Name)
+
+            if (animal.Image.ImageId == 0)
             {
                 animal.Image.ImageId = realAnimal.ImageId;
                 animal.ImageId = realAnimal.ImageId;
                 imageRepository.Update(animal.Image);
+                animal.ImageId = animal.Image.ImageId;
             }
             animalRepository.Update(animal);
         }

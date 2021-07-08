@@ -1,13 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PetCatalog.Domain.Models;
+using System;
 
 namespace PetCatalog.Infra.Data.Contexts
 {
     public class PetCatalogDbContext : DbContext
     {
-        public PetCatalogDbContext(DbContextOptions<PetCatalogDbContext> options) : base(options)
+        private readonly string defaultImage;
+        private readonly int defaultImageId;
+        public int DefaultImageId => defaultImageId;
+        public PetCatalogDbContext(DbContextOptions<PetCatalogDbContext> options,IConfiguration configuration) : base(options)
         {
-
+            this.defaultImage = configuration["DefaultImageName"];
+            defaultImageId = Convert.ToInt32(configuration["DefaultImageId"]);
         }
 
         public DbSet<Image> Images { get; set; }
@@ -21,8 +27,8 @@ namespace PetCatalog.Infra.Data.Contexts
 
             modelBuilder.Entity<Image>().HasData(new Image()
             {
-                ImageId = 1,
-                Name ="default.png"
+                ImageId = defaultImageId,
+                Name = defaultImage
             }); ;
 
         }

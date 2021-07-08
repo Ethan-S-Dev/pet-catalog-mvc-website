@@ -7,28 +7,27 @@ namespace PetCatalog.Infra.Data.FileContexts
 {
     public partial class FileContext
     {
-        public static Action<FileContextOptions> Configuring;
-        private static readonly FileContextOptions configurationOptions = new();
+        private static bool isCreated;             
         private static FileContextDir saveDiractory;
-        private static bool Created;             
-        public FileContextDir Diractory => saveDiractory;
+
+        private readonly FileContextOptions options;
         private readonly string path;
-        public FileContext()
-        {    
-            if(!Created)
+        public FileContextDir Diractory => saveDiractory;
+        public FileContext(FileContextOptions fileContextOptions)
+        {
+            options = fileContextOptions;
+            if (!isCreated)
             {
-                Configure();
-                Created = true;
+                Configure(options);
+                isCreated = true;
             }
             path = saveDiractory.Path;
         }
 
-        private void Configure()
+        private void Configure(FileContextOptions options)
         {
-            if (Configuring is null) throw new FileSaverConfigurationException();
-            Configuring?.Invoke(configurationOptions);
-            if (configurationOptions.SaveingDirectory is null) throw new ArgumentNullException();
-            saveDiractory = new FileContextDir(configurationOptions.SaveingDirectory);
+            if (options.SaveingDirectory is null) throw new ArgumentNullException();
+            saveDiractory = new FileContextDir(options.SaveingDirectory);
             saveDiractory.OnCreation += OnCreation;
         }
 
