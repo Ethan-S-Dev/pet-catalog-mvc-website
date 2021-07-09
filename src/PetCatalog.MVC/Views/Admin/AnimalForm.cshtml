@@ -1,12 +1,13 @@
 ﻿@model PetCatalog.MVC.ViewModels.AnimalViewModel
 @inject PetCatalog.Application.Interfaces.ICategoryService categoryService
 @inject PetCatalog.Application.Interfaces.IImageService imageService
+
 @{
-    ViewBag.Title = "Pet Shop";
     ViewBag.AdminClss = "active";
+    ViewBag.Title = "Admin";
     var categorys = categoryService.GetCategorys();
     var imageName = imageService.GetImageName(Model.ImageId);
-    var submitText = Model.ImageId == 0 ? "Add Animal" : "Edit Animal";
+    var submitText = Model.AnimalId == 0 ? "Add Animal" : "Edit Animal";
 }
 
 <script src="~/scripts/jquery/jquery.validate.min.js"></script>
@@ -26,6 +27,7 @@
                     <tr>
                         <td>
                             <label asp-for="Name"></label>
+                            <i class="fas fa-asterisk requird"></i>
                         </td>
                         <td>
                             <input asp-for="Name" type="text" />
@@ -39,6 +41,7 @@
                     <tr>
                         <td>
                             <label asp-for="Age"></label>
+                            <i class="fas fa-asterisk requird"></i>
                         </td>
                         <td>
                             <input asp-for="Age" type="number" />
@@ -70,6 +73,7 @@
                     <tr>
                         <td>
                             <label asp-for="Description"></label>
+                            <i class="fas fa-asterisk requird"></i>
                         </td>
                         <td>
                             <textarea asp-for="Description"></textarea>
@@ -84,6 +88,7 @@
                     <tr>
                         <td>
                             <label asp-for="CategoryId"></label>
+                            <i class="fas fa-asterisk requird"></i>
                         </td>
                         <td>
 
@@ -102,6 +107,7 @@
                     <tr id="category-name">
                         <td>
                             <label asp-for="CategoryName"></label>
+                            <i class="fas fa-asterisk requird"></i>
                         </td>
                         <td>
                             <input id="category-name-filed" asp-for="CategoryName" type="text" />

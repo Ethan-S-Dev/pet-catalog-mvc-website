@@ -9,7 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PetCatalog.MVC.Controllers
-{   
+{
+    
     public class HomeController : Controller
     {
         private readonly IAnimalService animalService;

@@ -9,8 +9,9 @@ namespace PetCatalog.Application.Interfaces
 {
     public interface ICategoryService
     {
-        public IEnumerable<Category> GetCategorys();
-        public Category GetCategory(int categoryId);
+        IEnumerable<Category> GetCategorys();
+        Category GetCategory(int categoryId);
+        IEnumerable<Animal> GetAnimals(int categoryId);
         bool AddCategory(string name,out int id);
         bool AddCategory(string name);
     }

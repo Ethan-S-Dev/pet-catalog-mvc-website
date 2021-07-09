@@ -35,9 +35,9 @@ namespace PetCatalog.MVC
        
         public void Configure(IApplicationBuilder app, PetCatalogDbContext ctx,ImageFileContext fs)
         {
-            ctx.Database.EnsureDeleted();
+            //ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();
-            fs.Diractory.EnsureDeleted();
+            //fs.Diractory.EnsureDeleted();
             fs.Diractory.EnsureCreated();
 
 
@@ -49,10 +49,10 @@ namespace PetCatalog.MVC
                 endpoints.MapDefaultControllerRoute();
             });
 
-            app.Run(async c =>
-            {
-                 c.Response.Redirect("/");
-            });
+            //app.Run(async c =>
+            //{
+            //     c.Response.Redirect("/");
+            //});
         }
 
         

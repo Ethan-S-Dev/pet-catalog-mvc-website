@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PetCatalog.MVC.Controllers
-{    
+{
     public class CommentsController : Controller
     {
         private readonly ICommentService commentService;
@@ -20,12 +20,12 @@ namespace PetCatalog.MVC.Controllers
             this.mapper = mapper;
         }
 
-
         [HttpPost]
-        public IActionResult AddComment(CommentViewModel comment)
+        public IActionResult AddComment(CommentViewModel comment,int id)
         {
             if(ModelState.IsValid)
             {
+                comment.AnimalId = id;
                 var realComment = mapper.Map<Comment>(comment);
                 commentService.AddComment(realComment);
             }
@@ -33,7 +33,6 @@ namespace PetCatalog.MVC.Controllers
             return Redirect(url);
         }
 
-        
         public IActionResult DeleteComment(int id)
         {
             var url = Request.Headers["Referer"].ToString();

@@ -35,7 +35,7 @@ namespace PetCatalog.Infra.Data.Repositorys
 
         public IEnumerable<Category> GetAll()
         {
-            return dbContext.Categories;
+            return dbContext.Categories.OrderBy(cat=>cat.Name.ToLower());
         }
 
         public void Update(Category obj)

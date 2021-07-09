@@ -7,9 +7,13 @@
 <script src="~/scripts/AnimalView.js"></script>
 <div>
     <div>
-        <h2>Best two Pets</h2>
+        <h2>Best Pets</h2>
     </div>
     <div>
+        @if(Model.Count() == 0)
+            {
+        <h4>There are no animals in the catalog.</h4>
+            }
         @foreach (var animal in Model)
             {
                 <partial name="AnimalView" model="animal" />

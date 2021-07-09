@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PetCatalog.MVC.Controllers
-{    
+{
     public class CatalogController : Controller
     {
         private readonly ICategoryService categoryService;
@@ -19,8 +19,8 @@ namespace PetCatalog.MVC.Controllers
             this.mapper = mapper;
         }
         public IActionResult Index()
-        {           
-            var model = mapper.Map<IEnumerable<CategoryViewModel>>(categoryService.GetCategorys());
+        {         
+             var model = mapper.Map<IEnumerable<CategoryViewModel>>(categoryService.GetCategorys());         
             return View(model);
         }
     }

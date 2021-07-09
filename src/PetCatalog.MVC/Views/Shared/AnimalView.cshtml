@@ -1,6 +1,6 @@
 ﻿@model PetCatalog.MVC.ViewModels.AnimalViewModel
 @inject PetCatalog.Application.Interfaces.IImageService imageService
-@{ 
+@{
     var imageName = imageService.GetImageName(Model.ImageId);
 }
 
@@ -8,29 +8,42 @@
     <div class="animal-details">
         <h1>@Html.DisplayFor(m => m.Name)</h1>
         <div class="comment-continer">
-            @if (ViewBag.EnableCommentDelete)
-            {
-                @foreach (var comment in Model.Comments)
+            <div class="comments-scroll">
+                @if (ViewBag.EnableCommentDelete)
                 {
-                    <partial name="CommentDelete" model="comment" />
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <partial name="CommentDelete" model="comment" />
+                    }
                 }
-            }
-            else
-            {
-                @foreach (var comment in Model.Comments)
+                else
                 {
-                    <partial name="CommentView" model="comment" />
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <partial name="CommentView" model="comment" />
+                    }
                 }
-            }
-            @if (Model.Comments.Count() == 0)
-            {
-                <div class="no-comment-div"><p>No Comments.</p></div>
-            }
+            </div>
+            <div class="comments-number-box">
+                @if (Model.Comments.Count() == 0)
+                {
+                    <div>
+                        <span>No Comments</span>
+                    </div>
+
+                }
+                else
+                {
+                    <div>
+                        <span><Strong>@Model.Comments.Count()</Strong> @(Model.Comments.Count() > 1 ? "Comments" : "Comment")</span>
+                    </div>
+                }
+            </div>
+
         </div>
         <div class="comments-control">
             <button animal-id="@Model.AnimalId" class="comments-btn">
-                <span class="coments-count">@Model.Comments.Count()</span>
-                <span class="coments-text">Comments</span>
+                <span class="coments-text">Add Comment</span>
             </button>
         </div>
     </div>
@@ -53,7 +66,7 @@
 <div id="desc-animal-@Model.AnimalId" class="animal-desc">
     <div class="animal-desc-header">
         <strong>Description</strong>
-        <button class="back-btn" animal-id="@Model.AnimalId" >
+        <button class="back-btn" animal-id="@Model.AnimalId">
             <i class="fas fa-arrow-circle-right"></i>
         </button>
     </div>
@@ -64,12 +77,12 @@
     </div>
 </div>
 <div id="comment-animal-@Model.AnimalId" class="animal-comment">
-    <div class="animal-comment-header">       
+    <div class="animal-comment-header">
         <button class="back-btn" animal-id="@Model.AnimalId">
             <i class="fas fa-arrow-circle-right"></i>
         </button>
     </div>
     <div class="comment-para">
-        <partial name="CommentCreate" model="@(new PetCatalog.MVC.ViewModels.CommentViewModel() {AnimalId = Model.AnimalId})"/>
+        <partial name="CommentCreate" model="@(new PetCatalog.MVC.ViewModels.CommentViewModel() {AnimalId = Model.AnimalId})" />
     </div>
 </div>

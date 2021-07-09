@@ -18,14 +18,19 @@
 .comment-continer {
     padding: 2px;
     box-shadow: 0 2px 4px 1px grey;
-    overflow:auto;
     height: 50%;
+}
+
+.comments-scroll {
+    overflow: auto;
+    border-bottom: 1px solid #1c0f13;
+    height: 85%;
     width: 100%;
     max-height: 250px;
 }
 
-.comment-box p{
-    margin:0;
+.comment-box p {
+    margin: 0;
 }
 
 .comment-para{
@@ -37,4 +42,20 @@
 .comment-table-div{
     width:95%;
     height:95%;
+}
+
+
+.comments-number-box {
+    height:15%;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    vertical-align:bottom;
+    font-size: 0.6em;
+}
+
+.comments-number-box div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

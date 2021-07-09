@@ -19,6 +19,7 @@
     }
 
 .admin-table-header {
+    width:40vw;
     display: flex;
     justify-content: space-between;
 }

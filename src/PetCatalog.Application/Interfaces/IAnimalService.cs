@@ -9,9 +9,10 @@ namespace PetCatalog.Application.Interfaces
 {
     public interface IAnimalService
     {
-        public Animal GetAnimal(int animalId);       
+        Animal GetAnimal(int animalId);       
 
-        public IEnumerable<Animal> GetBestAnimals();
+        IEnumerable<Animal> GetBestAnimals();
+        IEnumerable<Animal> GetAllAnimals();
 
         bool AddAnimal(Animal animal);
 

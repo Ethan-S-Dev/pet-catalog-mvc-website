@@ -53,6 +53,11 @@ namespace PetCatalog.Application.Services
             animalRepository.Update(animal);
         }
 
+        public IEnumerable<Animal> GetAllAnimals()
+        {
+            return animalRepository.GetAll().ToList();
+        }
+
         public Animal GetAnimal(int animalId)
         {
             return animalRepository.Get(animalId);

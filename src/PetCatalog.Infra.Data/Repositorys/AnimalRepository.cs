@@ -54,7 +54,7 @@ namespace PetCatalog.Infra.Data.Repositorys
 
         public IEnumerable<Animal> GetAll()
         {
-            return dbContext.Animals;
+            return dbContext.Animals.OrderBy(ani=>ani.Name.ToLower());
         }
 
         public IEnumerable<Animal> GetTopCommented()

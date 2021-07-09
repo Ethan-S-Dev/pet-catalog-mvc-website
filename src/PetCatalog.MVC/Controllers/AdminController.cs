@@ -23,13 +23,13 @@ namespace PetCatalog.MVC.Controllers
         private readonly IAnimalService animalService;
 
         private readonly IMapper mapper;
-        private readonly string defaultName;
-        public AdminController(ICategoryService categoryService,IConfiguration configuration, IAnimalService animalService, ICommentService commentService, IMapper mapper)
+        private readonly int defaultId;
+        public AdminController(ICategoryService categoryService, IConfiguration configuration, IAnimalService animalService, ICommentService commentService, IMapper mapper)
         {
             this.commentService = commentService;
             this.categoryService = categoryService;
             this.animalService = animalService;
-            defaultName = configuration.GetValue<string>("");
+            defaultId = configuration.GetValue<int>("DefaultImageId");
             this.mapper = mapper;
         }
 
@@ -39,21 +39,17 @@ namespace PetCatalog.MVC.Controllers
             return View(model);
         }
 
-        public IActionResult NewAnimal()
-        {
-            var animalFm = new AnimalViewModel();
-            return View(animalFm);
-        }
 
         [HttpGet]
         public IActionResult AnimalForm(int id)
         {
+            ViewBag.DefaultImageId = defaultId;
             Animal animal;
-            if (id == 0)           
-                animal = animalService.GetEmptyAnimal();           
-            else           
-                animal = animalService.GetAnimal(id);            
-            
+            if (id == 0)
+                animal = animalService.GetEmptyAnimal();
+            else
+                animal = animalService.GetAnimal(id);
+
             if (animal is null) return RedirectToAction("Index");
             var animaVm = mapper.Map<AnimalViewModel>(animal);
             return View(animaVm);
@@ -62,16 +58,16 @@ namespace PetCatalog.MVC.Controllers
         public IActionResult DeleteAnimal(int id)
         {
             var animal = animalService.GetAnimal(id);
-            if(animal is null) return RedirectToAction("Index");
+            if (animal is null) return RedirectToAction("Index");
 
             animalService.DeleteAnimal(id);
-            commentService.DeleteComments(id);                  
+            commentService.DeleteComments(id);
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult AnimalForm(AnimalViewModel animalVm,int id)
+        public IActionResult AnimalForm(AnimalViewModel animalVm, int id)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +76,7 @@ namespace PetCatalog.MVC.Controllers
                 var animal = mapper.Map<Animal>(animalVm);
                 if (id == 0)
                 {
-                    animalService.AddAnimal(animal);           
+                    animalService.AddAnimal(animal);
                 }
                 else
                 {
@@ -89,8 +85,8 @@ namespace PetCatalog.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View("NewAnimal", animalVm);
+            return View("AnimalForm", animalVm);
         }
-     
+
     }
 }

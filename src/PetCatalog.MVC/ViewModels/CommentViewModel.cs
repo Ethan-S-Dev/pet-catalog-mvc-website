@@ -10,9 +10,9 @@ namespace PetCatalog.MVC.ViewModels
     public class CommentViewModel
     {
         public int CommentId { get; set; }
-        [Required]
         
         public int AnimalId { get; set; }
+
         [Required]
         [DataType(DataType.MultilineText)]
         [MaxLength(200)]

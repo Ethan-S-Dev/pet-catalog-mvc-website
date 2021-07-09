@@ -1,8 +1,11 @@
 ﻿@model IEnumerable<PetCatalog.MVC.ViewModels.CategoryViewModel>
+@inject PetCatalog.Application.Interfaces.IAnimalService animalServic
+@inject AutoMapper.IMapper mapper
 @{
     ViewBag.CatalogClss = "active";
     ViewBag.Title = "Catalog";
     ViewBag.EnableCommentDelete = false;
+    var allAnimal = mapper.Map<IEnumerable<PetCatalog.MVC.ViewModels.AnimalViewModel>>(animalServic.GetAllAnimals());
 }
 <script src="~/scripts/CategorySelect.js"></script>
 <script src="~/scripts/AnimalView.js"></script>
@@ -16,18 +19,28 @@
             <tr>
                 <td>
                     <select id="cata-select" asp-items="@(new SelectList(Model,"CategoryId","Name"))">
-                        <option value="-1" selected>All</option>
+                        <option value="0" selected>All</option>
                     </select>
                 </td>
             </tr>
         </thead>
         <tbody>
+            <tr class="cate-select-row" id="tr-id-0" style="visibility:visible">
+                <td>
+                    <div>
+                        @foreach (var animal in allAnimal)
+                        {
+                            <partial name="AnimalView" model="animal" />
+                        }
+                    </div>
+                </td>
+            </tr>
             @foreach (var cata in Model)
             {
                 <tr class="cate-select-row" id="tr-id-@cata.CategoryId">
                     <td>
                         <div>
-                            @foreach (var animal in cata.Animals)
+                            @foreach (var animal in cata.Animals.OrderBy(an=>an.Name.ToLower()))
                             {
                                 <partial name="AnimalView" model="animal" />
                             }

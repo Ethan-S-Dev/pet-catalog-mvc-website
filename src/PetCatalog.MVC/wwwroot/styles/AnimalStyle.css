@@ -158,13 +158,14 @@
     box-shadow: 0 15px 30px 1px grey;
     border-radius: 5px;
     width: 70vw;
-    height: 40vw;
+    height: auto;
     max-width: 700px;
     max-height: 400px;
     visibility: collapse;
     top: 20vh;
     display: flex;
     flex-direction: column;
+    margin:0px 0px 4px 0px;
 }
 
 .animal-desc strong {
@@ -223,11 +224,6 @@
     justify-content:flex-end;
 }
 
-.no-comment-div{
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    height:100%;
 
-}
+
+

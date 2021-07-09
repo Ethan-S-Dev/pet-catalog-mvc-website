@@ -1,6 +1,6 @@
 ﻿.cate-select-row
 {
-    visibility:visible;
+    visibility:collapse;
 }
 
 select {

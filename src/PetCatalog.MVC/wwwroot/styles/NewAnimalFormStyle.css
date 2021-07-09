@@ -57,3 +57,8 @@
     background-color: #E2E2E2;
 }
 
+i.requird{
+    color:red;
+    font-size:0.3em;
+    vertical-align:text-top;
+}

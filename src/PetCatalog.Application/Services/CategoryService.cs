@@ -35,6 +35,11 @@ namespace PetCatalog.Application.Services
             return true;
         }
 
+        public IEnumerable<Animal> GetAnimals(int categoryId)
+        {
+            return categoryRepository.Get(categoryId).Animals.OrderBy(ani => ani.Name.ToLower()).ToList();
+        }
+
         public Category GetCategory(int categoryId)
         {
             return categoryRepository.Get(categoryId);
