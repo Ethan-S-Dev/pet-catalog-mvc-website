@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using PetCatalog.Application.Auth;
+using PetCatalog.Domain.Models;
 using PetCatalog.Infra.Data.Contexts;
 using PetCatalog.Infra.Data.DependencyInjections;
 using PetCatalog.Infra.IoC;
 using PetCatalog.MVC.Mappers;
 using System;
 using System.IO;
-
+using System.Text;
 
 namespace PetCatalog.MVC.Extensions
 {
@@ -70,7 +74,7 @@ namespace PetCatalog.MVC.Extensions
         public static bool UseSqlite(this IConfiguration configuration) 
             => configuration.GetValue<bool>("UseSqlite");
 
-        public static void CunfigureFileSaver(this IServiceCollection services, IWebHostEnvironment webHostEnv, IConfiguration config) 
+        public static void ConfigureFileSaver(this IServiceCollection services, IWebHostEnvironment webHostEnv, IConfiguration config) 
             => services.AddFileContext<ImageFileContext>(ops=>ops.UseSaveDir(Path.Combine(webHostEnv.WebRootPath,config.GetValue<string>("ImageDirectory"))));
 
         public static void RegisterServices(this IServiceCollection services)
@@ -83,6 +87,35 @@ namespace PetCatalog.MVC.Extensions
             {
                 cfg.RegisterMaps();
             });
+        }
+
+        public static void RegisterAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtSection = configuration.GetSection("JWTSettings");
+            services.Configure<JWTSettings>(jwtSection);
+
+            var jwtSetings = jwtSection.Get<JWTSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtSetings.SecretKey);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
         }
 
     }

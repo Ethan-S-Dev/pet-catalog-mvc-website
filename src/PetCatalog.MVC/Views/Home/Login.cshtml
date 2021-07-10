@@ -1,0 +1,69 @@
+﻿@model PetCatalog.Application.Auth.UserWithToken
+@{
+    ViewData["Title"] = "Login";
+}
+
+<script src="~/scripts/jquery/jquery.validate.min.js"></script>
+<script src="~/scripts/jquery/jquery.validate.unobtrusive.min.js"></script>
+
+<link href="~/styles/NewAnimalFormStyle.css" rel="stylesheet" />
+@if (!string.IsNullOrEmpty(Model.RefreshToken) && !string.IsNullOrEmpty(Model.AccessToken))
+{
+<script>
+        $(function () {
+            localStorage.setItem('refresh-token', @Model.RefreshToken);
+            localStorage.setItem('access-token', @Model.AccessToken);
+        });
+</script>
+}
+
+<h1>Login</h1>
+<div>
+    <div>
+        <h2>Login</h2>
+    </div>
+    <div>
+        <form enctype="multipart/form-data" method="post" asp-action="Login">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label asp-for="Email"></label>
+                            <i class="fas fa-asterisk requird"></i>
+                        </td>
+                        <td>
+                            <input asp-for="Email" type="email" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="error" asp-validation-for="Email"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label asp-for="Password"></label>
+                            <i class="fas fa-asterisk requird"></i>
+                        </td>
+                        <td>
+                            <input asp-for="Password" type="password" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="error" asp-validation-for="Password"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            <button class="btn" type="submit">Login</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+</div>
+

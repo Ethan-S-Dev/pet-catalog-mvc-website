@@ -21,14 +21,27 @@ namespace PetCatalog.Infra.Data.Contexts
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<RefreshToken> RefreshTokens { get; set; } 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Image>().Ignore(e => e.Data);
+
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique(true);
 
             modelBuilder.Entity<Image>().HasData(new Image()
             {
                 ImageId = defaultImageId,
                 Name = defaultImage
+            }); ;
+
+            modelBuilder.Entity<User>().HasData(new User()
+            {
+                UserId = 1,
+                Name = "Admin",
+                Email = "Admin@Email.com",
+                Password = "6RVUXqGTj3wmjeBYeZXwk4Eu"
             }); ;
 
         }

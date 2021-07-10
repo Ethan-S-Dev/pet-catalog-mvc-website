@@ -9,8 +9,8 @@ using PetCatalog.Infra.Data.Contexts;
 namespace PetCatalog.Infra.Data.Migrations
 {
     [DbContext(typeof(PetCatalogDbContext))]
-    [Migration("20210706152117_create")]
-    partial class create
+    [Migration("20210710202642_RefreshToken")]
+    partial class RefreshToken
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,9 +87,6 @@ namespace PetCatalog.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<byte[]>("Data")
-                        .HasColumnType("BLOB");
-
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -103,6 +100,53 @@ namespace PetCatalog.Infra.Data.Migrations
                             ImageId = 1,
                             Name = "default.png"
                         });
+                });
+
+            modelBuilder.Entity("PetCatalog.Domain.Models.RefreshToken", b =>
+                {
+                    b.Property<int>("TokenId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TokenId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshToken");
+                });
+
+            modelBuilder.Entity("PetCatalog.Domain.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PetCatalog.Domain.Models.Animal", b =>
@@ -135,6 +179,17 @@ namespace PetCatalog.Infra.Data.Migrations
                     b.Navigation("Animal");
                 });
 
+            modelBuilder.Entity("PetCatalog.Domain.Models.RefreshToken", b =>
+                {
+                    b.HasOne("PetCatalog.Domain.Models.User", "User")
+                        .WithMany("Tokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PetCatalog.Domain.Models.Animal", b =>
                 {
                     b.Navigation("Comments");
@@ -143,6 +198,11 @@ namespace PetCatalog.Infra.Data.Migrations
             modelBuilder.Entity("PetCatalog.Domain.Models.Category", b =>
                 {
                     b.Navigation("Animals");
+                });
+
+            modelBuilder.Entity("PetCatalog.Domain.Models.User", b =>
+                {
+                    b.Navigation("Tokens");
                 });
 #pragma warning restore 612, 618
         }

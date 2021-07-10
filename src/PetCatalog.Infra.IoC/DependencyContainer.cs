@@ -21,12 +21,15 @@ namespace PetCatalog.Infra.IoC
             services.AddScoped<IAnimalService, AnimalService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IAuthService, AuthorizationService>();
 
             // PetShop.Domain.Interfaces | PetShop.Infra.Data.Repositorys
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IAnimalRepository, AnimalRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
-            services.AddScoped<IImageRepository, ImageRepository>();        
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         }
        
     }
