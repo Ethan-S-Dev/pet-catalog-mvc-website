@@ -18,13 +18,12 @@ namespace PetCatalog.MVC.Controllers
     {
         private readonly IAnimalService animalService;
         private readonly IMapper mapper;
-        private readonly IAuthService authService;
+        
 
-        public HomeController(IAnimalService animalService, IMapper mapper, IAuthService authService)
+        public HomeController(IAnimalService animalService, IMapper mapper)
         {
             this.animalService = animalService;
             this.mapper = mapper;
-            this.authService = authService;
         }
 
         public IActionResult Index()
@@ -34,38 +33,8 @@ namespace PetCatalog.MVC.Controllers
             return View(bestAnimals);
         }
 
-        [HttpGet]
-        public IActionResult Login()
-        {
-            var user = authService.GetEmptyUser();
-            return View(user);
-        }
+        
 
-        [HttpPost]
-        public IActionResult Login(User user)
-        {
-            var userWithToken = authService.Authenticate(user);
-
-            if (userWithToken is null)
-                return RedirectToAction("Login");
-
-            HttpContext.Session.SetString("access-token", userWithToken.AccessToken);
-
-            return View("Login", userWithToken);
-        }
-
-        [HttpPost("RefreshToken")]
-        public IActionResult RefreshToken(RefreshRequest refreshRequest)
-        {
-            var userWithToken = authService.RefreshToken(refreshRequest);
-
-            if (userWithToken is null)
-                return RedirectToAction("Login");
-
-            HttpContext.Session.Remove("access-token");
-            HttpContext.Session.SetString("access-token", userWithToken.AccessToken);
-
-            return null;
-        }
+        
     }
 }

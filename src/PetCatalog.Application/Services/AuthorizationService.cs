@@ -60,7 +60,7 @@ namespace PetCatalog.Application.Services
                 Subject = new ClaimsIdentity(new Claim[]{
                     new Claim(ClaimTypes.Name,email)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(jwtSettings.JwtExpiresIn),
+                Expires = DateTime.UtcNow.AddSeconds(jwtSettings.JwtExpiresIn),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature)
             };

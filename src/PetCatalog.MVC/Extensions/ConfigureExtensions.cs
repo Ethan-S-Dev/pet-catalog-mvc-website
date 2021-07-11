@@ -113,7 +113,7 @@ namespace PetCatalog.MVC.Extensions
                         ValidateIssuer = false,
                         ValidateAudience = false,
                         ClockSkew = TimeSpan.Zero
-                    };
+                    };                 
                 });
 
         }

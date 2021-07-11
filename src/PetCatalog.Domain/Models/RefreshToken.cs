@@ -18,9 +18,7 @@ namespace PetCatalog.Domain.Models
 
         public string Token { get; set; }
 
-        public DateTime ExpiryDate { get; set; }
-
-        
+        public DateTime ExpiryDate { get; set; }        
 
     }
 }
