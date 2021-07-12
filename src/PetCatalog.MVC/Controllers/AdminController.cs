@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
+using PetCatalog.Application.Auth;
 using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Models;
 using PetCatalog.MVC.Extensions;
@@ -45,6 +46,24 @@ namespace PetCatalog.MVC.Controllers
             return View(model);
 
             //return RedirectToAction("Get", "Login");
+        }
+
+        [Authorize]
+        public IActionResult Logout()
+        {
+            string accessToken;
+            string refreshToken;
+
+            Request.Cookies.TryGetValue("accessToken", out accessToken);                  
+            Request.Cookies.TryGetValue("refreshToken", out refreshToken);
+
+            Response.Cookies.Delete("accessToken");
+            Response.Cookies.Delete("refreshToken");
+
+            var request = new RefreshRequest() { AccessToken = accessToken, RefreshToken = refreshToken };
+            authService.DeleteRefreshToken(request);
+
+            return RedirectToAction("Index","Login");
         }
 
         [Authorize]

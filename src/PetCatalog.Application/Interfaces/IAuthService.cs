@@ -15,6 +15,8 @@ namespace PetCatalog.Application.Interfaces
 
         UserWithToken RefreshToken(RefreshRequest refreshRequest);
 
+        void DeleteRefreshToken(RefreshRequest refreshRequest);
+
         User GetEmptyUser();
 
     }

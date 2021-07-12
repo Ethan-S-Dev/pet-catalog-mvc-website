@@ -27,6 +27,16 @@ namespace PetCatalog.Infra.Data.Repositorys
             throw new NotImplementedException();
         }
 
+        public void DeleteUserToken(User user, string token)
+        {
+            foreach (var item in user.RefreshTokens.Where(t=>t.Token == token))
+            {
+                dbContext.RefreshTokens.Remove(item);
+            }
+
+            dbContext.SaveChanges();
+        }
+
         public RefreshToken Get(int id)
         {
             throw new NotImplementedException();

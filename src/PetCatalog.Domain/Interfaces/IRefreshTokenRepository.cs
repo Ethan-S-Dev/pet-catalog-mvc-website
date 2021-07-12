@@ -10,5 +10,7 @@ namespace PetCatalog.Domain.Interfaces
     public interface IRefreshTokenRepository : IRepository<RefreshToken>
     {
         IEnumerable<RefreshToken> GetRecentTokens(string token);
+
+        void DeleteUserToken(User user, string token);
     }
 }
