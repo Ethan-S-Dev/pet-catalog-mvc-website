@@ -93,8 +93,11 @@ namespace PetCatalog.MVC
                                 var refreshRequest = new RefreshRequest() { RefreshToken = refreshToken, AccessToken = accessToken };
                                 var userWithTokens = authService.RefreshToken(refreshRequest);
 
-                                httpContext.Response.Cookies.Delete("accessToken");
-                                httpContext.Response.Cookies.Append("accessToken", userWithTokens.AccessToken);
+                                var options = new CookieOptions();
+                                options.Expires = userWithTokens.RefreshToken.ExpiryDate;
+
+                                httpContext.Response.Cookies.Delete("accessToken");                                
+                                httpContext.Response.Cookies.Append("accessToken", userWithTokens.AccessToken, options);
 
                                 response.Redirect(httpContext.Request.Path);
                             }

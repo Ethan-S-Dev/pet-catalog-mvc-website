@@ -14,11 +14,12 @@ namespace PetCatalog.Application.Auth
             UserId = user.UserId;
             Email = user.Email;
             Name = user.Name;
+            RefreshToken = user.RefreshTokens.FirstOrDefault();
         }
 
         public string AccessToken { get; set; }
 
-        public string RefreshToken { get; set; }
+        public RefreshToken RefreshToken { get; set; }
 
     }
 }

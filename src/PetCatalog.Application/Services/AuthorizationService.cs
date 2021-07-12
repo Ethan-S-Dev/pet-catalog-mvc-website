@@ -38,8 +38,8 @@ namespace PetCatalog.Application.Services
             var userWithToken = new UserWithToken(user);
             var refreshToken = GenerateRefreshToken();
             refreshToken.UserId = user.UserId;
-            userWithToken.RefreshToken = refreshToken.Token;
             refreshTokenRepository.Create(refreshToken);
+            userWithToken.RefreshToken = refreshToken;
 
             userWithToken.AccessToken = GenerateAccessToken(user.Email);
 
@@ -93,13 +93,10 @@ namespace PetCatalog.Application.Services
             if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
             {
                 var userWithToken = new UserWithToken(user);
-                userWithToken.RefreshToken = refreshRequest.RefreshToken;
                 userWithToken.AccessToken = GenerateAccessToken(user.Email);
 
                 return userWithToken;
-
             }
-
             return null;
         }
 

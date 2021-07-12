@@ -45,10 +45,10 @@ namespace PetCatalog.MVC.Controllers
 
 
             var options = new CookieOptions();
-            options.Expires = DateTime.UtcNow.AddMonths(configuration.GetSection("JWTSettings").GetValue<int>("RefreshExpiresIn"));
+            options.Expires = userWithToken.RefreshToken.ExpiryDate;
 
             this.HttpContext.Response.Cookies.Append("accessToken", userWithToken.AccessToken, options);
-            this.HttpContext.Response.Cookies.Append("refreshToken", userWithToken.RefreshToken, options);
+            this.HttpContext.Response.Cookies.Append("refreshToken", userWithToken.RefreshToken.Token, options);
 
             path ??= Url.Content("~/");
 
