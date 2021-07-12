@@ -1,4 +1,4 @@
-﻿@model PetCatalog.Domain.Models.User
+﻿@model PetCatalog.MVC.ViewModels.LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
@@ -8,14 +8,19 @@
 
 <link href="~/styles/NewAnimalFormStyle.css" rel="stylesheet" />
 
-<div>
+<div class="animal-form-continer">
     <div>
         <h2>Login</h2>
     </div>
     <div>
-        <form asp-action="Authenticate" enctype="multipart/form-data" asp-route-path="@ViewBag.RedirectPath" method="post">
+        <form asp-action="Authenticate" enctype="multipart/form-data" method="post">
             <table>
                 <tbody>
+                    <tr style="visibility:collapse">
+                        <td>
+                            <input asp-for="RedirectPath" type="text" value="@Model.RedirectPath" readonly />
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             <label asp-for="Email"></label>
@@ -42,6 +47,15 @@
                     <tr>
                         <td colspan="2">
                             <span class="error" asp-validation-for="Password"></span>
+                            <span class="error">@ViewBag.Error</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="keep-login-check-box" asp-for="KeepLoggedIn"></label>
+                        </td>
+                        <td>
+                            <input asp-for="KeepLoggedIn" type="checkbox" />
                         </td>
                     </tr>
                 </tbody>

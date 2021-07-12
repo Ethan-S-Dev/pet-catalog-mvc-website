@@ -28,7 +28,7 @@ namespace PetCatalog.Application.Services
             this.refreshTokenRepository = refreshTokenRepository;
         }
 
-        public UserWithToken Authenticate(User user)
+        public UserWithToken Authenticate(User user,bool keepLoggedIn = false)
         {
             user = userRepository.Get(user);
 
@@ -37,6 +37,7 @@ namespace PetCatalog.Application.Services
 
             var userWithToken = new UserWithToken(user);
             var refreshToken = GenerateRefreshToken();
+            refreshToken.KeepLoggedIn = keepLoggedIn;
             refreshToken.UserId = user.UserId;
             refreshTokenRepository.Create(refreshToken);
             userWithToken.RefreshToken = refreshToken;
@@ -144,6 +145,16 @@ namespace PetCatalog.Application.Services
         }
 
         public void DeleteRefreshToken(RefreshRequest refreshRequest)
+        {
+            var user = GetUserFromAccessToken(refreshRequest.AccessToken);
+
+            if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
+            {
+                refreshTokenRepository.DeleteUserToken(user, refreshRequest.RefreshToken);
+            }
+        }
+
+        public void DeleteAllRefreshToken(RefreshRequest refreshRequest)
         {
             var user = GetUserFromAccessToken(refreshRequest.AccessToken);
 

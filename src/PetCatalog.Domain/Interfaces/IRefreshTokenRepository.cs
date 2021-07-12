@@ -12,5 +12,7 @@ namespace PetCatalog.Domain.Interfaces
         IEnumerable<RefreshToken> GetRecentTokens(string token);
 
         void DeleteUserToken(User user, string token);
+
+        void DeleteAllUserTokens(User user, string token);
     }
 }

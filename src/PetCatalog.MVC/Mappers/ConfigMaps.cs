@@ -35,6 +35,8 @@ namespace PetCatalog.MVC.Mappers
                 .ForPath(des => des.Image.Name, cfg => cfg.MapFrom(src => (src.Image == null) ? null : src.Image.FileName))
                 .ForPath(des => des.Image.Data, cfg => cfg.MapFrom(src => (src.Image == null) ? null : CreateData(src.Image)));
 
+            mce.CreateMap<LoginViewModel, User>();
+
             return mce;
         }
 

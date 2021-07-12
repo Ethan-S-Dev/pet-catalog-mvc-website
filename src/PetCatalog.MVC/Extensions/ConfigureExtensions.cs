@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using PetCatalog.Infra.Data.Contexts;
 using PetCatalog.Infra.Data.DependencyInjections;
 using PetCatalog.Infra.IoC;
 using PetCatalog.MVC.Mappers;
+using PetCatalog.MVC.Middlewares;
 using System;
 using System.IO;
 using System.Text;
@@ -56,7 +58,7 @@ namespace PetCatalog.MVC.Extensions
                     if (useLazyLoading)
                         options.UseLazyLoadingProxies();
                     options.UseSqlite(connectionString);
-                },ServiceLifetime.Singleton);
+                });
         }
 
         public static bool IsValid(this IConfiguration configuration)
@@ -91,6 +93,8 @@ namespace PetCatalog.MVC.Extensions
 
         public static void RegisterAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<IAuthorizationMiddlewareResultHandler, AuthorizeMiddlewareResultHandler>();
+
             var jwtSection = configuration.GetSection("JWTSettings");
             services.Configure<JWTSettings>(jwtSection);
 
