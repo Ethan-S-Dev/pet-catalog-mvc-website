@@ -31,3 +31,24 @@
 select#category-select {
     font-size: 0.9em;
 }
+
+.keep-login-check-box{
+    font-size:0.6em;
+}
+
+.logout-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.logout-form {
+    width: max-content;
+    display: flex;
+    flex-direction: column;  
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+}

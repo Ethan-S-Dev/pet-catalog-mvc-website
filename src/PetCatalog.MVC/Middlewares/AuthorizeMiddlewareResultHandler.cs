@@ -30,7 +30,7 @@ namespace PetCatalog.MVC.Middlewares
 
             if (!authorizeResult.Challenged)
             {
-                await DefaultHandler.HandleAsync(next,context,policy,authorizeResult);
+                await DefaultHandler.HandleAsync(next, context, policy, authorizeResult);
                 return;
             }
 
@@ -62,15 +62,25 @@ namespace PetCatalog.MVC.Middlewares
             var refreshRequest = new RefreshRequest() { RefreshToken = refreshToken, AccessToken = accessToken };
             var userWithTokens = authService.RefreshToken(refreshRequest);
 
+            if(userWithTokens is null)
+            {
+                await DefaultHandler.HandleAsync(next, context, policy, authorizeResult);
+                response.Redirect($"/login?path={context.Request.Path}");
+                return;
+            }
+
             var options = new CookieOptions();
             options.SameSite = SameSiteMode.Strict;
             options.Expires = userWithTokens.RefreshToken.ExpiryDate;
 
             context.Request.Headers.Remove("Authorization");
             context.Request.Headers.Add("Authorization", "Bearer " + userWithTokens.AccessToken);
-
             context.Response.Cookies.Delete("accessToken");
-            context.Response.Cookies.Append("accessToken", userWithTokens.AccessToken, options);
+
+            if (userWithTokens.RefreshToken.KeepLoggedIn)
+                context.Response.Cookies.Append("accessToken", userWithTokens.AccessToken, options);
+            else
+                context.Response.Cookies.Append("accessToken", userWithTokens.AccessToken);
 
             context.Response.StatusCode = (int)HttpStatusCode.OK;
 

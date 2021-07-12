@@ -49,7 +49,8 @@ namespace PetCatalog.MVC.Controllers
         }
 
         [Authorize]
-        public IActionResult Logout()
+        [HttpPost]
+        public IActionResult Logout(bool logoutAll)
         {
             string accessToken;
             string refreshToken;
@@ -61,7 +62,11 @@ namespace PetCatalog.MVC.Controllers
             Response.Cookies.Delete("refreshToken");
 
             var request = new RefreshRequest() { AccessToken = accessToken, RefreshToken = refreshToken };
-            authService.DeleteRefreshToken(request);
+
+            if(logoutAll)
+                authService.DeleteAllRefreshToken(request);
+            else
+                authService.DeleteRefreshToken(request);
 
             return RedirectToAction("Index","Login");
         }
