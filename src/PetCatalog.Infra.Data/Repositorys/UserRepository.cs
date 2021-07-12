@@ -1,4 +1,5 @@
-﻿using PetCatalog.Domain.Interfaces;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
 using PetCatalog.Infra.Data.Contexts;
 using System;
@@ -33,13 +34,14 @@ namespace PetCatalog.Infra.Data.Repositorys
 
         public User Get(User user)
         {
-            user = dbContext.Users.Where(u => (u.Email.ToLower() == user.Email.ToLower() && u.Password == user.Password)).FirstOrDefault();
+            user = dbContext.Users.FirstOrDefault(u => (u.Email.ToLower() == user.Email.ToLower() && u.Password == user.Password));
             return user;
         }
 
         public User Get(string email)
         {
-            return dbContext.Users.Where(usr => usr.Email == email).FirstOrDefault();
+            var user = dbContext.Users.FirstOrDefault(user => user.Email.ToLower() == email.ToLower());
+            return user;
         }
 
         public IEnumerable<User> GetAll()

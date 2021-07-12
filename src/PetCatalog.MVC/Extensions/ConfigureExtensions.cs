@@ -56,7 +56,7 @@ namespace PetCatalog.MVC.Extensions
                     if (useLazyLoading)
                         options.UseLazyLoadingProxies();
                     options.UseSqlite(connectionString);
-                });
+                },ServiceLifetime.Singleton);
         }
 
         public static bool IsValid(this IConfiguration configuration)

@@ -6,6 +6,7 @@ using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -20,7 +21,7 @@ namespace PetCatalog.Application.Services
         private readonly JWTSettings jwtSettings;
         private readonly IUserRepository userRepository;
         private readonly IRefreshTokenRepository refreshTokenRepository;
-        public AuthorizationService(IOptions<JWTSettings> jwtSettings,IUserRepository userRepository,IRefreshTokenRepository refreshTokenRepository)
+        public AuthorizationService(IOptions<JWTSettings> jwtSettings, IUserRepository userRepository, IRefreshTokenRepository refreshTokenRepository)
         {
             this.jwtSettings = jwtSettings.Value;
             this.userRepository = userRepository;
@@ -58,16 +59,16 @@ namespace PetCatalog.Application.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]{
-                    new Claim(ClaimTypes.Name,email)
+                    new Claim(ClaimTypes.Email,email)
                 }),
-                Expires = DateTime.UtcNow.AddSeconds(jwtSettings.JwtExpiresIn),
+                Expires = DateTime.UtcNow.AddMinutes(jwtSettings.JwtExpiresIn),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-           return tokenHandler.WriteToken(token);
+            return tokenHandler.WriteToken(token);
         }
 
         private RefreshToken GenerateRefreshToken()
@@ -89,9 +90,10 @@ namespace PetCatalog.Application.Services
         {
             var user = GetUserFromAccessToken(refreshRequest.AccessToken);
 
-            if(user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
+            if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
             {
                 var userWithToken = new UserWithToken(user);
+                userWithToken.RefreshToken = refreshRequest.RefreshToken;
                 userWithToken.AccessToken = GenerateAccessToken(user.Email);
 
                 return userWithToken;
@@ -105,7 +107,7 @@ namespace PetCatalog.Application.Services
         {
             var refreshTokenUser = refreshTokenRepository.GetRecentTokens(refreshToken).FirstOrDefault();
 
-            if(refreshTokenUser is not null && refreshTokenUser.UserId == user.UserId && refreshTokenUser.ExpiryDate > DateTime.UtcNow)
+            if (refreshTokenUser is not null && refreshTokenUser.UserId == user.UserId && refreshTokenUser.ExpiryDate > DateTime.UtcNow)
             {
                 return true;
             }
@@ -127,20 +129,31 @@ namespace PetCatalog.Application.Services
                 ClockSkew = TimeSpan.Zero
             };
 
-            SecurityToken securityToken;
+            var securityToken = tokenHandler.ReadJwtToken(accessToken);
 
-            var principle = tokenHandler.ValidateToken(accessToken, tokenValidationParameters,out securityToken);
-
-            var jwtSecurityToken = securityToken as JwtSecurityToken;
-
-            if(jwtSecurityToken is not null && jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,StringComparison.InvariantCultureIgnoreCase))
+            if (securityToken is not null && securityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
             {
-                var userEmail = principle.FindFirst(ClaimTypes.Name)?.Value;
+                var userEmail = securityToken.Claims.FirstOrDefault(cl => 
+                {
+                    var type = cl.Type;
+                    return type == "email";
+                })?.Value;
 
-                return userRepository.Get(userEmail);
+                var user = userRepository.Get(userEmail);
+                return user;
             }
 
             return null;
+        }
+
+        public void DeleteRefreshToken(RefreshRequest refreshRequest)
+        {
+            var user = GetUserFromAccessToken(refreshRequest.AccessToken);
+
+            if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
+            {
+                refreshTokenRepository.DeleteUserToken(user, refreshRequest.RefreshToken);
+            }
         }
     }
 }

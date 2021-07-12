@@ -18,54 +18,41 @@ namespace PetCatalog.MVC.Controllers
     public class LoginController : Controller
     {
         private readonly IAuthService authService;
-        private readonly IHttpContextAccessor httpContext;
         private readonly IConfiguration configuration;
 
-        public LoginController(IAuthService authService, IHttpContextAccessor httpContext,IConfiguration configuration)
+        public LoginController(IAuthService authService,IConfiguration configuration)
         {
             this.authService = authService;
-            this.httpContext = httpContext;
             this.configuration = configuration;
         }
 
         // GET: <LoginController>
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] string path)
         {
+            ViewBag.RedirectPath = path;
             return View("Login");
         }
 
 
         [HttpPost]
-        public IActionResult Authenticate(User user,string returnUrl = null)
+        public IActionResult Authenticate(User user,[FromQuery] string path)
         {
             var userWithToken = authService.Authenticate(user);
 
             if (userWithToken is null)
                 return View("Login", user);
 
-            this.HttpContext.Session.SetString("accessToken", userWithToken.AccessToken);
 
             var options = new CookieOptions();
             options.Expires = DateTime.UtcNow.AddMonths(configuration.GetSection("JWTSettings").GetValue<int>("RefreshExpiresIn"));
+
+            this.HttpContext.Response.Cookies.Append("accessToken", userWithToken.AccessToken, options);
             this.HttpContext.Response.Cookies.Append("refreshToken", userWithToken.RefreshToken, options);
 
-            returnUrl ??= Url.Content("~/");
+            path ??= Url.Content("~/");
 
-            return LocalRedirect(returnUrl);
-        }
-
-        [HttpPost]
-        public IActionResult RefreshToken([FromBody] RefreshRequest refreshRequest, string returnUrl = null)
-        {
-            var userWithToken = authService.RefreshToken(refreshRequest);
-
-            if (userWithToken is null)
-                return RedirectToAction("Login");
-
-            returnUrl ??= Url.Content("~/");
-
-            return LocalRedirect(returnUrl);
+            return Redirect(path);
         }
 
 

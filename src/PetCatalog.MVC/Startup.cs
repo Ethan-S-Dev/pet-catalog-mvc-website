@@ -13,6 +13,7 @@ using PetCatalog.Application.Auth;
 using System.IO;
 using System.Diagnostics;
 using System.Text;
+using PetCatalog.Application.Interfaces;
 
 namespace PetCatalog.MVC
 {
@@ -31,9 +32,6 @@ namespace PetCatalog.MVC
         {
             services.AddControllersWithViews();
 
-            services.AddSession();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.ConfigureSqlDb(configuration);
 
             services.ConfigureFileSaver(webHostEnvironment, configuration);
@@ -45,77 +43,66 @@ namespace PetCatalog.MVC
             services.RegisterAutoMapper();
         }
 
-        public void Configure(IApplicationBuilder app, PetCatalogDbContext ctx, ImageFileContext fs)
+        public void Configure(IApplicationBuilder app, IAuthService authService, PetCatalogDbContext ctx, ImageFileContext fs)
         {
-            ctx.Database.EnsureDeleted();
+            //ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();
-            fs.Diractory.EnsureDeleted();
+            //fs.Diractory.EnsureDeleted();
             fs.Diractory.EnsureCreated();
-
-            app.UseSession();
 
             app.Use(async (context, next) =>
             {
-                var token = context.Session.GetString("accessToken");
-                if (!string.IsNullOrEmpty(token))
+                string token;
+                if (context.Request.Cookies.TryGetValue("accessToken", out token))
                 {
-                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        context.Request.Headers.Add("Authorization", "Bearer " + token);
+                    }
                 }
                 await next();
             });
 
-            //app.Use(async (context, next) =>
-            //{
-            //    string token;
-            //    if (context.Request.Cookies.TryGetValue("refreshToken",out token))
-            //    {                 
-            //        context.Request.Headers.Add("Authorization", "Bearer " + token);
-            //    }
-            //    await next();
-            //});
-
-
             app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthentication();
-            app.Use(async (context,next) =>
+
+            app.UseStatusCodePages(async context =>
             {
-                var response = context.Response;
-
-                if (response.StatusCode == (int)HttpStatusCode.Unauthorized ||
-                    response.StatusCode == (int)HttpStatusCode.Forbidden)
+                var response = context.HttpContext.Response;
+                var httpContext = context.HttpContext;
+                if (response.StatusCode == (int)HttpStatusCode.Unauthorized || response.StatusCode == (int)HttpStatusCode.Forbidden)
                 {
-
                     string refreshToken;
-                    if(context.Request.Cookies.TryGetValue("refreshToken",out refreshToken))
+
+                    if (!httpContext.Request.Cookies.TryGetValue("refreshToken", out refreshToken))
+                        response.Redirect($"/login?path={httpContext.Request.Path}");
+                    else
                     {
-                        var accessToken = context.Session.GetString("accessToken");
-                        if (accessToken is not null)
-                        if(refreshToken is not null)
+                        string accessToken;
+                        if(!httpContext.Request.Cookies.TryGetValue("accessToken", out accessToken))
+                            response.Redirect($"/login?path={httpContext.Request.Path}");
+                        else
                         {
-                            var body = JsonSerializer.Serialize(new RefreshRequest() { RefreshToken = refreshToken, AccessToken = accessToken });
-                                try
-                                {
-                                    var buffer = Encoding.UTF8.GetBytes(body);
-                                    using var bodyStream = context.Request.Body;
-                                    bodyStream.Position = 0;
-                                    bodyStream.Write(buffer, 0, buffer.Length);
-                                }catch(Exception e)
-                                {
-                                    Debug.WriteLine(e.Message);
-                                }
+                            if (refreshToken is null || accessToken is null)                           
+                                response.Redirect($"/login?path={httpContext.Request.Path}");                            
+                            else
+                            {
+                                var refreshRequest = new RefreshRequest() { RefreshToken = refreshToken, AccessToken = accessToken };
+                                var userWithTokens = authService.RefreshToken(refreshRequest);
 
-                                                    
+                                httpContext.Response.Cookies.Delete("accessToken");
+                                httpContext.Response.Cookies.Append("accessToken", userWithTokens.AccessToken);
 
-
-                            response.Redirect("/login/RefreshToken");                            
-                        }
+                                response.Redirect(httpContext.Request.Path);
+                            }
+                        }                   
                     }
-                    response.Redirect("/login");
                 }
-                   
             });
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -128,7 +115,5 @@ namespace PetCatalog.MVC
                 await c.Response.WriteAsync("Error!");
             });
         }
-
-
     }
 }
