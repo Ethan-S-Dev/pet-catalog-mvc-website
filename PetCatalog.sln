@@ -27,13 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetCatalog.Infra.IoC", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2D9753D3-E656-4037-887E-1DEF8D95A4C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTest", "Application.UnitTest\Application.UnitTest.csproj", "{81BBF21E-9A43-4283-9978-BDD83F66761F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTest", "Tests/Application.UnitTest\Application.UnitTest.csproj", "{81BBF21E-9A43-4283-9978-BDD83F66761F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.UnitTest", "Infrastructure.UnitTest\Infrastructure.UnitTest.csproj", "{D67A1B59-193D-4CEB-BFC0-5DFDE2AE6CAC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.UnitTest", "Tests/Infrastructure.UnitTest\Infrastructure.UnitTest.csproj", "{D67A1B59-193D-4CEB-BFC0-5DFDE2AE6CAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC.UnitTest", "MVC.UnitTest\MVC.UnitTest.csproj", "{B01BC90A-08BB-49B2-9C41-20DC9426C734}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC.UnitTest", "Tests/MVC.UnitTest\MVC.UnitTest.csproj", "{B01BC90A-08BB-49B2-9C41-20DC9426C734}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.UnitTest", "Shared.UnitTest\Shared.UnitTest.csproj", "{8529BADD-DD8B-45CE-B1D6-B39858CE89AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.UnitTest", "Tests/Shared.UnitTest\Shared.UnitTest.csproj", "{8529BADD-DD8B-45CE-B1D6-B39858CE89AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

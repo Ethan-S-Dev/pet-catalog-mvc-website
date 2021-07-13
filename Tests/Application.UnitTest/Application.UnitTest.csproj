@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared.UnitTest\Shared.UnitTest.csproj" />
-    <ProjectReference Include="..\src\PetCatalog.Domain\PetCatalog.Domain.csproj" />
+    <ProjectReference Include="..\..\src\PetCatalog.Domain\PetCatalog.Domain.csproj" />
   </ItemGroup>
 
 </Project>
