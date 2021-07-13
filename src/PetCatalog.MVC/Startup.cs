@@ -29,6 +29,11 @@ namespace PetCatalog.MVC
 
             services.ConfigureFileSaver(webHostEnvironment, configuration);
 
+<<<<<<< HEAD
+=======
+            services.ConfigureFileSaver(webHostEnvironment, configuration);
+
+>>>>>>> 4ed9177dc3409562cd9d0939a3330decd16c467e
             services.RegisterAuthentication(configuration);
 
             services.RegisterServices();
@@ -44,6 +49,8 @@ namespace PetCatalog.MVC
             fs.Diractory.EnsureCreated();
 
             app.UseSession();
+
+            app.UseAddAuthorization();
 
             app.UseAddAuthorization();
 
