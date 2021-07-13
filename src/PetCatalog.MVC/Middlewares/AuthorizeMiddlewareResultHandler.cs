@@ -39,7 +39,6 @@ namespace PetCatalog.MVC.Middlewares
             string refreshToken;
             if (!context.Request.Cookies.TryGetValue("refreshToken", out refreshToken))
             {
-<<<<<<< HEAD
                 refreshToken = context.Session.GetString("refreshToken");
                 if (refreshToken is null)
                 {
@@ -47,17 +46,11 @@ namespace PetCatalog.MVC.Middlewares
                     response.Redirect($"/login?path={context.Request.Path}");
                     return;
                 }
-=======
-                await DefaultHandler.HandleAsync(next, context, policy, authorizeResult);
-                response.Redirect($"/login?path={context.Request.Path}");
-                return;
->>>>>>> 4ed9177dc3409562cd9d0939a3330decd16c467e
             }
 
             string accessToken;
             if (!context.Request.Cookies.TryGetValue("accessToken", out accessToken))
             {
-<<<<<<< HEAD
                 accessToken = context.Session.GetString("accessToken");
                 if (accessToken is null)
                 {
@@ -65,11 +58,6 @@ namespace PetCatalog.MVC.Middlewares
                     response.Redirect($"/login?path={context.Request.Path}");
                     return;
                 }
-=======
-                await DefaultHandler.HandleAsync(next, context, policy, authorizeResult);
-                response.Redirect($"/login?path={context.Request.Path}");
-                return;
->>>>>>> 4ed9177dc3409562cd9d0939a3330decd16c467e
             }
 
             if (refreshToken is null || accessToken is null)
@@ -96,19 +84,13 @@ namespace PetCatalog.MVC.Middlewares
             context.Request.Headers.Remove("Authorization");
             context.Request.Headers.Add("Authorization", "Bearer " + userWithTokens.AccessToken);
             context.Response.Cookies.Delete("accessToken");
-<<<<<<< HEAD
             context.Session.Remove("accessToken");
-=======
->>>>>>> 4ed9177dc3409562cd9d0939a3330decd16c467e
+
 
             if (userWithTokens.RefreshToken.KeepLoggedIn)
                 context.Response.Cookies.Append("accessToken", userWithTokens.AccessToken, options);
             else
-<<<<<<< HEAD
                 context.Session.SetString("accessToken", userWithTokens.AccessToken);
-=======
-                context.Response.Cookies.Append("accessToken", userWithTokens.AccessToken);
->>>>>>> 4ed9177dc3409562cd9d0939a3330decd16c467e
 
             context.Response.StatusCode = (int)HttpStatusCode.OK;
 

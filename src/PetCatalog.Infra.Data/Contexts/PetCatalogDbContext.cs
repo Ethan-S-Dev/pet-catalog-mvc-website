@@ -41,11 +41,7 @@ namespace PetCatalog.Infra.Data.Contexts
                 UserId = 1,
                 Name = "Admin",
                 Email = "Admin@Email.com",
-<<<<<<< HEAD
                 Password = "123"
-=======
-                Password = "6RVUXqGTj3wmjeBYeZXwk4Eu"
->>>>>>> 4ed9177dc3409562cd9d0939a3330decd16c467e
             }); ;
 
         }
