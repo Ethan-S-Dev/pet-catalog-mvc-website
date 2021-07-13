@@ -93,9 +93,13 @@ namespace PetCatalog.MVC.Extensions
 
         public static void RegisterAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+
             services.AddScoped<IAuthorizationMiddlewareResultHandler, AuthorizeMiddlewareResultHandler>();
 
             var jwtSection = configuration.GetSection("JWTSettings");
+            
+            services.AddSession(ops => ops.IdleTimeout = TimeSpan.FromMinutes(configuration.GetValue<int>("SessionTimeOut")));
+
             services.Configure<JWTSettings>(jwtSection);
 
             var jwtSetings = jwtSection.Get<JWTSettings>();

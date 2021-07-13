@@ -39,17 +39,25 @@ namespace PetCatalog.MVC.Middlewares
             string refreshToken;
             if (!context.Request.Cookies.TryGetValue("refreshToken", out refreshToken))
             {
-                await DefaultHandler.HandleAsync(next, context, policy, authorizeResult);
-                response.Redirect($"/login?path={context.Request.Path}");
-                return;
+                refreshToken = context.Session.GetString("refreshToken");
+                if (refreshToken is null)
+                {
+                    await DefaultHandler.HandleAsync(next, context, policy, authorizeResult);
+                    response.Redirect($"/login?path={context.Request.Path}");
+                    return;
+                }
             }
 
             string accessToken;
             if (!context.Request.Cookies.TryGetValue("accessToken", out accessToken))
             {
-                await DefaultHandler.HandleAsync(next, context, policy, authorizeResult);
-                response.Redirect($"/login?path={context.Request.Path}");
-                return;
+                accessToken = context.Session.GetString("accessToken");
+                if (accessToken is null)
+                {
+                    await DefaultHandler.HandleAsync(next, context, policy, authorizeResult);
+                    response.Redirect($"/login?path={context.Request.Path}");
+                    return;
+                }
             }
 
             if (refreshToken is null || accessToken is null)
@@ -76,11 +84,12 @@ namespace PetCatalog.MVC.Middlewares
             context.Request.Headers.Remove("Authorization");
             context.Request.Headers.Add("Authorization", "Bearer " + userWithTokens.AccessToken);
             context.Response.Cookies.Delete("accessToken");
+            context.Session.Remove("accessToken");
 
             if (userWithTokens.RefreshToken.KeepLoggedIn)
                 context.Response.Cookies.Append("accessToken", userWithTokens.AccessToken, options);
             else
-                context.Response.Cookies.Append("accessToken", userWithTokens.AccessToken);
+                context.Session.SetString("accessToken", userWithTokens.AccessToken);
 
             context.Response.StatusCode = (int)HttpStatusCode.OK;
 

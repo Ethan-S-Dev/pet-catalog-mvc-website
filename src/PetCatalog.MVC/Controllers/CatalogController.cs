@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PetCatalog.Application.Interfaces;
+using PetCatalog.Domain.Models;
 using PetCatalog.MVC.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,12 @@ namespace PetCatalog.MVC.Controllers
             this.categoryService = categoryService;
             this.mapper = mapper;
         }
+
         public IActionResult Index()
         {         
              var model = mapper.Map<IEnumerable<CategoryViewModel>>(categoryService.GetCategorys());         
             return View(model);
         }
+
     }
 }

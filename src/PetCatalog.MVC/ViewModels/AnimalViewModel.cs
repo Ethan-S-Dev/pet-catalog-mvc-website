@@ -38,8 +38,10 @@ namespace PetCatalog.MVC.ViewModels
         [MaxFileSize(204800, ErrorMessage = "Image must be smaller then 200 KB.")]
         [Display(Name = "Animal Image")]
         public IFormFile Image {get;set;}
+
         [Display(Name="Category")]
         public int CategoryId { get; set; }
+
         [CategoryName]
         [Display(Name ="Category name")]
         [Required(ErrorMessage = "Category name can't be empty.")]

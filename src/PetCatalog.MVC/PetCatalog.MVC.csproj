@@ -34,4 +34,8 @@
     <ProjectReference Include="..\PetCatalog.Infra.IoC\PetCatalog.Infra.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Test\" />
+  </ItemGroup>
+
 </Project>

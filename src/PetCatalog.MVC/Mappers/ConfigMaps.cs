@@ -21,9 +21,7 @@ namespace PetCatalog.MVC.Mappers
             mce.CreateMap<Category, CategoryViewModel>();
 
             mce.CreateMap<Comment, CommentViewModel>();
-            mce.CreateMap<CommentViewModel, Comment>();
-            //mce.CreateMap<IFormFile, Image>()
-            //    .ConvertUsing<ImageConverter>();
+            mce.CreateMap<CommentViewModel, Comment>();            
 
             mce.CreateMap<Animal, AnimalViewModel>()
                 .ForMember(des => des.CategoryName, cfg => cfg.MapFrom(src => src.Category.Name))

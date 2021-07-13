@@ -25,7 +25,7 @@ namespace PetCatalog.MVC
         {
             services.AddControllersWithViews();
 
-            services.ConfigureSqlDb(configuration);
+            services.ConfigureSqlDb(configuration);           
 
             services.ConfigureFileSaver(webHostEnvironment, configuration);
 
@@ -43,6 +43,7 @@ namespace PetCatalog.MVC
             //fs.Diractory.EnsureDeleted();
             fs.Diractory.EnsureCreated();
 
+            app.UseSession();
 
             app.UseAddAuthorization();
 

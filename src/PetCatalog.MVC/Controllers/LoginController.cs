@@ -63,9 +63,9 @@ namespace PetCatalog.MVC.Controllers
                 this.HttpContext.Response.Cookies.Append("refreshToken", userWithToken.RefreshToken.Token, options);
             }
             else
-            {
-                this.HttpContext.Response.Cookies.Append("accessToken", userWithToken.AccessToken);
-                this.HttpContext.Response.Cookies.Append("refreshToken", userWithToken.RefreshToken.Token);
+            {             
+                this.HttpContext.Session.SetString("accessToken", userWithToken.AccessToken);
+                this.HttpContext.Session.SetString("refreshToken", userWithToken.RefreshToken.Token);
             }
 
             userView.RedirectPath ??= Url.Content("~/");
