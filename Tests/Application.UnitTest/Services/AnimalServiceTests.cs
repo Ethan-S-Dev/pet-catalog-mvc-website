@@ -116,26 +116,173 @@ namespace Application.UnitTest.Services
 
 
         [TestMethod]
-        public void AnimalServiceTests_EditAnimal_CallWithAnimal()
+        public void AnimalServiceTests_EditAnimal_CallWithAnimalNoImage()
         {
             // Arrange
             var input = dataEntities.GetAnimals().First();
-
-            imageRepository.Setup(rep => rep.Update(It.IsAny<Image>()));
+            var realanimal = new DataEntities().GetAnimals().First(a => a.AnimalId == input.AnimalId);
 
             animalRepository.Setup(rep => rep.Get(It.IsAny<int>()))
-                .Returns<int>(e => dataEntities.GetAnimals().First(a => a.AnimalId == e));
+                .Returns(realanimal);
+
+            animalRepository.Setup(rep => rep.Update(It.IsAny<Animal>()));
+
+            imageRepository.Setup(rep => rep.Update(It.IsAny<Image>()))
+                .Callback<Image>(a =>
+                {
+                    a.ImageId = realanimal.Image.ImageId;
+                });
+
+            input.Image.ImageId = 0;
+            input.ImageId = 0;                    
 
             var service = new AnimalService(animalRepository.Object, imageRepository.Object);
 
             // Act
 
-            service.DeleteAnimal(input.AnimalId);
+            service.EditAnimal(input);
 
             // Assert
 
-            imageRepository.Verify(rep => rep.Delete(input.ImageId), Times.Exactly(1));
-            animalRepository.Verify(rep => rep.Delete(input.AnimalId), Times.Exactly(1));
+            imageRepository.Verify(rep => rep.Update(input.Image), Times.Exactly(1));
+            animalRepository.Verify(rep => rep.Get(input.AnimalId), Times.Exactly(1));
+            animalRepository.Verify(rep => rep.Update(input), Times.Exactly(1));
+
+            Assert.AreEqual(realanimal.Image.ImageId, input.Image.ImageId);
+            Assert.AreEqual(realanimal.Image.ImageId, input.ImageId);
+
+        }
+
+        [TestMethod]
+        public void AnimalServiceTests_EditAnimal_CallWithAnimalWithImage()
+        {
+            // Arrange
+            var input = dataEntities.GetAnimals().First();
+            var realanimal = new DataEntities().GetAnimals().First(a => a.AnimalId == input.AnimalId);
+
+            animalRepository.Setup(rep => rep.Get(It.IsAny<int>()))
+                .Returns(realanimal);
+
+            animalRepository.Setup(rep => rep.Update(It.IsAny<Animal>()));
+
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+
+            // Act
+
+            service.EditAnimal(input);
+
+            // Assert
+
+            animalRepository.Verify(rep => rep.Get(input.AnimalId), Times.Exactly(1));
+            animalRepository.Verify(rep => rep.Update(input), Times.Exactly(1));
+
+        }
+
+        [TestMethod]
+        public void AnimalServiceTests_GetAllAnimals_ReturnsAnimals()
+        {
+            // Arrange
+            var input = dataEntities.GetAnimals().First();
+            var realanimals = new DataEntities().GetAnimals();
+
+            animalRepository.Setup(rep => rep.GetAll())
+                .Returns(realanimals);
+
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+
+            // Act
+
+            service.GetAllAnimals();
+
+            // Assert
+
+            animalRepository.Verify(rep => rep.GetAll(), Times.Exactly(1));
+
+        }
+
+        [TestMethod]
+        public void AnimalServiceTests_GetAnimal__CallWithAnimalId_ReturnsAnimal()
+        {
+            // Arrange
+            var input = dataEntities.GetAnimals().First();
+            var realanimals = new DataEntities().GetAnimals();
+
+            animalRepository.Setup(rep => rep.Get(It.IsAny<int>()))
+                .Returns<int>(a=> realanimals.First(d=>d.AnimalId == a));
+
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+
+            // Act
+
+            var result = service.GetAnimal(input.AnimalId);
+
+            // Assert
+
+            animalRepository.Verify(rep => rep.Get(input.AnimalId), Times.Exactly(1));
+
+            DataEntities.AssertAnimals(input, result);
+
+        }
+
+        [TestMethod]
+        public void AnimalServiceTests_GetBestAnimals_ReturnsTwoAnimals()
+        {
+            // Arrange
+            var expected = dataEntities.GetAnimals().OrderByDescending(ani=>ani.Comments.Count()).Take(2);
+            var realanimals = new DataEntities().GetAnimals().OrderByDescending(ani => ani.Comments.Count()).Take(2);
+
+            animalRepository.Setup(rep => rep.GetTopCommented())
+                .Returns(realanimals);
+
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+
+            // Act
+
+            var result = service.GetBestAnimals();
+
+            // Assert
+
+            animalRepository.Verify(rep => rep.GetTopCommented(), Times.Exactly(1));
+
+            Assert.AreEqual(expected.Count(), result.Count());
+
+            for (int i = 0; i < result.Count(); i++)
+            {
+                DataEntities.AssertAnimals(expected.ElementAt(i), result.ElementAt(i));
+            }
+
+        }
+
+        [TestMethod]
+        public void AnimalServiceTests_GetEmptyAnimal_ReturnsTwoAnimals()
+        {
+            var image = new Image()
+            {
+                ImageId = 1,
+                Name = "default.png",
+                Data = null
+            };
+            // Arrange
+            var expected = new Animal()
+            {
+                Image = image
+            };
+
+            var realanimals = new DataEntities().GetAnimals().OrderByDescending(ani => ani.Comments.Count()).Take(2);
+
+            imageRepository.Setup(rep => rep.Get(It.IsAny<int>()))
+                .Returns(image);
+
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+
+            // Act
+
+            var result = service.GetEmptyAnimal();
+
+            // Assert
+
+            imageRepository.Verify(rep => rep.Get(1), Times.Exactly(1));
+            DataEntities.AssertImage(image, result.Image);
 
         }
 

@@ -18,7 +18,6 @@ namespace PetCatalog.Application.Services
             this.animalRepository = animalRepository;
             this.imageRepository = imageRepository;
         }        
-
         public bool AddAnimal(Animal animal)
         {
             var image = imageRepository.Get(animal.Image.ImageId);
@@ -32,13 +31,11 @@ namespace PetCatalog.Application.Services
             animalRepository.Create(animal);
             return true;
         }
-
         public void DeleteAnimal(int animalId)
         {
             var animal = animalRepository.Delete(animalId);                    
             imageRepository.Delete(animal.ImageId);
         }
-
         public void EditAnimal(Animal animal)
         {
             var realAnimal = animalRepository.Get(animal.AnimalId);
@@ -52,12 +49,10 @@ namespace PetCatalog.Application.Services
             }
             animalRepository.Update(animal);
         }
-
         public IEnumerable<Animal> GetAllAnimals()
         {
             return animalRepository.GetAll().ToList();
         }
-
         public Animal GetAnimal(int animalId)
         {
             return animalRepository.Get(animalId);
@@ -67,7 +62,6 @@ namespace PetCatalog.Application.Services
             var bestAnimals = animalRepository.GetTopCommented().ToList();
             return bestAnimals;
         }
-
         public Animal GetEmptyAnimal()
         {
             return new Animal { Image = imageRepository.Get(1) };

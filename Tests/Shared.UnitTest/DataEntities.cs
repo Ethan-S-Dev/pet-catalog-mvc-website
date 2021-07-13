@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using PetCatalog.Domain.Models;
 using PetCatalog.MVC.ViewModels;
@@ -336,6 +337,104 @@ namespace Shared.UnitTest
         public IList<CategoryViewModel> GetCategoryViewModels() => categoryViewModels;
         public IList<AnimalViewModel> GetAnimalViewModels() => animalViewModels;
         public IList<CommentViewModel> GetCommentViewModels() => commentViewModels;
+
+
+        public static void AssertCommentsViewModel(CommentViewModel expected, CommentViewModel result)
+        {
+            Assert.AreEqual(expected.CommentId, result.CommentId);
+            Assert.AreEqual(expected.AnimalId, result.AnimalId);
+            Assert.AreEqual(expected.Value, result.Value);
+        }
+
+
+        public static void AssertAnimalsViewModel(AnimalViewModel expected, AnimalViewModel result)
+        {
+            Assert.AreEqual(expected.AnimalId, result.AnimalId);
+            Assert.AreEqual(expected.CategoryId, result.CategoryId);
+            Assert.AreEqual(expected.Age, result.Age);
+            Assert.AreEqual(expected.CategoryName, result.CategoryName);
+            Assert.AreEqual(expected.Description, result.Description);
+            Assert.AreEqual(expected.ImageId, result.ImageId);
+            Assert.AreEqual(expected.Name, result.Name);
+
+            Assert.AreEqual(expected.Comments.Count(), result.Comments.Count());
+
+            for (int i = 0; i < expected.Comments.Count(); i++)
+            {
+                AssertCommentsViewModel(expected.Comments.ElementAt(i), result.Comments.ElementAt(i));
+            }
+
+        }
+
+
+        public static void AssertCategoryViewModel(CategoryViewModel expected, CategoryViewModel result)
+        {
+            Assert.AreEqual(expected.CategoryId, result.CategoryId);
+            Assert.AreEqual(expected.Name, result.Name);
+            Assert.AreEqual(expected.Animals.Count(), result.Animals.Count());
+            for (int i = 0; i < expected.Animals.Count(); i++)
+            {
+                AssertAnimalsViewModel(expected.Animals.ElementAt(i), result.Animals.ElementAt(i));
+            }
+        }
+
+
+        public static void AssertComments(Comment expected, Comment result)
+        {
+            Assert.AreEqual(expected.CommentId, result.CommentId);
+            Assert.AreEqual(expected.AnimalId, result.AnimalId);
+            Assert.AreEqual(expected.Value, result.Value);
+        }
+
+
+        public static void AssertAnimals(Animal expected, Animal result)
+        {
+            Assert.AreEqual(expected.AnimalId, result.AnimalId);
+            Assert.AreEqual(expected.CategoryId, result.CategoryId);
+            Assert.AreEqual(expected.Age, result.Age);
+            AssertImage(expected.Image, result.Image);
+            Assert.AreEqual(expected.Description, result.Description);
+            Assert.AreEqual(expected.ImageId, result.ImageId);
+            Assert.AreEqual(expected.Name, result.Name);
+
+            Assert.AreEqual(expected.Comments.Count(), result.Comments.Count());
+
+            for (int i = 0; i < expected.Comments.Count(); i++)
+            {
+                AssertComments(expected.Comments.ElementAt(i), result.Comments.ElementAt(i));
+            }
+
+        }
+
+        public static void AssertImage(Image expected, Image result)
+        {
+            //Assert.AreEqual(expected.ImageId, result.ImageId);
+            Assert.AreEqual(expected.Name, result.Name);
+            if (expected.Data is null ^ result.Data is null)
+                Assert.Fail();
+            if (expected.Data is not null)
+            {
+                Assert.AreEqual(expected.Data.Length, result.Data.Length);
+
+                for (int i = 0; i < expected.Data.Length; i++)
+                {
+                    Assert.AreEqual(expected.Data[i], result.Data[i]);
+                }
+            }
+
+        }
+
+
+        public static void AssertCategory(Category expected, Category result)
+        {
+            Assert.AreEqual(expected.CategoryId, result.CategoryId);
+            Assert.AreEqual(expected.Name, result.Name);
+            Assert.AreEqual(expected.Animals.Count(), result.Animals.Count());
+            for (int i = 0; i < expected.Animals.Count(); i++)
+            {
+                AssertAnimals(expected.Animals.ElementAt(i), result.Animals.ElementAt(i));
+            }
+        }
 
     }
 }

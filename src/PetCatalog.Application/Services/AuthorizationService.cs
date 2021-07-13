@@ -47,10 +47,56 @@ namespace PetCatalog.Application.Services
 
             return userWithToken;
         }
-
         public User GetEmptyUser()
         {
             return new User();
+        }
+        public void DeleteRefreshToken(RefreshRequest refreshRequest)
+        {
+            var user = GetUserFromAccessToken(refreshRequest.AccessToken);
+
+            if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
+            {
+                refreshTokenRepository.DeleteUserToken(user, refreshRequest.RefreshToken);
+            }
+        }
+        public void DeleteAllRefreshToken(RefreshRequest refreshRequest)
+        {
+            var user = GetUserFromAccessToken(refreshRequest.AccessToken);
+
+            if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
+            {
+                refreshTokenRepository.DeleteUserToken(user, refreshRequest.RefreshToken);
+            }
+        }
+        public UserWithToken RefreshToken(RefreshRequest refreshRequest)
+        {
+            var user = GetUserFromAccessToken(refreshRequest.AccessToken);
+
+            if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
+            {
+                var userWithToken = new UserWithToken(user);
+                userWithToken.AccessToken = GenerateAccessToken(user.Email);
+
+                return userWithToken;
+            }
+            return null;
+        }
+
+        
+        private RefreshToken GenerateRefreshToken()
+        {
+            RefreshToken refreshToken = new RefreshToken();
+
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+
+            rng.GetBytes(randomNumber);
+            refreshToken.Token = Convert.ToBase64String(randomNumber);
+
+            refreshToken.ExpiryDate = DateTime.UtcNow.AddMonths(jwtSettings.RefreshExpiresIn);
+
+            return refreshToken;
         }
 
         private string GenerateAccessToken(string email)
@@ -70,35 +116,6 @@ namespace PetCatalog.Application.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
-        }
-
-        private RefreshToken GenerateRefreshToken()
-        {
-            RefreshToken refreshToken = new RefreshToken();
-
-            var randomNumber = new byte[32];
-            using var rng = RandomNumberGenerator.Create();
-
-            rng.GetBytes(randomNumber);
-            refreshToken.Token = Convert.ToBase64String(randomNumber);
-
-            refreshToken.ExpiryDate = DateTime.UtcNow.AddMonths(jwtSettings.RefreshExpiresIn);
-
-            return refreshToken;
-        }
-
-        public UserWithToken RefreshToken(RefreshRequest refreshRequest)
-        {
-            var user = GetUserFromAccessToken(refreshRequest.AccessToken);
-
-            if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
-            {
-                var userWithToken = new UserWithToken(user);
-                userWithToken.AccessToken = GenerateAccessToken(user.Email);
-
-                return userWithToken;
-            }
-            return null;
         }
 
         private bool ValidateRefreshToken(User user, string refreshToken)
@@ -144,24 +161,5 @@ namespace PetCatalog.Application.Services
             return null;
         }
 
-        public void DeleteRefreshToken(RefreshRequest refreshRequest)
-        {
-            var user = GetUserFromAccessToken(refreshRequest.AccessToken);
-
-            if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
-            {
-                refreshTokenRepository.DeleteUserToken(user, refreshRequest.RefreshToken);
-            }
-        }
-
-        public void DeleteAllRefreshToken(RefreshRequest refreshRequest)
-        {
-            var user = GetUserFromAccessToken(refreshRequest.AccessToken);
-
-            if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
-            {
-                refreshTokenRepository.DeleteUserToken(user, refreshRequest.RefreshToken);
-            }
-        }
     }
 }
