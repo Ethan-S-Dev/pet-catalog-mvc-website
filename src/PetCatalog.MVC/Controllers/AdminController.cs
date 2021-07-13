@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
+using PetCatalog.Application.Auth;
 using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Models;
 using PetCatalog.MVC.Extensions;
@@ -15,31 +18,60 @@ using System.Threading.Tasks;
 
 namespace PetCatalog.MVC.Controllers
 {
+
     public class AdminController : Controller
     {
 
         private readonly ICommentService commentService;
         private readonly ICategoryService categoryService;
         private readonly IAnimalService animalService;
+        private readonly IAuthService authService;
 
         private readonly IMapper mapper;
         private readonly int defaultId;
-        public AdminController(ICategoryService categoryService, IConfiguration configuration, IAnimalService animalService, ICommentService commentService, IMapper mapper)
+        public AdminController(ICategoryService categoryService, IAuthService authService, IConfiguration configuration, IAnimalService animalService, ICommentService commentService, IMapper mapper)
         {
             this.commentService = commentService;
             this.categoryService = categoryService;
             this.animalService = animalService;
+            this.authService = authService;
             defaultId = configuration.GetValue<int>("DefaultImageId");
             this.mapper = mapper;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             var model = mapper.Map<IEnumerable<CategoryViewModel>>(categoryService.GetCategorys());
             return View(model);
+
+            //return RedirectToAction("Get", "Login");
         }
 
+        [Authorize]
+        [HttpPost]
+        public IActionResult Logout(bool logoutAll)
+        {
+            string accessToken;
+            string refreshToken;
 
+            Request.Cookies.TryGetValue("accessToken", out accessToken);                  
+            Request.Cookies.TryGetValue("refreshToken", out refreshToken);
+
+            Response.Cookies.Delete("accessToken");
+            Response.Cookies.Delete("refreshToken");
+
+            var request = new RefreshRequest() { AccessToken = accessToken, RefreshToken = refreshToken };
+
+            if(logoutAll)
+                authService.DeleteAllRefreshToken(request);
+            else
+                authService.DeleteRefreshToken(request);
+
+            return RedirectToAction("Index","Login");
+        }
+
+        [Authorize]
         [HttpGet]
         public IActionResult AnimalForm(int id)
         {
@@ -54,9 +86,10 @@ namespace PetCatalog.MVC.Controllers
             var animaVm = mapper.Map<AnimalViewModel>(animal);
             return View(animaVm);
         }
-
+        [Authorize]
         public IActionResult DeleteAnimal(int id)
         {
+
             var animal = animalService.GetAnimal(id);
             if (animal is null) return RedirectToAction("Index");
 
@@ -65,7 +98,7 @@ namespace PetCatalog.MVC.Controllers
 
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult AnimalForm(AnimalViewModel animalVm, int id)
         {

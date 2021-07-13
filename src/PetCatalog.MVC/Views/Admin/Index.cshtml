@@ -6,14 +6,24 @@
     ViewBag.Title = "Admin";
     ViewBag.EnableCommentDelete = true;
     var allAnimal = mapper.Map<IEnumerable<PetCatalog.MVC.ViewModels.AnimalViewModel>>(animalServic.GetAllAnimals());
+    bool logoutAll = false;
 }
 <script src="~/scripts/CategorySelect.js"></script>
 <script src="~/scripts/AnimalView.js"></script>
 <div>
-    <div>
+    <div class="admin-header">
         <h2>Animals</h2>
+        <div class="logout-box">
+            <form asp-action="Logout" class="logout-form">
+                <button action="submit" class="btn">Logout</button>
+                <div>
+                    <label for="checkbox" class="keep-login-check-box">Logout from all devices</label>
+                    <input type="checkbox" name="logoutAll" asp-for="@logoutAll" />
+                </div>
+            </form>
+        </div>
     </div>
-
+    
     <div>
         <div>
 
