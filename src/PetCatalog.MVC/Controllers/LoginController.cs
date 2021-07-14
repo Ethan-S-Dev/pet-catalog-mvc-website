@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using PetCatalog.Application.Auth;
+using PetCatalog.Domain.Auth;
 using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Models;
 using PetCatalog.MVC.ViewModels;

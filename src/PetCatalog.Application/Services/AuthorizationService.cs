@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using PetCatalog.Application.Auth;
+using PetCatalog.Domain.Auth;
 using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;

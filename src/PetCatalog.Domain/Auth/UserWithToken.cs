@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetCatalog.Application.Auth
+namespace PetCatalog.Domain.Auth
 {
     public class UserWithToken : User
     {

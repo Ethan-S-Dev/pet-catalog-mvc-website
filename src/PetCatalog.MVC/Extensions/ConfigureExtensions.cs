@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using PetCatalog.Application.Auth;
+using PetCatalog.Domain.Auth;
 using PetCatalog.Domain.Models;
 using PetCatalog.Infra.Data.Contexts;
 using PetCatalog.Infra.Data.DependencyInjections;

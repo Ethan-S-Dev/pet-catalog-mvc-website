@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
-using PetCatalog.Application.Auth;
+using PetCatalog.Domain.Auth;
 using PetCatalog.Application.Interfaces;
 using System;
 using System.Collections.Generic;

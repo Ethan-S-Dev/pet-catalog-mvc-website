@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using PetCatalog.Application.Auth;
+using PetCatalog.Domain.Auth;
 using PetCatalog.Domain.Models;
 using System;
 using System.Collections.Generic;
