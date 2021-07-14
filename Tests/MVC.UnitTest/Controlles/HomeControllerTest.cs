@@ -59,5 +59,53 @@ namespace MVC.UnitTest.Controlles
             Assert.AreEqual(viewResult.Model, expected);
 
         }
+
+        [TestMethod]
+        public void HomeControllerTest_AddComment_CallWithCommentAndAnimalId_ReturnViewResult()
+        {
+            // Arrange         
+            var input = new CommentViewModel()
+            {
+                CommentId = 0,
+                AnimalId = 0,
+                Value = "test"
+            };
+
+            var mapresult = new Comment()
+            {
+                CommentId = 0,
+                AnimalId = 0,
+                Value = null
+            };
+
+            aniService.Setup(s => s.AddComment(It.IsAny<Comment>()));
+            mapper.Setup(m => m.Map<Comment>(It.IsAny<CommentViewModel>()))
+                .Returns<CommentViewModel>(inp => 
+                { 
+                    mapresult.CommentId = inp.CommentId;
+                    mapresult.AnimalId = inp.AnimalId;
+                    mapresult.Value = inp.Value;
+                    return mapresult;
+                });
+
+            var controller = new HomeController(aniService.Object, mapper.Object);
+            // Act
+
+            var result = controller.AddComment(input,1);
+
+            // Assert
+
+            aniService.Verify(m => m.AddComment(mapresult), Times.Exactly(1));
+            mapper.Verify(m => m.Map<Comment>(input), Times.Exactly(1));
+
+            Assert.AreEqual(mapresult.Value, "test");
+            Assert.AreEqual(mapresult.AnimalId, 1);
+
+            Assert.IsInstanceOfType(result, typeof(RedirectResult));
+            var redirectResult = result as RedirectResult;
+
+            Assert.AreEqual(redirectResult.Url, "/");
+
+        }
     }
 }

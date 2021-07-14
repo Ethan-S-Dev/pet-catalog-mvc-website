@@ -12,7 +12,6 @@ namespace PetCatalog.Application.Interfaces
         IEnumerable<Category> GetCategorys();
         Category GetCategory(int categoryId);
         IEnumerable<Animal> GetAnimals(int categoryId);
-        bool AddCategory(string name,out int id);
-        bool AddCategory(string name);
+
     }
 }

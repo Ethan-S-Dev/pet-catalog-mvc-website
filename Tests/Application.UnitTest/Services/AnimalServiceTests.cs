@@ -18,6 +18,7 @@ namespace Application.UnitTest.Services
         private Mock<IAnimalRepository> animalRepository;
         private Mock<IImageRepository> imageRepository;
         private Mock<ICommentRepository> commentRepository;
+        private Mock<ICategoryRepository> categoryRepository;
         private DataEntities dataEntities;
 
         public AnimalServiceTests()
@@ -31,11 +32,12 @@ namespace Application.UnitTest.Services
             animalRepository = new Mock<IAnimalRepository>();
             imageRepository = new Mock<IImageRepository>();
             commentRepository = new Mock<ICommentRepository>();
+            categoryRepository = new Mock<ICategoryRepository>();
             dataEntities = new DataEntities();
         }
 
         [TestMethod]
-        public void AnimalServiceTests_AddAnimal_CallWithAnimalAndImage_ReturnBool()
+        public void AnimalServiceTests_AddAnimal_CallWithAnimalAndImageAndUseCate_ReturnBool()
         {
             // Arrange
             var input = dataEntities.GetAnimals().First();
@@ -45,7 +47,7 @@ namespace Application.UnitTest.Services
                 .Returns(dataEntities.GetImages().First(img => img.ImageId == input.ImageId));
             animalRepository.Setup(rep => rep.Create(It.IsAny<Animal>()));
 
-            var service = new AnimalService(animalRepository.Object,imageRepository.Object, commentRepository.Object);
+            var service = new AnimalService(animalRepository.Object,imageRepository.Object, commentRepository.Object,categoryRepository.Object);
 
             var expected = true;
 
@@ -57,18 +59,21 @@ namespace Application.UnitTest.Services
 
             imageRepository.Verify(rep => rep.Get(imgid), Times.Exactly(1));
             animalRepository.Verify(rep => rep.Create(input), Times.Exactly(1));
-
+            categoryRepository.Verify(rep => rep.GetAll(), Times.Never());
+            categoryRepository.Verify(rep => rep.Create(It.IsAny<Category>()), Times.Never());
             Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
-        public void AnimalServiceTests_AddAnimal_CallWithAnimalNoImage_ReturnBool()
+        public void AnimalServiceTests_AddAnimal_CallWithAnimalNoImageNewCate_ReturnBool()
         {
             // Arrange
             //Image nullimage = null;
 
             var input = dataEntities.GetAnimals().First();
             input.Image.ImageId = 0;
+            input.CategoryId = -1;
+            input.Category = new Category() { Name = "test" };
 
             imageRepository.Setup(rep => rep.Get(It.IsAny<int>()));
               
@@ -76,7 +81,14 @@ namespace Application.UnitTest.Services
 
             animalRepository.Setup(rep => rep.Create(It.IsAny<Animal>()));
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object,commentRepository.Object);
+            categoryRepository.Setup(rep => rep.GetAll());
+
+            categoryRepository.Setup(rep => rep.Create(It.IsAny<Category>())).Callback<Category>(c =>
+            {
+                c.CategoryId = 1;
+            });
+
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object,commentRepository.Object, categoryRepository.Object);
 
             var expected = true;
 
@@ -89,7 +101,12 @@ namespace Application.UnitTest.Services
             imageRepository.Verify(rep => rep.Get(0), Times.Exactly(1));
             imageRepository.Verify(rep => rep.Create(input.Image), Times.Exactly(1));
             animalRepository.Verify(rep => rep.Create(input), Times.Exactly(1));
+            categoryRepository.Verify(rep => rep.GetAll(), Times.Exactly(1));
+            categoryRepository.Verify(rep => rep.Create(It.IsAny<Category>()), Times.Exactly(1));
 
+            Assert.AreEqual(input.CategoryId, 1);
+            Assert.AreEqual(input.Category.CategoryId, 1);
+            Assert.AreEqual(input.Category.Name, "test");
             Assert.AreEqual(result, expected);
         }
 
@@ -104,7 +121,7 @@ namespace Application.UnitTest.Services
             animalRepository.Setup(rep => rep.Delete(It.IsAny<int>()))
                 .Returns<int>(e=> dataEntities.GetAnimals().First(a=>a.AnimalId == e));
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object, categoryRepository.Object);
 
             // Act
 
@@ -120,7 +137,7 @@ namespace Application.UnitTest.Services
 
 
         [TestMethod]
-        public void AnimalServiceTests_EditAnimal_CallWithAnimalNoImage()
+        public void AnimalServiceTests_EditAnimal_CallWithAnimalNoImageNewCate()
         {
             // Arrange
             var input = dataEntities.GetAnimals().First();
@@ -138,9 +155,19 @@ namespace Application.UnitTest.Services
                 });
 
             input.Image.ImageId = 0;
-            input.ImageId = 0;                    
+            input.ImageId = 0;
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object,commentRepository.Object);
+            input.CategoryId = -1;
+            input.Category = new Category() { Name = "test" };
+
+            categoryRepository.Setup(rep => rep.GetAll());
+
+            categoryRepository.Setup(rep => rep.Create(It.IsAny<Category>())).Callback<Category>(c =>
+            {
+                c.CategoryId = 1;
+            });
+
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object,commentRepository.Object, categoryRepository.Object);
 
             // Act
 
@@ -151,6 +178,12 @@ namespace Application.UnitTest.Services
             imageRepository.Verify(rep => rep.Update(input.Image), Times.Exactly(1));
             animalRepository.Verify(rep => rep.Get(input.AnimalId), Times.Exactly(1));
             animalRepository.Verify(rep => rep.Update(input), Times.Exactly(1));
+            categoryRepository.Verify(rep => rep.GetAll(), Times.Exactly(1));
+            categoryRepository.Verify(rep => rep.Create(It.IsAny<Category>()), Times.Exactly(1));
+
+            Assert.AreEqual(input.CategoryId, 1);
+            Assert.AreEqual(input.Category.CategoryId, 1);
+            Assert.AreEqual(input.Category.Name, "test");
 
             Assert.AreEqual(realanimal.Image.ImageId, input.Image.ImageId);
             Assert.AreEqual(realanimal.Image.ImageId, input.ImageId);
@@ -158,7 +191,7 @@ namespace Application.UnitTest.Services
         }
 
         [TestMethod]
-        public void AnimalServiceTests_EditAnimal_CallWithAnimalWithImage()
+        public void AnimalServiceTests_EditAnimal_CallWithAnimalWithImageUseCate()
         {
             // Arrange
             var input = dataEntities.GetAnimals().First();
@@ -169,7 +202,7 @@ namespace Application.UnitTest.Services
 
             animalRepository.Setup(rep => rep.Update(It.IsAny<Animal>()));
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object, categoryRepository.Object);
 
             // Act
 
@@ -179,6 +212,8 @@ namespace Application.UnitTest.Services
 
             animalRepository.Verify(rep => rep.Get(input.AnimalId), Times.Exactly(1));
             animalRepository.Verify(rep => rep.Update(input), Times.Exactly(1));
+            categoryRepository.Verify(rep => rep.GetAll(), Times.Never());
+            categoryRepository.Verify(rep => rep.Create(It.IsAny<Category>()), Times.Never());
 
         }
 
@@ -192,7 +227,7 @@ namespace Application.UnitTest.Services
             animalRepository.Setup(rep => rep.GetAll())
                 .Returns(realanimals);
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object, categoryRepository.Object);
 
             // Act
 
@@ -214,7 +249,7 @@ namespace Application.UnitTest.Services
             animalRepository.Setup(rep => rep.Get(It.IsAny<int>()))
                 .Returns<int>(a=> realanimals.First(d=>d.AnimalId == a));
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object, categoryRepository.Object);
 
             // Act
 
@@ -238,7 +273,7 @@ namespace Application.UnitTest.Services
             animalRepository.Setup(rep => rep.GetTopCommented())
                 .Returns(realanimals);
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object, categoryRepository.Object);
 
             // Act
 
@@ -260,13 +295,14 @@ namespace Application.UnitTest.Services
         [TestMethod]
         public void AnimalServiceTests_GetEmptyAnimal_ReturnsTwoAnimals()
         {
+            // Arrange
             var image = new Image()
             {
                 ImageId = 1,
                 Name = "default.png",
                 Data = null
             };
-            // Arrange
+            
             var expected = new Animal()
             {
                 Image = image
@@ -277,7 +313,7 @@ namespace Application.UnitTest.Services
             imageRepository.Setup(rep => rep.Get(It.IsAny<int>()))
                 .Returns(image);
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object, categoryRepository.Object);
 
             // Act
 
@@ -287,6 +323,54 @@ namespace Application.UnitTest.Services
 
             imageRepository.Verify(rep => rep.Get(1), Times.Exactly(1));
             DataEntities.AssertImage(image, result.Image);
+
+        }
+
+        [TestMethod]
+        public void AnimalServiceTests_AddComment_CallWithComment()
+        {
+            
+            // Arrange
+            var input = new Comment()
+            {
+                AnimalId = 1,
+                Value = "dddd"
+            };
+
+            commentRepository.Setup(rep => rep.Create(It.IsAny<Comment>()));
+
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object, categoryRepository.Object);
+
+            // Act
+
+            service.AddComment(input);
+
+            // Assert
+
+            commentRepository.Verify(rep => rep.Create(input),Times.Exactly(1));
+
+
+        }
+
+        [TestMethod]
+        public void AnimalServiceTests_DeleteComment_CallWithCommentId()
+        {
+
+            // Arrange
+            var input = 1;
+
+            commentRepository.Setup(rep => rep.Delete(It.IsAny<int>()));
+
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object, categoryRepository.Object);
+
+            // Act
+
+            service.DeleteComment(input);
+
+            // Assert
+
+            commentRepository.Verify(rep => rep.Delete(input), Times.Exactly(1));
+
 
         }
 

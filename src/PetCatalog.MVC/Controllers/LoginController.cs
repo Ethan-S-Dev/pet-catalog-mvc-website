@@ -36,7 +36,7 @@ namespace PetCatalog.MVC.Controllers
             var userView = new LoginViewModel()
             {
                 RedirectPath = path
-        };
+            };
             return View("Login", userView);
         }
 

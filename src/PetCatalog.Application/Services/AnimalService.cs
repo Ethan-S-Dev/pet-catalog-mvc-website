@@ -14,15 +14,34 @@ namespace PetCatalog.Application.Services
         private readonly IAnimalRepository animalRepository;
         private readonly IImageRepository imageRepository;
         private readonly ICommentRepository commentRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        public AnimalService(IAnimalRepository animalRepository,IImageRepository imageRepository,ICommentRepository commentRepository)
+        public AnimalService(IAnimalRepository animalRepository,IImageRepository imageRepository,ICommentRepository commentRepository,ICategoryRepository categoryRepository)
         {
             this.animalRepository = animalRepository;
             this.imageRepository = imageRepository;
             this.commentRepository = commentRepository;
+            this.categoryRepository = categoryRepository;
         }        
         public bool AddAnimal(Animal animal)
         {
+            if (animal.CategoryId < 0)
+            {
+                var cate = categoryRepository.GetAll().FirstOrDefault(c => c.Name.ToLower() == animal.Category.Name.ToLower());
+                if (cate is null)
+                {
+                    cate = new Category() { Name = animal.Category.Name };
+                    categoryRepository.Create(cate);
+                    animal.CategoryId = cate.CategoryId;
+                    animal.Category = cate;
+                }
+                else
+                {
+                    animal.CategoryId = cate.CategoryId;
+                    animal.Category = cate;
+                }
+            }
+
             var image = imageRepository.Get(animal.Image.ImageId);
             if (image is not null)
                 animal.Image = image;
@@ -54,6 +73,23 @@ namespace PetCatalog.Application.Services
 
         public void EditAnimal(Animal animal)
         {
+            if (animal.CategoryId < 0)
+            {
+                var cate = categoryRepository.GetAll().FirstOrDefault(c => c.Name.ToLower() == animal.Category.Name.ToLower());
+                if (cate is null)
+                {
+                    cate = new Category() { Name = animal.Category.Name };
+                    categoryRepository.Create(cate);
+                    animal.CategoryId = cate.CategoryId;
+                    animal.Category = cate;
+                }
+                else
+                {
+                    animal.CategoryId = cate.CategoryId;
+                    animal.Category = cate;
+                }
+            }
+
             var realAnimal = animalRepository.Get(animal.AnimalId);
 
             if (animal.Image.ImageId == 0)

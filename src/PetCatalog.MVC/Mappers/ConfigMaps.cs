@@ -29,6 +29,7 @@ namespace PetCatalog.MVC.Mappers
                 .ForMember(des => des.Image, cfg => cfg.Ignore());
 
             mce.CreateMap<AnimalViewModel, Animal>()
+                .ForPath(des => des.Category.Name, cfg => cfg.MapFrom(src => src.CategoryName))
                 .ForPath(des => des.Image.ImageId, cfg => cfg.MapFrom(src => (src.Image == null) ? src.ImageId : 0))
                 .ForPath(des => des.Image.Name, cfg => cfg.MapFrom(src => (src.Image == null) ? null : src.Image.FileName))
                 .ForPath(des => des.Image.Data, cfg => cfg.MapFrom(src => (src.Image == null) ? null : CreateData(src.Image)));

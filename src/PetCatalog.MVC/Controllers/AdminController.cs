@@ -107,7 +107,6 @@ namespace PetCatalog.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                animalVm.SetCategory(categoryService);
                 animalVm.AnimalId = id;
                 var animal = mapper.Map<Animal>(animalVm);
                 if (id == 0)

@@ -42,7 +42,8 @@ namespace PetCatalog.MVC.Controllers
                 var realComment = mapper.Map<Comment>(comment);
                 animalService.AddComment(realComment);
             }
-            var url = Request.Headers["Referer"].ToString();
+            var url = Request?.Headers["Referer"].ToString();
+            url ??= "/";
             return Redirect(url);
         }
     }

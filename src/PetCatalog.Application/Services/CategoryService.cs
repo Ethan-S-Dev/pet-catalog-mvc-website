@@ -18,23 +18,6 @@ namespace PetCatalog.Application.Services
             this.categoryRepository = categoryRepository;
         } 
 
-        public bool AddCategory(string name)
-        {
-            if (!categoryRepository.GetAll().All(c => c.Name.ToLower() != name.ToLower())) return false;
-            categoryRepository.Create(new Category() { Name = name });
-            return true;
-        }
-
-        public bool AddCategory(string name, out int id)
-        {
-            id = default;
-            if (!categoryRepository.GetAll().All(c => c.Name.ToLower() != name.ToLower())) return false;
-            var cate = new Category() { Name = name };
-            categoryRepository.Create(cate);
-            id = cate.CategoryId;
-            return true;
-        }
-
         public IEnumerable<Animal> GetAnimals(int categoryId)
         {
             return categoryRepository.Get(categoryId).Animals.OrderBy(ani => ani.Name.ToLower()).ToList();
@@ -42,13 +25,13 @@ namespace PetCatalog.Application.Services
 
         public Category GetCategory(int categoryId)
         {
-            return categoryRepository.Get(categoryId);
-           
+            return categoryRepository.Get(categoryId);           
         }
 
         public IEnumerable<Category> GetCategorys()
         {
-            return categoryRepository.GetAll().ToList();         
+            var ret = categoryRepository.GetAll().ToList();
+            return ret;
         }
     }
 }
