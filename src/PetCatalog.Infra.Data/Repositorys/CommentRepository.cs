@@ -33,7 +33,7 @@ namespace PetCatalog.Infra.Data.Repositorys
 
         public IEnumerable<Comment> DeleteAnimalComments(int animalId)
         {
-            var toRemove = GetAnimalComments(animalId);
+            var toRemove = GetAnimalComments(animalId).ToList();
             if (toRemove.Count() == 0) return null;
             foreach (var comm in toRemove)
             {
