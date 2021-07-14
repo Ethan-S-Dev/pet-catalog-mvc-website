@@ -17,6 +17,7 @@ namespace Application.UnitTest.Services
     {
         private Mock<IAnimalRepository> animalRepository;
         private Mock<IImageRepository> imageRepository;
+        private Mock<ICommentRepository> commentRepository;
         private DataEntities dataEntities;
 
         public AnimalServiceTests()
@@ -29,6 +30,7 @@ namespace Application.UnitTest.Services
         {
             animalRepository = new Mock<IAnimalRepository>();
             imageRepository = new Mock<IImageRepository>();
+            commentRepository = new Mock<ICommentRepository>();
             dataEntities = new DataEntities();
         }
 
@@ -43,7 +45,7 @@ namespace Application.UnitTest.Services
                 .Returns(dataEntities.GetImages().First(img => img.ImageId == input.ImageId));
             animalRepository.Setup(rep => rep.Create(It.IsAny<Animal>()));
 
-            var service = new AnimalService(animalRepository.Object,imageRepository.Object);
+            var service = new AnimalService(animalRepository.Object,imageRepository.Object, commentRepository.Object);
 
             var expected = true;
 
@@ -74,7 +76,7 @@ namespace Application.UnitTest.Services
 
             animalRepository.Setup(rep => rep.Create(It.IsAny<Animal>()));
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object,commentRepository.Object);
 
             var expected = true;
 
@@ -98,10 +100,11 @@ namespace Application.UnitTest.Services
             var input = dataEntities.GetAnimals().First();
 
             imageRepository.Setup(rep => rep.Delete(It.IsAny<int>()));
+            commentRepository.Setup(rep => rep.DeleteAnimalComments(It.IsAny<int>()));
             animalRepository.Setup(rep => rep.Delete(It.IsAny<int>()))
                 .Returns<int>(e=> dataEntities.GetAnimals().First(a=>a.AnimalId == e));
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
 
             // Act
 
@@ -111,6 +114,7 @@ namespace Application.UnitTest.Services
 
             imageRepository.Verify(rep => rep.Delete(input.ImageId), Times.Exactly(1));
             animalRepository.Verify(rep => rep.Delete(input.AnimalId), Times.Exactly(1));
+            commentRepository.Verify(rep => rep.DeleteAnimalComments(input.AnimalId), Times.Exactly(1));
             
         }
 
@@ -136,7 +140,7 @@ namespace Application.UnitTest.Services
             input.Image.ImageId = 0;
             input.ImageId = 0;                    
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object,commentRepository.Object);
 
             // Act
 
@@ -165,7 +169,7 @@ namespace Application.UnitTest.Services
 
             animalRepository.Setup(rep => rep.Update(It.IsAny<Animal>()));
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
 
             // Act
 
@@ -188,7 +192,7 @@ namespace Application.UnitTest.Services
             animalRepository.Setup(rep => rep.GetAll())
                 .Returns(realanimals);
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
 
             // Act
 
@@ -210,7 +214,7 @@ namespace Application.UnitTest.Services
             animalRepository.Setup(rep => rep.Get(It.IsAny<int>()))
                 .Returns<int>(a=> realanimals.First(d=>d.AnimalId == a));
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
 
             // Act
 
@@ -234,7 +238,7 @@ namespace Application.UnitTest.Services
             animalRepository.Setup(rep => rep.GetTopCommented())
                 .Returns(realanimals);
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
 
             // Act
 
@@ -273,7 +277,7 @@ namespace Application.UnitTest.Services
             imageRepository.Setup(rep => rep.Get(It.IsAny<int>()))
                 .Returns(image);
 
-            var service = new AnimalService(animalRepository.Object, imageRepository.Object);
+            var service = new AnimalService(animalRepository.Object, imageRepository.Object, commentRepository.Object);
 
             // Act
 

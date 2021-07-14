@@ -33,8 +33,17 @@ namespace PetCatalog.MVC.Controllers
             return View(bestAnimals);
         }
 
-        
-
-        
+        [HttpPost]
+        public IActionResult AddComment(CommentViewModel comment, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                comment.AnimalId = id;
+                var realComment = mapper.Map<Comment>(comment);
+                animalService.AddComment(realComment);
+            }
+            var url = Request.Headers["Referer"].ToString();
+            return Redirect(url);
+        }
     }
 }

@@ -3,7 +3,7 @@
 
 <div class="comment-box">
     <p>@Html.DisplayFor(c => c.Value)</p>
-    <a asp-controller="Comments" asp-action="DeleteComment" asp-route-id="@Model.CommentId">
+    <a asp-controller="Admin" asp-action="DeleteComment" asp-route-id="@Model.CommentId">
         <i class="fa fa-trash" aria-hidden="true"></i>
     </a>
 </div>

@@ -19,7 +19,6 @@ namespace PetCatalog.Infra.IoC
             // PetShop.Application
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAnimalService, AnimalService>();
-            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IAuthService, AuthorizationService>();
 

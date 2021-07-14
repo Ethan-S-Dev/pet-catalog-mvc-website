@@ -22,16 +22,18 @@ namespace PetCatalog.MVC.Controllers
     public class AdminController : Controller
     {
 
-        private readonly ICommentService commentService;
         private readonly ICategoryService categoryService;
         private readonly IAnimalService animalService;
         private readonly IAuthService authService;
 
         private readonly IMapper mapper;
         private readonly int defaultId;
-        public AdminController(ICategoryService categoryService, IAuthService authService, IConfiguration configuration, IAnimalService animalService, ICommentService commentService, IMapper mapper)
+        public AdminController(ICategoryService categoryService,
+                                IAuthService authService,
+                                IConfiguration configuration,
+                                IAnimalService animalService,
+                                IMapper mapper)
         {
-            this.commentService = commentService;
             this.categoryService = categoryService;
             this.animalService = animalService;
             this.authService = authService;
@@ -55,7 +57,7 @@ namespace PetCatalog.MVC.Controllers
             string accessToken;
             string refreshToken;
 
-            Request.Cookies.TryGetValue("accessToken", out accessToken);                  
+            Request.Cookies.TryGetValue("accessToken", out accessToken);
             Request.Cookies.TryGetValue("refreshToken", out refreshToken);
 
             Response.Cookies.Delete("accessToken");
@@ -63,12 +65,12 @@ namespace PetCatalog.MVC.Controllers
 
             var request = new RefreshRequest() { AccessToken = accessToken, RefreshToken = refreshToken };
 
-            if(logoutAll)
+            if (logoutAll)
                 authService.DeleteAllRefreshToken(request);
             else
                 authService.DeleteRefreshToken(request);
 
-            return RedirectToAction("Index","Login");
+            return RedirectToAction("Index", "Login");
         }
 
         [Authorize]
@@ -86,6 +88,7 @@ namespace PetCatalog.MVC.Controllers
             var animaVm = mapper.Map<AnimalViewModel>(animal);
             return View(animaVm);
         }
+
         [Authorize]
         public IActionResult DeleteAnimal(int id)
         {
@@ -94,10 +97,10 @@ namespace PetCatalog.MVC.Controllers
             if (animal is null) return RedirectToAction("Index");
 
             animalService.DeleteAnimal(id);
-            commentService.DeleteComments(id);
 
             return RedirectToAction("Index");
         }
+
         [Authorize]
         [HttpPost]
         public IActionResult AnimalForm(AnimalViewModel animalVm, int id)
@@ -119,6 +122,16 @@ namespace PetCatalog.MVC.Controllers
             }
 
             return View("AnimalForm", animalVm);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult DeleteComment(int id)
+        {
+            var url = Request.Headers["Referer"].ToString();
+            if (id == 0) return Redirect(url);
+            animalService.DeleteComment(id);
+            return Redirect(url);
         }
 
     }

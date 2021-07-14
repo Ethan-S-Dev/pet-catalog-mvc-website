@@ -13,10 +13,13 @@ namespace PetCatalog.Application.Services
     {
         private readonly IAnimalRepository animalRepository;
         private readonly IImageRepository imageRepository;
-        public AnimalService(IAnimalRepository animalRepository,IImageRepository imageRepository)
+        private readonly ICommentRepository commentRepository;
+
+        public AnimalService(IAnimalRepository animalRepository,IImageRepository imageRepository,ICommentRepository commentRepository)
         {
             this.animalRepository = animalRepository;
             this.imageRepository = imageRepository;
+            this.commentRepository = commentRepository;
         }        
         public bool AddAnimal(Animal animal)
         {
@@ -31,11 +34,24 @@ namespace PetCatalog.Application.Services
             animalRepository.Create(animal);
             return true;
         }
+
+        public void AddComment(Comment comment)
+        {
+            commentRepository.Create(comment);
+        }
+
         public void DeleteAnimal(int animalId)
         {
-            var animal = animalRepository.Delete(animalId);                    
+            var animal = animalRepository.Delete(animalId);
+            commentRepository.DeleteAnimalComments(animalId);
             imageRepository.Delete(animal.ImageId);
         }
+
+        public void DeleteComment(int id)
+        {
+            commentRepository.Delete(id);
+        }
+
         public void EditAnimal(Animal animal)
         {
             var realAnimal = animalRepository.Get(animal.AnimalId);
