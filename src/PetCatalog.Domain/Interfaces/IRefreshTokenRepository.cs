@@ -13,6 +13,6 @@ namespace PetCatalog.Domain.Interfaces
 
         void DeleteUserToken(User user, string token);
 
-        void DeleteAllUserTokens(User user, string token);
+        void DeleteAllUserTokens(User user);
     }
 }

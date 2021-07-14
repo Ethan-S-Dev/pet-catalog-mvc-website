@@ -40,6 +40,7 @@ namespace Infrastructure.UnitTest.Repositorys
         public void Cleanup()
         {
             dbContext.Database.EnsureDeleted();
+            dbContext.Dispose();
         }
 
         [TestMethod]

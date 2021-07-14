@@ -66,7 +66,7 @@ namespace PetCatalog.Application.Services
 
             if (user is not null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
             {
-                refreshTokenRepository.DeleteAllUserTokens(user, refreshRequest.RefreshToken);
+                refreshTokenRepository.DeleteAllUserTokens(user);
             }
         }
         public UserWithToken RefreshToken(RefreshRequest refreshRequest)

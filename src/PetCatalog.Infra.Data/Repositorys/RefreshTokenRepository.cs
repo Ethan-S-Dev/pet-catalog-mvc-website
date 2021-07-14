@@ -27,7 +27,7 @@ namespace PetCatalog.Infra.Data.Repositorys
             throw new NotImplementedException();
         }
 
-        public void DeleteAllUserTokens(User user, string token)
+        public void DeleteAllUserTokens(User user)
         {
             foreach (var item in user.RefreshTokens)
             {

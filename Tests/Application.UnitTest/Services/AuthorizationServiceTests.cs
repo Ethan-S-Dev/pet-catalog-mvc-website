@@ -196,7 +196,7 @@ namespace Application.UnitTest.Services
                 RefreshToken = token.RefreshToken.Token
             };
 
-            refRepo.Setup(rep => rep.DeleteAllUserTokens(It.IsAny<User>(), It.IsAny<string>()));
+            refRepo.Setup(rep => rep.DeleteAllUserTokens(It.IsAny<User>()));
             // Act
 
 
@@ -207,7 +207,7 @@ namespace Application.UnitTest.Services
 
             refRepo.Verify(e => e.GetRecentTokens(token.RefreshToken.Token), Times.Exactly(1));
             userRepo.Verify(e => e.Get("test@test.com"), Times.Exactly(1));
-            refRepo.Verify(e => e.DeleteAllUserTokens(retuser, token.RefreshToken.Token), Times.Exactly(1));
+            refRepo.Verify(e => e.DeleteAllUserTokens(retuser), Times.Exactly(1));
         }
 
         [TestMethod]
