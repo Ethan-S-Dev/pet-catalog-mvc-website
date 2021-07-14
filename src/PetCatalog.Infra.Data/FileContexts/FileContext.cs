@@ -2,10 +2,11 @@
 using System;
 using System.IO;
 using PetCatalog.Infra.Data.Contexts;
+using PetCatalog.Infra.Data.Interfaces;
 
 namespace PetCatalog.Infra.Data.FileContexts
 {
-    public partial class FileContext
+    public partial class FileContext : IFileContext
     {
         private readonly FileContextDir saveDiractory;
         private readonly string path;
