@@ -1,6 +1,7 @@
 ﻿using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
 using PetCatalog.Infra.Data.Contexts;
+using PetCatalog.Infra.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +10,9 @@ namespace PetCatalog.Infra.Data.Repositorys
 {
     public class ImageRepository : IImageRepository
     {
-        private readonly ImageFileContext fileSaver;
+        private readonly IFileContext fileSaver;
         private readonly PetCatalogDbContext dbContext;
-        public ImageRepository(ImageFileContext fileSaver, PetCatalogDbContext dbContext)
+        public ImageRepository(IFileContext fileSaver, PetCatalogDbContext dbContext)
         {
             this.fileSaver = fileSaver;
             this.dbContext = dbContext;

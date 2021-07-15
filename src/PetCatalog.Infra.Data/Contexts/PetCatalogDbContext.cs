@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PetCatalog.Domain.Models;
+using PetCatalog.Infra.Data.Interfaces;
 using System;
 
 namespace PetCatalog.Infra.Data.Contexts
 {
-    public class PetCatalogDbContext : DbContext
+    public class PetCatalogDbContext : DbContext 
     {
         private readonly string defaultImage;
         private readonly int defaultImageId;
