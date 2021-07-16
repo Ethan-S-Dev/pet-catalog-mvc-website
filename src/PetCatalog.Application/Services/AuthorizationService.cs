@@ -1,18 +1,15 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using PetCatalog.Domain.Auth;
 using PetCatalog.Application.Interfaces;
+using PetCatalog.Domain.Auth;
 using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PetCatalog.Application.Services
 {
@@ -27,7 +24,6 @@ namespace PetCatalog.Application.Services
             this.userRepository = userRepository;
             this.refreshTokenRepository = refreshTokenRepository;
         }
-
         public UserWithToken Authenticate(User user,bool keepLoggedIn = false)
         {
             user = userRepository.Get(user);
@@ -81,9 +77,7 @@ namespace PetCatalog.Application.Services
                 return userWithToken;
             }
             return null;
-        }
-
-        
+        }     
         private RefreshToken GenerateRefreshToken()
         {
             RefreshToken refreshToken = new RefreshToken();
@@ -98,7 +92,6 @@ namespace PetCatalog.Application.Services
 
             return refreshToken;
         }
-
         private string GenerateAccessToken(string email)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -117,7 +110,6 @@ namespace PetCatalog.Application.Services
 
             return tokenHandler.WriteToken(token);
         }
-
         private bool ValidateRefreshToken(User user, string refreshToken)
         {
             var refreshTokenUser = refreshTokenRepository.GetRecentTokens(refreshToken).FirstOrDefault();
@@ -129,7 +121,6 @@ namespace PetCatalog.Application.Services
 
             return false;
         }
-
         private User GetUserFromAccessToken(string accessToken)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -160,6 +151,5 @@ namespace PetCatalog.Application.Services
 
             return null;
         }
-
     }
 }

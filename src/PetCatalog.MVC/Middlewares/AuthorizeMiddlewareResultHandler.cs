@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Http;
-using PetCatalog.Domain.Auth;
 using PetCatalog.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using PetCatalog.Domain.Auth;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -96,7 +93,5 @@ namespace PetCatalog.MVC.Middlewares
 
             await next(context);
         }
-    }
-
-    public class Show404Requirement : IAuthorizationRequirement { }
+    }   
 }

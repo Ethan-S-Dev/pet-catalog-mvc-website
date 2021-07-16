@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PetCatalog.Application.Interfaces;
-using PetCatalog.Domain.Models;
 using PetCatalog.MVC.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PetCatalog.MVC.Controllers
 {

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetCatalog.Domain.Models
 {
@@ -15,7 +11,6 @@ namespace PetCatalog.Domain.Models
         public string Name { get; set; }
         [Required]
         public string Password { get; set; }
-
         public virtual IEnumerable<RefreshToken> RefreshTokens { get; set; }
     }
 }

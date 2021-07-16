@@ -1,18 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using PetCatalog.Domain.Auth;
 using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Models;
 using PetCatalog.MVC.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PetCatalog.MVC.Controllers
 {
@@ -29,7 +20,6 @@ namespace PetCatalog.MVC.Controllers
 
         }
 
-        // GET: <LoginController>
         [HttpGet]
         public IActionResult Index([FromQuery] string path)
         {
@@ -39,7 +29,6 @@ namespace PetCatalog.MVC.Controllers
             };
             return View("Login", userView);
         }
-
 
         [HttpPost]
         public IActionResult Authenticate(LoginViewModel userView)
@@ -72,7 +61,5 @@ namespace PetCatalog.MVC.Controllers
 
             return Redirect(userView.RedirectPath);
         }
-
-
     }
 }

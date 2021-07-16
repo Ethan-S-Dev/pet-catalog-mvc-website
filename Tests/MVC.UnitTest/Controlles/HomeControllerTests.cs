@@ -14,12 +14,14 @@ using System.Linq;
 namespace MVC.UnitTest.Controlles
 {
     [TestClass]
-    public class HomeControllerTest
+    public class HomeControllerTests
     {
-        private readonly Mock<IAnimalService> aniService;
-        private readonly Mock<IMapper> mapper;
+        private Mock<IAnimalService> aniService;
+        private Mock<IMapper> mapper;
 
-        public HomeControllerTest()
+
+        [TestInitialize]
+        public void Init()
         {
             aniService = new Mock<IAnimalService>();
             mapper = new Mock<IMapper>();
@@ -27,7 +29,7 @@ namespace MVC.UnitTest.Controlles
 
 
         [TestMethod]
-        public void HomeControllerTest_Index_ReturnViewResult()
+        public void HomeControllerTests_Index_ReturnViewResult()
         {
             // Arrange
             var entitys = new DataEntities();
@@ -61,7 +63,7 @@ namespace MVC.UnitTest.Controlles
         }
 
         [TestMethod]
-        public void HomeControllerTest_AddComment_CallWithCommentAndAnimalId_ReturnViewResult()
+        public void HomeControllerTests_AddComment_CallWithCommentAndAnimalId_ReturnViewResult()
         {
             // Arrange         
             var input = new CommentViewModel()

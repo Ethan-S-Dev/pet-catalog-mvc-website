@@ -5,11 +5,6 @@ using PetCatalog.Domain.Interfaces;
 using PetCatalog.Infra.Data.Contexts;
 using PetCatalog.Infra.Data.Interfaces;
 using PetCatalog.Infra.Data.Repositorys;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetCatalog.Infra.IoC
 {

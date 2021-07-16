@@ -1,8 +1,7 @@
-﻿using PetCatalog.Infra.Data.Exceptions;
+﻿using PetCatalog.Infra.Data.Contexts;
+using PetCatalog.Infra.Data.Interfaces;
 using System;
 using System.IO;
-using PetCatalog.Infra.Data.Contexts;
-using PetCatalog.Infra.Data.Interfaces;
 
 namespace PetCatalog.Infra.Data.FileContexts
 {

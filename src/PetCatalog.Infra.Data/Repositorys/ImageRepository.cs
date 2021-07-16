@@ -35,14 +35,12 @@ namespace PetCatalog.Infra.Data.Repositorys
                 }
                 catch
                 {
-                    // TODO: Add logging
                     fileSaver.Delete(newName);
                 }
 
             }
 
         }
-
         public Image Delete(int id)
         {
             var image = dbContext.Images.Find(id);
@@ -54,29 +52,23 @@ namespace PetCatalog.Infra.Data.Repositorys
                 dbContext.SaveChanges();
                 if (fileSaver.Delete(image.Name))
                 {
-                    // TODO: Add logging
                     return image;
                 }
                 return image;
             }
             catch
             {
-                // TODO: Add logging
-            }
-
-            return null;
+                return null;
+            }         
         }
-
         public Image Get(int id)
         {
             return dbContext.Images.Find(id);
         }
-
         public IEnumerable<Image> GetAll()
         {
             return dbContext.Images;
         }
-
         public void Update(Image obj)
         {
             if (obj is null) throw new ArgumentNullException();

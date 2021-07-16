@@ -4,8 +4,6 @@ using PetCatalog.Infra.Data.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetCatalog.Infra.Data.Repositorys
 {
@@ -21,12 +19,10 @@ namespace PetCatalog.Infra.Data.Repositorys
             dbContext.RefreshTokens.Add(obj);
             dbContext.SaveChanges();
         }
-
         public RefreshToken Delete(int Id)
         {
             throw new NotImplementedException();
         }
-
         public void DeleteAllUserTokens(User user)
         {
             foreach (var item in user.RefreshTokens)
@@ -36,7 +32,6 @@ namespace PetCatalog.Infra.Data.Repositorys
 
             dbContext.SaveChanges();
         }
-
         public void DeleteUserToken(User user, string token)
         {
             foreach (var item in user.RefreshTokens.Where(t=>t.Token == token))
@@ -46,22 +41,18 @@ namespace PetCatalog.Infra.Data.Repositorys
 
             dbContext.SaveChanges();
         }
-
         public RefreshToken Get(int id)
         {
             throw new NotImplementedException();
         }
-
         public IEnumerable<RefreshToken> GetAll()
         {
             throw new NotImplementedException();
         }
-
         public IEnumerable<RefreshToken> GetRecentTokens(string token)
         {
             return dbContext.RefreshTokens.Where(rt => rt.Token == token).OrderByDescending(rt => rt.ExpiryDate);
         }
-
         public void Update(RefreshToken obj)
         {
             throw new NotImplementedException();

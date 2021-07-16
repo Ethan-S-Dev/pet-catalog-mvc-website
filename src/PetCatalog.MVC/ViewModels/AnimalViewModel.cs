@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using PetCatalog.Domain.Models;
 using PetCatalog.MVC.Validations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetCatalog.MVC.ViewModels
 {
@@ -42,7 +37,6 @@ namespace PetCatalog.MVC.ViewModels
         [Display(Name="Category")]
         public int CategoryId { get; set; }
 
-        [CategoryName]
         [Display(Name ="Category name")]
         [Required(ErrorMessage = "Category name can't be empty.")]
         public string CategoryName { get; set; }

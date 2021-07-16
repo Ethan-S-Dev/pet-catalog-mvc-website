@@ -1,11 +1,8 @@
 ﻿using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetCatalog.Application.Services
 {
@@ -53,24 +50,20 @@ namespace PetCatalog.Application.Services
             animalRepository.Create(animal);
             return true;
         }
-
         public void AddComment(Comment comment)
         {
             commentRepository.Create(comment);
         }
-
         public void DeleteAnimal(int animalId)
         {
             var animal = animalRepository.Delete(animalId);
             commentRepository.DeleteAnimalComments(animalId);
             imageRepository.Delete(animal.ImageId);
         }
-
         public void DeleteComment(int id)
         {
             commentRepository.Delete(id);
         }
-
         public void EditAnimal(Animal animal)
         {
             if (animal.CategoryId < 0)
