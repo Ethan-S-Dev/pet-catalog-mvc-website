@@ -1,12 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using PetCatalog.Domain.Interfaces;
+﻿using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
 using PetCatalog.Infra.Data.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetCatalog.Infra.Data.Repositorys
 {
@@ -21,29 +18,24 @@ namespace PetCatalog.Infra.Data.Repositorys
         {
             throw new NotImplementedException();
         }
-
         public User Delete(int Id)
         {
             throw new NotImplementedException();
         }
-
         public User Get(int id)
         {
             throw new NotImplementedException();
         }
-
         public User Get(User user)
         {
             user = dbContext.Users.FirstOrDefault(u => (u.Email.ToLower() == user.Email.ToLower() && u.Password == user.Password));
             return user;
         }
-
         public User Get(string email)
         {
             var user = dbContext.Users.FirstOrDefault(user => user.Email.ToLower() == email.ToLower());
             return user;
         }
-
         public IEnumerable<User> GetAll()
         {
             throw new NotImplementedException();

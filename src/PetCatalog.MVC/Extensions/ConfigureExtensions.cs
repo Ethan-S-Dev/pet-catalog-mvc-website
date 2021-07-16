@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using PetCatalog.Application.Auth;
-using PetCatalog.Domain.Models;
+using PetCatalog.Domain.Auth;
 using PetCatalog.Infra.Data.Contexts;
 using PetCatalog.Infra.Data.DependencyInjections;
 using PetCatalog.Infra.IoC;
+using PetCatalog.MVC.Exceptions;
 using PetCatalog.MVC.Mappers;
 using PetCatalog.MVC.Middlewares;
 using System;
@@ -22,7 +22,7 @@ namespace PetCatalog.MVC.Extensions
     {
         public static void ConfigureSqlDb(this IServiceCollection services, IConfiguration configuration, bool useLazyLoading = true)
         {
-            if (!configuration.IsValid()) throw new Exception(); // TODO: Add proper exception
+            if (!configuration.IsValid()) throw new InvalidConfigurationException();
 
             if (configuration.UseSqlServer())
             {
@@ -81,8 +81,7 @@ namespace PetCatalog.MVC.Extensions
 
         public static void RegisterServices(this IServiceCollection services)
             => DependencyContainer.RegisterServices(services);
-
-        //Most be called after RegisterServices!!
+  
         public static void RegisterAutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(cfg =>
@@ -125,6 +124,5 @@ namespace PetCatalog.MVC.Extensions
                 });
 
         }
-
     }
 }

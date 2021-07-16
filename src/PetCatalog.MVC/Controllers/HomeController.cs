@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PetCatalog.Application.Auth;
 using PetCatalog.Application.Interfaces;
 using PetCatalog.Domain.Models;
-using PetCatalog.MVC.Extensions;
 using PetCatalog.MVC.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PetCatalog.MVC.Controllers
 {
@@ -33,8 +27,18 @@ namespace PetCatalog.MVC.Controllers
             return View(bestAnimals);
         }
 
-        
-
-        
+        [HttpPost]
+        public IActionResult AddComment(CommentViewModel comment, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                comment.AnimalId = id;
+                var realComment = mapper.Map<Comment>(comment);
+                animalService.AddComment(realComment);
+            }
+            var url = Request?.Headers["Referer"].ToString();
+            url ??= "/";
+            return Redirect(url);
+        }
     }
 }

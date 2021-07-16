@@ -5,7 +5,7 @@ using System;
 
 namespace PetCatalog.Infra.Data.Contexts
 {
-    public class PetCatalogDbContext : DbContext
+    public class PetCatalogDbContext : DbContext 
     {
         private readonly string defaultImage;
         private readonly int defaultImageId;

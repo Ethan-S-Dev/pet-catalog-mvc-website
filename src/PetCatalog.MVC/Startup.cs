@@ -43,15 +43,24 @@ namespace PetCatalog.MVC
             //fs.Diractory.EnsureDeleted();
             fs.Diractory.EnsureCreated();
 
-            app.UseSession();
+            if(webHostEnvironment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
-            app.UseAddAuthorization();
+            if(webHostEnvironment.IsProduction() || webHostEnvironment.IsStaging())
+            {
+                app.UseExceptionHandler("/Error/Index");
+            }
 
-            app.UseAddAuthorization();
 
             app.UseStaticFiles();
 
+            app.UseSession();
+            
             app.UseRouting();
+
+            app.UseAuthHeader();
 
             app.UseAuthentication();
 
@@ -64,7 +73,7 @@ namespace PetCatalog.MVC
 
             app.Run(async c =>
             {
-                await c.Response.WriteAsync("Error!");
+                await c.Response.WriteAsync("Why are you runnin?!");
             });
         }
     }

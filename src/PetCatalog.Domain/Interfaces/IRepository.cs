@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PetCatalog.Domain.Interfaces
 {
@@ -10,11 +6,9 @@ namespace PetCatalog.Domain.Interfaces
     {
         //Create
         void Create(T obj);
-
         // Read
         public IEnumerable<T> GetAll();
         public T Get(int id);
-
         // Update
         void Update(T obj);
         // Delete

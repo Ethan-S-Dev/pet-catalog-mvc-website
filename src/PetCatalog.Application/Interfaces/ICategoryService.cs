@@ -1,9 +1,5 @@
 ﻿using PetCatalog.Domain.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetCatalog.Application.Interfaces
 {
@@ -12,7 +8,5 @@ namespace PetCatalog.Application.Interfaces
         IEnumerable<Category> GetCategorys();
         Category GetCategory(int categoryId);
         IEnumerable<Animal> GetAnimals(int categoryId);
-        bool AddCategory(string name,out int id);
-        bool AddCategory(string name);
     }
 }

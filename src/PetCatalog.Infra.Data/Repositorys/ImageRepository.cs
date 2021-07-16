@@ -1,6 +1,7 @@
 ﻿using PetCatalog.Domain.Interfaces;
 using PetCatalog.Domain.Models;
 using PetCatalog.Infra.Data.Contexts;
+using PetCatalog.Infra.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +10,9 @@ namespace PetCatalog.Infra.Data.Repositorys
 {
     public class ImageRepository : IImageRepository
     {
-        private readonly ImageFileContext fileSaver;
+        private readonly IFileContext fileSaver;
         private readonly PetCatalogDbContext dbContext;
-        public ImageRepository(ImageFileContext fileSaver, PetCatalogDbContext dbContext)
+        public ImageRepository(IFileContext fileSaver, PetCatalogDbContext dbContext)
         {
             this.fileSaver = fileSaver;
             this.dbContext = dbContext;
@@ -34,14 +35,12 @@ namespace PetCatalog.Infra.Data.Repositorys
                 }
                 catch
                 {
-                    // TODO: Add logging
                     fileSaver.Delete(newName);
                 }
 
             }
 
         }
-
         public Image Delete(int id)
         {
             var image = dbContext.Images.Find(id);
@@ -53,29 +52,23 @@ namespace PetCatalog.Infra.Data.Repositorys
                 dbContext.SaveChanges();
                 if (fileSaver.Delete(image.Name))
                 {
-                    // TODO: Add logging
                     return image;
                 }
                 return image;
             }
             catch
             {
-                // TODO: Add logging
-            }
-
-            return null;
+                return null;
+            }         
         }
-
         public Image Get(int id)
         {
             return dbContext.Images.Find(id);
         }
-
         public IEnumerable<Image> GetAll()
         {
             return dbContext.Images;
         }
-
         public void Update(Image obj)
         {
             if (obj is null) throw new ArgumentNullException();
