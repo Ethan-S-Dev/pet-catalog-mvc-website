@@ -9,11 +9,7 @@ Architecture inspired by *Nishan Chathurange Wickramarathna* Clean Architecture 
 
 ## Screenshots
 
-<img src="screenshots/Screenshot_1.png" height="280px"/>
-<img src="screenshots/Screenshot_2.png" height="280px"/>
-<img src="screenshots/Screenshot_3.png" height="280px"/>
-<img src="screenshots/Screenshot_4.png" height="280px"/>
-<img src="screenshots/Screenshot_5.png" height="280px"/>
+<img src="screenshots/Screenshot_1.png" height="280px"/><img src="screenshots/Screenshot_2.png" height="280px"/><img src="screenshots/Screenshot_3.png" height="280px"/><img src="screenshots/Screenshot_4.png" height="280px"/><img src="screenshots/Screenshot_5.png" height="280px"/>
 
 ## Technologies
 
