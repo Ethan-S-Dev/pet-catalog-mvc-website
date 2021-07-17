@@ -4,8 +4,10 @@
 
 ### Pet catalog website using ASP.NET core MVC and Razor views.
 This project is for my ASP.NET Core MVC class.
+[The Progect SRS](https://github.com/Ethan-S-Dev/pet-catalog-mvc-website/blob/master/Project-srs.pdf)
 Architecture inspired by *Nishan Chathurange Wickramarathna* Clean Architecture .NET Core.
 [Link to the article](https://nishanc.medium.com/clean-architecture-net-core-part-2-implementation-7376896390c5)
+
 
 ## Screenshots
 
