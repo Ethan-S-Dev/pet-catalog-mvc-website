@@ -45,6 +45,7 @@ namespace PetCatalog.Infra.Data.Repositorys
         {
             var image = dbContext.Images.Find(id);
             if (image is null) return null;
+            if (image.Name == fileSaver.DefaultFile) return null;
 
             try
             {

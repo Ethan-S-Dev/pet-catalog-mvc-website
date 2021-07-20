@@ -95,9 +95,10 @@ namespace PetCatalog.Application.Services
         private string GenerateAccessToken(string email)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
+            
             var key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
-            {
+            {               
                 Subject = new ClaimsIdentity(new Claim[]{
                     new Claim(ClaimTypes.Email,email)
                 }),

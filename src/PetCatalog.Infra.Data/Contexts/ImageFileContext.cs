@@ -18,5 +18,9 @@ namespace PetCatalog.Infra.Data.Contexts
             var data = File.ReadAllBytes(defaultImagePath);
             Save(defaultImage, data);
         }
+        protected override string GetDefaultFile()
+        {
+            return defaultImage;
+        }
     }
 }

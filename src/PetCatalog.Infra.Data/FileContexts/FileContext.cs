@@ -10,6 +10,9 @@ namespace PetCatalog.Infra.Data.FileContexts
         private readonly FileContextDir saveDiractory;
         private readonly string path;
         public FileContextDir Diractory => saveDiractory;
+
+        public string DefaultFile => GetDefaultFile();
+
         public FileContext(FileContextOptions fileContextOptions)
         {
             if (fileContextOptions.SaveingDirectory is null) throw new ArgumentNullException();
@@ -21,6 +24,10 @@ namespace PetCatalog.Infra.Data.FileContexts
         protected virtual void OnDirectoryCreation()
         {
 
+        }
+        protected virtual string GetDefaultFile()
+        {
+            return null;
         }
 
         public bool Delete(string fileName)

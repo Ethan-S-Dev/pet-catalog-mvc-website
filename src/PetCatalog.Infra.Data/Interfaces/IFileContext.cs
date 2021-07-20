@@ -5,5 +5,7 @@
         bool Delete(string fileName);
         bool Save(string name, byte[] data);
         bool Update(string oldName, string newName, byte[] data);
+
+        string DefaultFile { get; }
     }
 }
