@@ -18,6 +18,7 @@ Architecture inspired by *Nishan Chathurange Wickramarathna* Clean Architecture 
 ### Architecture
 - **Clean Architecture**
 - **MVC**
+- **MVVM**
 
 ### Tools
 - **ASP.NET Core MVC**
